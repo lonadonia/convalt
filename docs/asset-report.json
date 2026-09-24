@@ -1,0 +1,122 @@
+{
+  "generated": "2026-09-24T07:20:47.741Z",
+  "source": {
+    "archive": "simple-72-cell-solar-panel.zip",
+    "fbx": "source/simple_solar_panel_72c.zip › solar panel.fbx (binary FBX 7400)",
+    "mesh": {
+      "name": "Cube",
+      "triangles": 44,
+      "vertices": 132,
+      "nodeTransform": {
+        "rotation": [
+          -1.5707964897155764,
+          0,
+          0
+        ],
+        "scale": [
+          100,
+          99.99999999999999,
+          99.99999999999999
+        ]
+      }
+    },
+    "fbxTextureReferences": [
+      "solar_panel_diffuse.png",
+      "solar_panel_normal.png",
+      "solar_panel_roughness.png",
+      "solar_panel_metalness.png"
+    ],
+    "fbxLoaderWarnings": [
+      "THREE.FBXLoader: ShininessExponent map is not supported in three.js, skipping texture.",
+      "THREE.FBXLoader: ReflectionFactor map is not supported in three.js, skipping texture."
+    ],
+    "textureSetUsed": "textures/ (RGB / greyscale PNG, 4096²)",
+    "textureSetSkipped": "source/simple_solar_panel_72c.zip copies — pixel-identical RGBA duplicates",
+    "groundAO": "textures/internal_ground_ao_texture.jpeg (512², blurred rectangle for a ground plane under a flat-lying panel) — not applied to the panel; no ground mesh or UVs for it exist in the FBX.",
+    "license": "No license or attribution file is included in the supplied archive. Licence terms must be confirmed with the asset supplier before production use."
+  },
+  "normalized": {
+    "size": [
+      1.864,
+      0.935,
+      0.03
+    ],
+    "units": "metres",
+    "frameLip": 0.0105,
+    "uvRects": {
+      "front": [
+        0.0008,
+        0.40364,
+        0.78249,
+        0.79574
+      ],
+      "back": [
+        0.0008,
+        0.01045,
+        0.78249,
+        0.40256
+      ]
+    },
+    "colors": {
+      "frame": "#979ca1",
+      "back": "#9da1a6"
+    }
+  },
+  "normalMap": {
+    "finding": "Baked against smoothed low-poly normals and a different triangulation; large-scale content is compensation, not surface detail.",
+    "measurement": "Mean deviation from the flat front face when reconstructed with a MikkTSpace-style basis: ~38° (OpenGL green), ~66° (DirectX green).",
+    "fix": "Detail-only re-bake for flat normals (OpenGL / glTF convention); side strips flattened.",
+    "rebakeStats": {
+      "front": {
+        "texels": 1285307,
+        "meanDetailDeg": 1.03,
+        "maxDetailDeg": 73.5,
+        "pctOver5Deg": 5.5,
+        "unresolvedTexels": 0
+      },
+      "back": {
+        "texels": 1285308,
+        "meanDetailDeg": 0.41,
+        "maxDetailDeg": 38.7,
+        "pctOver5Deg": 2.06,
+        "unresolvedTexels": 0
+      }
+    }
+  },
+  "outputs": {
+    "2k": {
+      "file": "public/models/solar-panel-2k.glb",
+      "kilobytes": 823.7,
+      "textureKilobytes": {
+        "baseColor": 357.8,
+        "metallicRoughness": 261.5,
+        "normal": 198.3
+      },
+      "textureSize": 2048,
+      "validation": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    "1k": {
+      "file": "public/models/solar-panel-1k.glb",
+      "kilobytes": 233.5,
+      "textureKilobytes": {
+        "baseColor": 96.4,
+        "metallicRoughness": 63.1,
+        "normal": 67.9
+      },
+      "textureSize": 1024,
+      "validation": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+/* ---------------------------------------------------------------------------------------------
+   Power generation (scene 03)
+   --------------------------------------------------------------------------------------------- */
+/* Bottom-anchored: the copy takes the space the bottom control row used to reserve (the stage's
+   96 px bottom padding stays for the opening's controls; 68 px of it was that row). */
+.chapter--field {
+  grid-column: 1 / 7;
+  align-self: end;
+  margin-bottom: calc(clamp(0px, 1.5vh, 20px) - 68px);
+}
+
+.chapter--field .display {
+  text-wrap: balance;
+}
+
+/* Over the field image the deeper teal and ink keep the text above WCAG AA on the haze below. */
+.chapter--field .eyebrow {
+  color: var(--ink-soft);
+}
+
+.chapter--field .display__accent {
+  color: var(--teal-text);
+}
+
+.chapter__note {
+  margin-top: 14px;
+  max-width: 46ch;
+  color: var(--ink-muted);
+  font-size: var(--text-micro);
+  line-height: 1.5;
+}
+
+/* Legibility: a soft ivory haze rising from the lower left, where the text sits (strong enough
+   behind the eyebrow and the headline's right end); the installation to the right stays clear. */
+.field-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(100% 115% at 0% 100%, rgb(245 244 238 / 0.95) 0%, rgb(245 244 238 / 0.88) 30%, rgb(245 244 238 / 0.7) 50%, rgb(245 244 238 / 0.38) 68%, rgb(245 244 238 / 0.1) 84%, transparent 96%),
+    linear-gradient(to top, rgb(245 244 238 / 0.6), transparent 24%);
+}
+
+html[data-tier='mobile'] .chapter--field {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin-bottom: 4px;
+}
+
+html[data-tier='mobile'] .field-scrim {
+  background: linear-gradient(to top, rgb(245 244 238 / 0.96) 0%, rgb(245 244 238 / 0.88) 30%, rgb(245 244 238 / 0.4) 48%, transparent 62%);
+}
+
+html[data-tier='mobile'] .stage-status--field {
+  top: calc(var(--header-h) + 12px);
+  bottom: auto;
+}
+
+html[data-capture='on'] .field-scrim {
+  display: none !important;
+}
+
+/* Document layout: the section follows the module chapter like the others. */
+.static-chapter--field > .chapter {
+  align-self: center;
+}

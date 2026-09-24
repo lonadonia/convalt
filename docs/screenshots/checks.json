@@ -1,0 +1,632 @@
+[
+  {
+    "name": "first paint shows the loop poster (boot frame → poster in place)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "opening: headline, playing loop, white navigation, footage hidden",
+    "pass": true,
+    "detail": "{\"hero\":1,\"loop\":{\"paused\":false,\"time\":2.7733,\"src\":\"factory-loop-1080.mp4\",\"readyState\":4,\"seeking\":false,\"muted\":true},\"onDark\":1}"
+  },
+  {
+    "name": "footage decoded and resting on its first usable frame before any scroll (never played)",
+    "pass": true,
+    "detail": "{\"scrub\":{\"desired\":6,\"requested\":6,\"presented\":6,\"seeks\":1,\"ready\":true,\"failed\":false},\"plays\":{\"loop\":1,\"assembly\":0,\"other\":0}}"
+  },
+  {
+    "name": "served videos are derivatives (never the 4K originals)",
+    "pass": true,
+    "detail": "factory-loop-1080.mp4 + factory-assembly-1080.mp4"
+  },
+  {
+    "name": "opening loop plays continuously through several loops",
+    "pass": true,
+    "detail": "{\"wraps\":2,\"playing\":true}"
+  },
+  {
+    "name": "all videos silent: muted, defaultMuted, muted attribute, no decoded audio",
+    "pass": true,
+    "detail": "[{\"muted\":true,\"defaultMuted\":true,\"attr\":true,\"audioBytes\":0},{\"muted\":true,\"defaultMuted\":true,\"attr\":true,\"audioBytes\":0}]"
+  },
+  {
+    "name": "departure at loop t≈1.2s: loop plays through the blend, pauses once covered, resumes from the same frame",
+    "pass": true,
+    "detail": "blend: loop playing, footage opacity 1.00; covered: paused at 1.6442s; back: resumed 2.4712s"
+  },
+  {
+    "name": "departure at loop t≈5.3s: loop plays through the blend, pauses once covered, resumes from the same frame",
+    "pass": true,
+    "detail": "blend: loop playing, footage opacity 1.00; covered: paused at 5.7275s; back: resumed 6.5428s"
+  },
+  {
+    "name": "scrolling back and forth across the loop/footage boundary: no repeated play/pause calls",
+    "pass": true,
+    "detail": "12 crossings → loop play() ×0, pause() ×1"
+  },
+  {
+    "name": "scroll position → exact footage frame (video paused on the mapped frame; presented frame logged)",
+    "pass": true,
+    "detail": "0.13:8/9 (element on 9: requested 9, time 0.3958; presentation report lagging) 0.25:39/39 0.4:73/73 0.55:101/101 0.62:116/116 0.7:133/133 0.745:142/142 0.9:142/142"
+  },
+  {
+    "name": "after the footage window the last frame (142) is held",
+    "pass": true,
+    "detail": "presented 142"
+  },
+  {
+    "name": "holding the scroll midway holds one frame (no drift, no playback)",
+    "pass": true,
+    "detail": "{\"frames\":[82],\"paused\":true,\"time\":3.4375}"
+  },
+  {
+    "name": "after the scroll stops, the footage settles on the final frame within 0.6 s (no rubber-banding)",
+    "pass": true,
+    "detail": "233 ms to frame 73"
+  },
+  {
+    "name": "small wheel steps (40 px) advance the footage by a few frames each",
+    "pass": true,
+    "detail": "frames 73 → 75 → 77 → 79 (steps 2, 2, 2)"
+  },
+  {
+    "name": "fast scrolling + immediate reversals land on the right frame",
+    "pass": true,
+    "detail": "presented 52 expected 52"
+  },
+  {
+    "name": "seeks are coalesced: never written while a seek is pending",
+    "pass": true,
+    "detail": "currentTime writes 199, while seeking 0, seeks during the burst 17"
+  },
+  {
+    "name": "the scroll-controlled footage is never played",
+    "pass": true,
+    "detail": "{\"loop\":3,\"assembly\":0,\"other\":0}"
+  },
+  {
+    "name": "resize (same tier and across tiers) keeps the intro position and footage frame",
+    "pass": true,
+    "detail": "intro 0.550 / mobile 0.550 (factory-assembly-portrait.mp4) / back 0.550, frame 101/101"
+  },
+  {
+    "name": "resize keeps the story state",
+    "pass": true,
+    "detail": "{\"p\":0.40336463223787167,\"t\":0.40336463223787167,\"story\":0.7199074074074073,\"status\":\"ready\"}"
+  },
+  {
+    "name": "fast scrolling across intro and story, then back to the top, restores the opening",
+    "pass": true,
+    "detail": "{\"p\":0,\"hero\":1,\"loop\":false,\"frame\":6}"
+  },
+  {
+    "name": "no console errors / failed requests (load, loops, scrubbing, reversals, resize)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "\"Skip intro\" lands on the overview, focuses its heading, updates the URL",
+    "pass": true,
+    "detail": "{\"t\":0.2850547730829421,\"focus\":\"hero-title\",\"hash\":\"#overview\"}"
+  },
+  {
+    "name": "\"Skip intro\" cuts through a brief fade (no fast-forward through the footage)",
+    "pass": true,
+    "detail": "0 visible in-between frames"
+  },
+  {
+    "name": "direct link #module opens the component scene",
+    "pass": true,
+    "detail": "{\"t\":0.40336463223787167,\"p\":0.40336463223787167,\"fade\":\"1\"}"
+  },
+  {
+    "name": "refresh restores the same state",
+    "pass": true,
+    "detail": "{\"t\":0.40336463223787167,\"p\":0.40336463223787167}"
+  },
+  {
+    "name": "direct link #overview opens the overview",
+    "pass": true,
+    "detail": "target=0.2851"
+  },
+  {
+    "name": "reload mid-footage restores the same place and frame (loop not playing)",
+    "pass": true,
+    "detail": "intro 0.500 → 0.500; frame 92 → 92; loop idle"
+  },
+  {
+    "name": "browser back returns to a consistent state",
+    "pass": true,
+    "detail": "{\"t\":0.28169014084507044,\"p\":0.28169014084507044,\"hash\":\"\"}"
+  },
+  {
+    "name": "no console errors (skip, deep links, reloads)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "tab order at the opening reaches \"Skip intro\" (no video or motion controls)",
+    "pass": true,
+    "detail": "Skip to content → Convalt Energy home → Projects → Project Solis → Team → Media → Resources → Contact → Skip intro"
+  },
+  {
+    "name": "\"Skip intro\" (Enter) moves focus to the overview heading",
+    "pass": true,
+    "detail": "focus=hero-title"
+  },
+  {
+    "name": "next Tab stop after skipping is \"Explore the module\"",
+    "pass": true,
+    "detail": "next=Explore the module"
+  },
+  {
+    "name": "\"Explore the module\" (Enter) reaches the component scene and focuses its heading",
+    "pass": true,
+    "detail": "{\"t\":0.40336463223787167,\"focus\":\"module-title\"}"
+  },
+  {
+    "name": "layer controls: Enter/Space/Arrow keys",
+    "pass": true,
+    "detail": "{\"p\":\"false\",\"c\":\"true\",\"panel\":true,\"active\":\"cells\"}"
+  },
+  {
+    "name": "phone serves the portrait derivatives of both videos",
+    "pass": true,
+    "detail": "factory-loop-portrait.mp4 + factory-assembly-portrait.mp4"
+  },
+  {
+    "name": "mobile menu over the footage opens with dark-on-ivory text",
+    "pass": true,
+    "detail": "{\"open\":true,\"color\":\"rgb(18, 51, 54)\",\"bg\":\"rgb(245, 244, 238)\"}"
+  },
+  {
+    "name": "phone: scrubbing shows the mapped frame",
+    "pass": true,
+    "detail": "92/92"
+  },
+  {
+    "name": "touch: \"Skip intro\" reaches the overview (mobile)",
+    "pass": true,
+    "detail": "target=0.2630"
+  },
+  {
+    "name": "touch: tap selects a layer (mobile)",
+    "pass": true,
+    "detail": "active=structure"
+  },
+  {
+    "name": "touch target ≥ 44 px (mobile layer control)",
+    "pass": true,
+    "detail": "{\"x\":258.578125,\"y\":673.21875,\"width\":111.15625,\"height\":71.59375}"
+  },
+  {
+    "name": "phone: power generation uses the light assets (mobile terrain, 1K module) and completes",
+    "pass": true,
+    "detail": "{\"status\":\"ready\",\"assets\":[\"field-module-1k.glb\",\"terrain-mobile.glb\",\"terrain-inset-mobile.webp\",\"terrain-scan-mobile.webp\",\"terrain-apron.webp\"],\"placed\":671,\"text\":1}"
+  },
+  {
+    "name": "phone: projects link is a comfortable touch target",
+    "pass": true,
+    "detail": "{\"x\":20.265625,\"y\":726,\"width\":220.15625,\"height\":48}"
+  },
+  {
+    "name": "phone: data centers reframed above the copy; copy and link usable",
+    "pass": true,
+    "detail": "{\"status\":\"ready\",\"mode\":\"datacenter\",\"text\":1,\"cta\":48,\"copyTop\":511}"
+  },
+  {
+    "name": "reduced motion (OS setting, a saved on-page choice ignored): no autoplay (play() never called), poster + readable opening copy, no video controls",
+    "pass": true,
+    "detail": "{\"loop\":{\"paused\":true,\"time\":0,\"src\":\"factory-loop-1080.mp4\",\"readyState\":4,\"seeking\":false,\"muted\":true},\"loopPlays\":0,\"state\":\"paused\",\"control\":false}"
+  },
+  {
+    "name": "reduced motion: the scroll-controlled footage is not downloaded",
+    "pass": true,
+    "detail": "src=\"\""
+  },
+  {
+    "name": "reduced motion: no camera travel — the opening holds, then one step to the overview",
+    "pass": true,
+    "detail": "early=0 later=0.2817 (overview=0.2817)"
+  },
+  {
+    "name": "prefers-reduced-motion: motion off, stepped story states",
+    "pass": true,
+    "detail": "motion=false progress=0.40338028169014084"
+  },
+  {
+    "name": "reduced motion: power generation is one step to the completed installation with its text",
+    "pass": true,
+    "detail": "{\"progress\":\"0.7549\",\"expected\":\"0.7549\",\"placed\":671,\"text\":1}"
+  },
+  {
+    "name": "reduced motion: data centers is one step to the settled view with its copy (no travel, no ivory flash)",
+    "pass": true,
+    "detail": "{\"progress\":\"0.9852\",\"expected\":\"0.9852\",\"text\":1,\"inBetweenFrames\":0}"
+  },
+  {
+    "name": "no Motion switch on the page; a change of the OS reduced-motion setting is followed live",
+    "pass": true,
+    "detail": "{\"motion\":true,\"toggles\":0}"
+  },
+  {
+    "name": "model failure: the factory footage still follows the scroll",
+    "pass": true,
+    "detail": "status=error frame 111/111"
+  },
+  {
+    "name": "model failure → overview with still image + note, text usable",
+    "pass": true,
+    "detail": "{\"status\":\"error\",\"note\":\"The 3D model could not be loaded. Still images are shown instead.\",\"heroVisible\":\"1\",\"poster\":1}"
+  },
+  {
+    "name": "model failure: story text still follows scroll",
+    "pass": true,
+    "detail": "module opacity 1"
+  },
+  {
+    "name": "model failure: power generation shows the installation still, its text and the projects link",
+    "pass": true,
+    "detail": "{\"poster\":1,\"text\":1,\"cta\":\"https://www.convalt.com/projects/\"}"
+  },
+  {
+    "name": "no WebGL → static document: factory opening, skip link, all explanations and links",
+    "pass": true,
+    "detail": "{\"layout\":\"static\",\"h1\":\"Where energytakes shape.\",\"video\":true,\"skip\":true,\"layers\":3,\"links\":20,\"field\":\"From one module.To a field of possibility.\",\"fieldCta\":\"https://www.convalt.com/projects/\",\"fieldStill\":true}"
+  },
+  {
+    "name": "no WebGL → static document includes power generation with its still and projects link",
+    "pass": true,
+    "detail": "{\"field\":\"From one module.To a field of possibility.\",\"cta\":\"https://www.convalt.com/projects/\",\"still\":true}"
+  },
+  {
+    "name": "no WebGL → static document includes data centers with its still and project link",
+    "pass": true,
+    "detail": "{\"title\":\"Infrastructure fora connected world.\",\"cta\":\"https://www.convalt.com/projects/northern-maine-data-center/\",\"still\":true}"
+  },
+  {
+    "name": "context loss during the intro → recovery",
+    "pass": true,
+    "detail": "lost=context-lost restored=ready"
+  },
+  {
+    "name": "no unexpected console errors (failure modes)",
+    "pass": true,
+    "detail": "[console.error] [convalt] model failed to load SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at _y.parse (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:4022:26315)\n    at Object.onLoad (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:4022:25595) | [console.warning] WebGL: INVALID_OPERATION: delete: object does not belong to this context | [console.warning] WebGL: INVALID_OPERATION: delete: object does not belong to this context | [console.warning] WebGL: INVALID_OPERATION: delete: object does not belong to this context"
+  },
+  {
+    "name": "autoplay refused → matching poster stays, scroll-controlled footage unaffected",
+    "pass": true,
+    "detail": "{\"state\":\"blocked\",\"control\":false,\"frame\":\"92/92\"}"
+  },
+  {
+    "name": "opening loop failure → poster in place, no video control, footage still scrubs",
+    "pass": true,
+    "detail": "{\"state\":\"error\",\"control\":false,\"poster\":true}"
+  },
+  {
+    "name": "footage failure → opening stays in place (no blank frame), overview reached with the model",
+    "pass": true,
+    "detail": "{\"failed\":true,\"loop\":\"block\",\"footage\":0,\"hero\":1}"
+  },
+  {
+    "name": "footage failure: \"Skip intro\" still reaches the overview",
+    "pass": true,
+    "detail": "target=0.2851"
+  },
+  {
+    "name": "power generation: assets load in the background once the module is ready",
+    "pass": true,
+    "detail": "ready 652 ms after the module (still in the intro)"
+  },
+  {
+    "name": "layout: 672 modules (+50% over the first 448), none rejected, lower edge ≥ 0.75 m above ground, legs reach the ground",
+    "pass": true,
+    "detail": "{\"modules\":672,\"tables\":48,\"supports\":912,\"rejected\":0,\"clearance\":[0.7499999999999996,0.8261052063014018],\"legs\":[0.7046123214006249,1.3419736749255904]}"
+  },
+  {
+    "name": "layout is deterministic (identical after a reload)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "reveal order: hero alone → small group → its table → its row → rows → all",
+    "pass": true,
+    "detail": "0.2:0+0 0.3:0+0 0.38:3+4 0.45:16+4 0.54:104+9 0.6:190+7 0.7:396+4 0.8:671+0"
+  },
+  {
+    "name": "the whole installation is visible from 0.8 to the end (nothing missing, nothing arriving)",
+    "pass": true,
+    "detail": "671 instanced modules + hero, 912 support boxes"
+  },
+  {
+    "name": "section text: hidden while the installation builds, fully shown for the reading interval",
+    "pass": true,
+    "detail": "0.6:0 0.7:0 0.8:0 0.9:1 1:1"
+  },
+  {
+    "name": "draw calls and triangles stay bounded (instancing): final overview",
+    "pass": true,
+    "detail": "5 calls, 256320 triangles"
+  },
+  {
+    "name": "reverse scrolling reproduces the forward state (reveal, counts, pixels)",
+    "pass": true,
+    "detail": "live {\"reveal\":33.77332903188132,\"placed\":60,\"arriving\":5,\"supportsPlaced\":114,\"supportsArriving\":19,\"heroSwap\":1}, mean pixel difference 0.000"
+  },
+  {
+    "name": "fast scrolling + reversals through power generation land on the right state",
+    "pass": true,
+    "detail": "{\"reveal\":89.88749458749167,\"placed\":192,\"arriving\":5,\"supportsPlaced\":285,\"supportsArriving\":0,\"heroSwap\":1} vs {\"reveal\":89.74286744623814,\"placed\":190,\"arriving\":7,\"supportsPlaced\":285,\"supportsArriving\":0,\"heroSwap\":1}"
+  },
+  {
+    "name": "\"Explore our projects\" links to the existing projects route (as the navigation does)",
+    "pass": true,
+    "detail": "{\"href\":\"https://www.convalt.com/projects/\",\"text\":\"Explore our projects\",\"nav\":\"https://www.convalt.com/projects/\"}"
+  },
+  {
+    "name": "direct link #power-generation opens the completed installation with its text",
+    "pass": true,
+    "detail": "{\"t\":\"0.7549\",\"expected\":\"0.7549\",\"placed\":671,\"text\":1}"
+  },
+  {
+    "name": "reload inside power generation restores the same place and reveal state",
+    "pass": true,
+    "detail": "field 0.600 → 0.600, placed 192 → 192"
+  },
+  {
+    "name": "resize across tiers inside power generation keeps the place; the scene is rebuilt per tier",
+    "pass": true,
+    "detail": "field 0.700 / phone 0.700 (161920 tris) / back 0.700 (271920 tris), placed 396/396/397"
+  },
+  {
+    "name": "no console errors / failed requests (power generation)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "field assets fail → the module stays in view with a note; text and projects link still appear",
+    "pass": true,
+    "detail": "{\"status\":\"error\",\"note\":\"The field view could not be loaded, so the module is shown instead.\",\"canvas\":\"1\",\"text\":1}"
+  },
+  {
+    "name": "no unexpected console errors (field failure)",
+    "pass": true,
+    "detail": "[requestfailed] http://localhost:4173/models/field/terrain-desktop.glb net::ERR_FAILED | [console.error] Failed to load resource: net::ERR_FAILED | [console.error] [convalt] power-generation assets failed to load TypeError: Failed to fetch\n    at Bu.load (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:40:131386)\n    at _y.load (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:4022:25570)\n    at http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:40: | [requestfailed] http://localhost:4173/models/field/terrain-inset-desktop.webp net::ERR_FAILED | [console.error] Failed to load resource: net::ERR_FAILED | [requestfailed] http://localhost:4173/models/field/terrain-scan-desktop.webp net::ERR_FAILED | [console.error] Failed to load resource: net::ERR_FAILED | [requestfailed] http://localhost:4173/models/field/terrain-apron.webp net::ERR_FAILED | [console.error] Failed to load resource: net::ERR_FAILED"
+  },
+  {
+    "name": "data centers: model loads in the background after the field (8 draw calls)",
+    "pass": true,
+    "detail": "{\"drawCalls\":8,\"triangles\":22982}"
+  },
+  {
+    "name": "camera path stays in open space: ≥ 0.3 m from every rack row and fixture, rising gently below the fixtures",
+    "pass": true,
+    "detail": "{\"clearance\":0.888,\"minHeight\":1.278,\"maxHeight\":1.788,\"startDistance\":1.4}"
+  },
+  {
+    "name": "transition: field only → both (dim, in the band) → data centers only; the field is no longer rendered after it",
+    "pass": true,
+    "detail": "0:field/5 0.02:field/5 0.03:band/6 0.038:band/21 0.045:band/21 0.052:datacenter/15 0.06:datacenter/15 0.075:datacenter/14 0.1:datacenter/14"
+  },
+  {
+    "name": "no white flash: the band darkens to charcoal and rises again (no frame brighter than its ends)",
+    "pass": true,
+    "detail": "0:166.2 0.02:142.3 0.03:107.9 0.038:61.9 0.045:21.2 0.052:23.2 0.06:26.0 0.075:29.0 0.1:28.9"
+  },
+  {
+    "name": "no empty black frame: server indicators already glow at the darkest point of the band",
+    "pass": true,
+    "detail": "darkest t=0.045: luma 21.2, indicator pixels 3.29%"
+  },
+  {
+    "name": "readable close view right after the band (indicators and racks clearly visible)",
+    "pass": true,
+    "detail": "luma 28.9, indicator pixels 18.5%"
+  },
+  {
+    "name": "dark treatment: solar copy gone, header light-on-dark, stage backdrop charcoal",
+    "pass": true,
+    "detail": "{\"fieldText\":0,\"onDark\":1,\"backdrop\":1}"
+  },
+  {
+    "name": "copy: hidden during the pullback, fully shown for the reading interval",
+    "pass": true,
+    "detail": "0.5:0 0.7:0 0.8:0 0.86:0.49 0.95:1 1:1"
+  },
+  {
+    "name": "final composition: copy on the left, installation to its right with a clear gap, reaching the right side",
+    "pass": true,
+    "detail": "{\"textRight\":0.36,\"model\":[0.401,0.973]}"
+  },
+  {
+    "name": "reverse scrolling reproduces the forward state exactly (camera, copy, pixels)",
+    "pass": true,
+    "detail": "mean pixel difference 0.011"
+  },
+  {
+    "name": "fast scrolling + reversals through the band land correctly; scrolling back restores the field",
+    "pass": true,
+    "detail": "{\"fast\":\"datacenter\",\"back\":\"field\",\"onDark\":0,\"fieldText\":1}"
+  },
+  {
+    "name": "CTA links to the existing data-center project page (label matches the destination)",
+    "pass": true,
+    "detail": "{\"href\":\"https://www.convalt.com/projects/northern-maine-data-center/\",\"text\":\"Explore our data center project\"}"
+  },
+  {
+    "name": "direct link #data-centers opens the settled view with its copy",
+    "pass": true,
+    "detail": "{\"t\":\"0.9852\",\"expected\":\"0.9852\",\"mode\":\"datacenter\",\"text\":1}"
+  },
+  {
+    "name": "reload inside data centers restores the same place",
+    "pass": true,
+    "detail": "dc 0.400 → 0.400"
+  },
+  {
+    "name": "resize across tiers inside data centers keeps the place (the model is not reloaded)",
+    "pass": true,
+    "detail": "dc 0.400 / phone 0.400 / back 0.400"
+  },
+  {
+    "name": "no console errors / failed requests (data centers)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "data-center model fails → charcoal stage, copy and link still appear, with a note",
+    "pass": true,
+    "detail": "{\"status\":\"error\",\"mode\":\"charcoal\",\"text\":1,\"note\":\"The data-center view could not be loaded. The section text and link remain available.\"}"
+  },
+  {
+    "name": "no unexpected console errors (data-center failure)",
+    "pass": true,
+    "detail": "[requestfailed] http://localhost:4173/models/datacenter.glb net::ERR_FAILED | [console.error] Failed to load resource: net::ERR_FAILED | [console.error] [convalt] data-center model failed to load TypeError: Failed to fetch\n    at Bu.load (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:40:131386)\n    at _y.load (http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:4022:25570)\n    at http://localhost:4173/assets/StoryCanvas-DHpi95oE.js:40:130193"
+  },
+  {
+    "name": "logo: visibly larger (artwork-trimmed) and sharp; header height on the desktop target",
+    "pass": true,
+    "detail": "{\"w\":157,\"h\":48,\"natural\":400,\"header\":84}"
+  },
+  {
+    "name": "header links keep ≥ 4.5:1 over every scene with no surface of its own (glyph pixels against the scene + halo behind them, worst pixel)",
+    "pass": true,
+    "detail": "{\"video\":15.37,\"module\":12.09,\"field0.15\":10.08,\"field0.3\":7.63,\"field0.6\":7.9,\"field0.94\":7.44,\"dc0.1\":11.45,\"dc0.3\":10.16,\"dc0.45\":8.83,\"dc0.6\":7.78,\"dc0.75\":19.02,\"dc0.95\":19.02}"
+  },
+  {
+    "name": "header has no background strip in any scene (transparent; no blur, shadow, border or pseudo-element)",
+    "pass": true,
+    "detail": "{\"video\":\"none\",\"module\":\"none\",\"field\":\"none\",\"dataCenters\":\"none\"}"
+  },
+  {
+    "name": "chapter bar, Motion switch and Pause/Play are gone; the field copy uses the freed space",
+    "pass": true,
+    "detail": "{\"chapterBar\":0,\"motion\":0,\"videoButtons\":0,\"footerItems\":[\"scroll-cue\",\"intro-control intro-control--skip\"],\"fieldCopyGapPx\":42}"
+  },
+  {
+    "name": "the header stays at the top through the journey, leaves with the released stage and returns with it",
+    "pass": true,
+    "detail": "{\"atEnd\":0,\"released\":{\"top\":-405,\"bottom\":-321,\"stageBottom\":495},\"atFooter\":-2460,\"backAgain\":0}"
+  },
+  {
+    "name": "dark from the data centers through the portfolio, company section and footer: no ivory areas, dark page and body, scene \"dark\"",
+    "pass": true,
+    "detail": "{\"dc\":0.1}:0.1%/dark {\"dc\":0.97}:0.7%/dark {\"after\":0.2}:0.7%/dark {\"after\":0.5}:1.0%/dark {\"el\":\"#portfolio\"}:0.3%/dark {\"el\":\"#company\"}:0.5%/dark {\"bottom\":true}:0.4%/dark"
+  },
+  {
+    "name": "footer: dark, reaches the page bottom, verified links and legal line",
+    "pass": true,
+    "detail": "{\"bg\":\"rgb(11, 18, 20)\",\"gapBelow\":0,\"links\":8,\"copyright\":\"© 2026 Convalt Energy, Inc. All rights reserved. A portfolio company of ACO Investment Group LLC\"}"
+  },
+  {
+    "name": "scrolling back up restores the light scenes (body ivory, header colours follow)",
+    "pass": true,
+    "detail": "{\"back\":{\"scene\":\"light\",\"body\":\"rgb(245, 244, 238)\"},\"backStory\":{\"scene\":\"light\",\"onDark\":\"0.000\"}}"
+  },
+  {
+    "name": "reload at the footer returns to the footer, dark from the first paint",
+    "pass": true,
+    "detail": "{\"firstScene\":\"dark\",\"before\":15324,\"after\":{\"y\":15324,\"max\":15324,\"scene\":\"dark\"}}"
+  },
+  {
+    "name": "no console errors / failed requests (header, dark lower page)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "jumps between the opening and the data centers fade through charcoal (no ivory frame either way)",
+    "pass": true,
+    "detail": "into: max ivory 0.8% over 4 frames, landed datacenter; back: max ivory 0.9% over 3 frames"
+  },
+  {
+    "name": "phone: legible logo, header on the mobile target, no horizontal overflow on any section",
+    "pass": true,
+    "detail": "{\"logo\":{\"w\":118,\"h\":36,\"header\":68},\"overflow\":[0,0,0,0,0]}"
+  },
+  {
+    "name": "phone: the \"Menu\" label keeps ≥ 4.5:1 over every scene (glyph pixels against the scene + halo behind them)",
+    "pass": true,
+    "detail": "{\"video\":16.09,\"module\":12.09,\"field0.6\":7.5,\"field\":8.01,\"dc0.45\":18.97,\"dataCenters\":18.97}"
+  },
+  {
+    "name": "phone: header has no background strip in any scene; the copy uses the space the bottom bar left",
+    "pass": true,
+    "detail": "{\"surfaces\":{\"video\":\"none\",\"module\":\"none\",\"field\":\"none\",\"dataCenters\":\"none\"},\"dcCopy\":20,\"fieldCopy\":20}"
+  },
+  {
+    "name": "phone: the menu over the dark lower page is dark with light links and logo, opens and closes",
+    "pass": true,
+    "detail": "{\"open\":true,\"bg\":\"rgb(11, 18, 20)\",\"link\":\"rgb(242, 245, 242)\",\"logoWhite\":1,\"focus\":\"Projects\",\"closed\":true}"
+  },
+  {
+    "name": "sections in order: the journey (ending with the data centers), then the portfolio, then the company section, then the footer",
+    "pass": true,
+    "detail": "{\"kids\":[\"story\",\"portfolio\",\"company\"],\"afterMain\":\"site-footer\",\"companyFollows\":true}"
+  },
+  {
+    "name": "portfolio heading: eyebrow, headline and \"View all projects ↗\" as supplied; close after the released stage; header clear; dark",
+    "pass": true,
+    "detail": "{\"eyebrow\":\"Our project portfolio\",\"title\":\"Local foundations. Global aspiration.\",\"all\":\"View all projects ↗\",\"allHref\":\"https://www.convalt.com/projects/index.html\",\"gapAfterStage\":72,\"headerBottom\":-816,\"scene\":\"dark\",\"bg\":\"rgb(11, 18, 20)\"}"
+  },
+  {
+    "name": "United States: the five projects in order, with exact title, status, location, description, link and image",
+    "pass": true,
+    "detail": "Project Solis [UNDER FINANCING] New Mexico, U.S.A. · 3.6 GW cells / 3.0 GW modules · Manufacturing → /project-solis/index.html | Watertown Factory [ON HOLD] Watertown, New York, U.S.A. · 2 GW planned solar cell production · Manufacturing → /projects/watertown-factory/index.html | River Drivers Solar [UNDER DEVELOPMENT] East Millinocket, Maine, U.S.A. · 12 MW · Power Generation → /projects/river-drivers-solar/index.html | New Mexico Panel Recycling [UNDER DEVELOPMENT] New Mexico, U.S.A. · 1 GW · Recycling → /projects/new-mexico-panel-recycling/index.html | Northern Maine Data Center [UNDER DEVELOPMENT] Maine, U.S.A. · Integrated infrastructure · Data Centers → /projects/northern-maine-data-center/index.html"
+  },
+  {
+    "name": "United States: every project image loads (fixed dimensions, no placeholder)",
+    "pass": true,
+    "detail": "[true,true,true,true,true]"
+  },
+  {
+    "name": "regional tabs: labelled tablist of buttons, United States first and selected; arrows, Home and End select and focus; one panel shown",
+    "pass": true,
+    "detail": "{\"steps\":[{\"key\":\"ArrowRight\",\"selected\":\"Africa\",\"focus\":\"Africa\",\"visible\":\"region-panel-africa\"},{\"key\":\"ArrowRight\",\"selected\":\"India\",\"focus\":\"India\",\"visible\":\"region-panel-india\"},{\"key\":\"End\",\"selected\":\"Southeast Asia\",\"focus\":\"Southeast Asia\",\"visible\":\"region-panel-southeast-asia\"},{\"key\":\"Home\",\"selected\":\"United States\",\"focus\":\"United States\",\"visible\":\"region-panel-united-states\"},{\"key\":\"ArrowLeft\",\"selected\":\"Southeast Asia\",\"focus\":\"Southeast Asia\",\"visible\":\"region-panel-southeast-asia\"}],\"semantics\":{\"list\":\"Projects by region\",\"controls\":true,\"buttons\":true}}"
+  },
+  {
+    "name": "Tab from the regional tabs moves into the projects (first card link)",
+    "pass": true,
+    "detail": "focus: Project Solis↗"
+  },
+  {
+    "name": "other regions: only the official regional projects (no U.S. duplicates), each with status, location, scope, working link and image",
+    "pass": true,
+    "detail": "{\"africa\":{\"ok\":true,\"cards\":[\"Chad Solar [UNDER DEVELOPMENT]\",\"Chad Rural Electrification [UNDER DEVELOPMENT]\",\"Sierra Leone Solar [UNDER DEVELOPMENT]\",\"Kobong Hybrid Infrastructure [UNDER DEVELOPMENT]\"]},\"india\":{\"ok\":true,\"cards\":[\"Redan Waste-to-Energy [OPERATING]\",\"Vizhag Waste-to-Energy [UNDER DEVELOPMENT]\"]},\"southeast-asia\":{\"ok\":true,\"cards\":[\"Mandalay Solar [SOLD]\",\"Lao Solar [UNDER DEVELOPMENT]\"]}}"
+  },
+  {
+    "name": "company section: eyebrow, headline, paragraph, \"Meet our team ↗\" and image as supplied; dark; header clear",
+    "pass": true,
+    "detail": "{\"eyebrow\":\"Construct with capital and conscience\",\"title\":\"Built for the next generation. And the one after that.\",\"body\":\"Founded in 2011, Convalt brings together…\",\"cta\":\"Meet our team ↗\",\"href\":\"https://www.convalt.com/team/index.html\",\"img\":\"http://localhost:4173/media/portfolio/integrated-energy-infrastructure-900.webp\",\"alt\":\"Automated equipment moving silicon wafers along a production line\",\"loaded\":true,\"bg\":\"rgb(11, 18, 20)\",\"scene\":\"dark\",\"headerBottom\":-2216}"
+  },
+  {
+    "name": "no layout shift in the new sections while scrolling through them and switching regions (CLS contribution)",
+    "pass": true,
+    "detail": "cls=0"
+  },
+  {
+    "name": "no console errors / failed requests (portfolio, company)",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "project grid: three columns on a wide screen, two on a tablet, one on a phone; company split stacks on the phone; no overflow, no oversized gaps",
+    "pass": true,
+    "detail": "[{\"name\":\"desktop\",\"cols\":3,\"overflow\":0,\"split\":\"side by side\",\"gapToCompany\":130},{\"name\":\"tablet\",\"cols\":2,\"overflow\":0,\"split\":\"side by side\",\"gapToCompany\":70},{\"name\":\"mobile\",\"cols\":1,\"overflow\":0,\"split\":\"stacked\",\"gapToCompany\":50}]"
+  },
+  {
+    "name": "reduced motion: the new sections are visible at once (no entrance animation)",
+    "pass": true,
+    "detail": "[{\"o\":\"1\",\"t\":\"none\"},{\"o\":\"1\",\"t\":\"none\"},{\"o\":\"1\",\"t\":\"none\"}]"
+  },
+  {
+    "name": "a #portfolio link lands on the portfolio, dark from the first paint",
+    "pass": true,
+    "detail": "{\"firstScene\":\"dark\",\"top\":0,\"scene\":\"dark\"}"
+  },
+  {
+    "name": "no-WebGL document: the portfolio and company sections follow its data-center section",
+    "pass": true,
+    "detail": "{\"layout\":\"static\",\"kids\":[\"main-content\",\"portfolio\",\"company\"],\"cards\":5}"
+  }
+]

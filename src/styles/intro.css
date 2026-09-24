@@ -1,0 +1,248 @@
+/* ---------------------------------------------------------------------------------------------
+   Factory intro (pinned journey)
+   --------------------------------------------------------------------------------------------- */
+.stage__visual {
+  position: absolute;
+  inset: 0;
+}
+
+.factory {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #c9cfd1;
+}
+
+.factory__layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  /* Multi-layer masks (ellipse × border feathers) intersect. */
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Loop poster = its first frame, in place under the video (shown until a frame is decoded, and
+   if the video fails). */
+.factory__poster,
+.factory__video {
+  position: absolute;
+  display: block;
+  object-fit: fill;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.factory__video[data-ready='false'] {
+  opacity: 0;
+}
+
+.factory__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Keeps the white navigation legible over the bright hall ceiling without darkening the machinery. */
+.factory__scrim--top {
+  background: linear-gradient(to bottom, rgb(5 17 19 / 0.72) 0, rgb(5 17 19 / 0.6) calc(var(--header-h) * 0.75), rgb(5 17 19 / 0.22) calc(var(--header-h) * 1.6), transparent calc(var(--header-h) * 2.6));
+}
+
+/* Localized gradient behind the opening copy (bottom-left), clear of the central machine. */
+.factory__scrim--hero {
+  background:
+    radial-gradient(40% 36% at 17% 64%, rgb(5 17 19 / 0.36), rgb(5 17 19 / 0.18) 55%, transparent 100%),
+    radial-gradient(120% 100% at 0% 100%, rgb(5 17 19 / 0.82) 0%, rgb(5 17 19 / 0.6) 30%, rgb(5 17 19 / 0.3) 50%, rgb(5 17 19 / 0.1) 62%, transparent 72%),
+    linear-gradient(to top, rgb(5 17 19 / 0.32), transparent 34%);
+}
+
+html[data-tier='mobile'] .factory__scrim--hero {
+  background: linear-gradient(to top, rgb(5 17 19 / 0.86) 0%, rgb(5 17 19 / 0.62) 30%, rgb(5 17 19 / 0.2) 52%, transparent 66%);
+}
+
+.intro-hero {
+  grid-area: 1 / 1 / 2 / 8;
+  align-self: end;
+  margin-bottom: clamp(8px, 3vh, 40px);
+  pointer-events: auto;
+  will-change: opacity, transform;
+}
+
+/* The stage has no bottom row reserved any more (layout.css): the opening copy keeps its own
+   clearance above "Skip intro" (16 px offset + 44 px row + the former 8 px margin). */
+html[data-tier='mobile'] .intro-hero {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin-bottom: 68px;
+}
+
+.stage__footer-center {
+  display: grid;
+  justify-items: center;
+}
+
+.stage__footer-center > * {
+  grid-area: 1 / 1;
+}
+
+html[data-tier='mobile'] .stage__footer-center {
+  justify-items: start;
+}
+
+/* Header and footer follow the footage → ivory transition through one variable (0 = ivory). */
+.site-header,
+.stage__footer {
+  --on-dark: 0;
+  --fg: color-mix(in srgb, #ffffff calc(var(--on-dark) * 100%), var(--ink));
+  --fg-muted: color-mix(in srgb, rgb(255 255 255 / 0.86) calc(var(--on-dark) * 100%), var(--ink-muted));
+}
+
+.site-header {
+  color: var(--fg);
+}
+
+.site-header .btn--outline {
+  color: var(--fg);
+  border-color: color-mix(in srgb, rgb(255 255 255 / 0.6) calc(var(--on-dark) * 100%), var(--line-strong));
+}
+
+html.menu-open .site-header {
+  --on-dark: 0 !important;
+  --nav-dim: 1 !important;
+}
+
+/* Brief dip while the backdrop behind the header changes during the handoff (NAV_TIMING). */
+html[data-layout='pinned'] .site-header > .brand,
+html[data-layout='pinned'] .site-header > .primary-nav,
+html[data-layout='pinned'] .site-header > .menu-toggle {
+  opacity: var(--nav-dim, 1);
+}
+
+.mobile-menu {
+  color: var(--ink);
+}
+
+.brand__logos {
+  position: relative;
+  display: block;
+}
+
+.brand__logos .logo:first-child {
+  opacity: var(--on-dark);
+}
+
+.brand__logos .logo:last-child {
+  position: absolute;
+  inset: 0;
+  opacity: calc(1 - var(--on-dark));
+}
+
+.stage__footer .scroll-cue {
+  color: var(--fg-muted);
+}
+
+.stage__footer .scroll-cue__line {
+  background: color-mix(in srgb, rgb(255 255 255 / 0.5) calc(var(--on-dark) * 100%), var(--line-strong));
+}
+
+/* Typography and controls over the footage */
+.eyebrow--on-dark {
+  color: rgb(255 255 255 / 0.9);
+  /* Small caps over busy footage: a soft local halo keeps them legible on bright rails. */
+  text-shadow: 0 0 12px rgb(5 17 19 / 0.6), 0 1px 2px rgb(5 17 19 / 0.4);
+}
+
+.display--intro {
+  color: #ffffff;
+  font-size: clamp(2.6rem, min(1.25rem + 4.9vw, 10.8vh), 6.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.042em;
+  text-wrap: balance;
+}
+
+.lede--on-dark {
+  max-width: 38ch;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.intro-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px 22px;
+}
+
+.intro-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 2px;
+  background: none;
+  border: 0;
+  color: var(--fg, var(--ink));
+  font-size: var(--text-micro);
+  font-weight: 550;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.intro-control .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.intro-control--skip {
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, rgb(255 255 255 / 0.5) calc(var(--on-dark, 0) * 100%), var(--line-strong));
+  text-underline-offset: 6px;
+}
+
+/* Static (no-WebGL) opening: the factory loop or its poster behind the headline. */
+.static-intro {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: 86vh;
+  margin: calc(-1 * (var(--header-h) + 40px)) calc(-1 * var(--gutter)) 0;
+  padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
+  overflow: hidden;
+  color: #fff;
+}
+
+.static-intro__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.static-intro__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(5 17 19 / 0.8), rgb(5 17 19 / 0.3) 45%, transparent 70%);
+}
+
+.static-intro .intro-hero {
+  position: relative;
+  max-width: 44rem;
+}
+
+.static-intro__skip {
+  position: relative;
+  justify-self: start;
+  margin-top: 16px;
+  color: #fff;
+}
+
+html[data-capture='on'] .factory,
+html[data-capture='on'] .stage__visual {
+  display: none !important;
+}

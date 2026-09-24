@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-layout="pinned" data-motion="on" data-tier="desktop">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Convalt Energy — Where energy takes shape.</title>
+    <meta
+      name="description"
+      content="Explore the components behind solar energy—and the infrastructure they help make possible. An interactive look at the layers of a solar module."
+    />
+    <meta name="theme-color" content="#F5F4EE" />
+    <meta property="og:title" content="Convalt Energy — Where energy takes shape." />
+    <meta property="og:description" content="Explore the components behind solar energy—and the infrastructure they help make possible." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="preload" href="/brand/convalt-logo-white.webp" as="image" type="image/webp" />
+    <!-- Opening: the loop's first-frame poster (LCP), shown until the loop has a decoded frame. -->
+    <link rel="preload" href="/media/intro/factory-loop-720.webp" as="image" type="image/webp" fetchpriority="high" media="(min-aspect-ratio: 57/100)" />
+    <link rel="preload" href="/media/intro/factory-loop-portrait.webp" as="image" type="image/webp" fetchpriority="high" media="(max-aspect-ratio: 57/100)" />
+    <!-- The model starts early but yields to the opening media: it is first seen at the end of the
+         factory intro. Media queries mirror src/config/quality.ts. -->
+    <link rel="preload" href="/models/solar-panel-2k.glb" as="fetch" type="model/gltf-binary" crossorigin="anonymous" fetchpriority="low" media="(pointer: fine) and (min-width: 760px)" />
+    <link rel="preload" href="/models/solar-panel-1k.glb" as="fetch" type="model/gltf-binary" crossorigin="anonymous" fetchpriority="low" media="(pointer: coarse), (max-width: 759px)" />
+    <style>
+      /* First paint before CSS/JS: ivory page on a dark canvas (overscroll), no flash of white; the
+         lower page (data centers → footer) is dark from the first paint when the page opens there. */
+      html { background: #0b1214; }
+      body { background: #f5f4ee; color: #123336; margin: 0; }
+      html[data-scene='dark'] body { background: #0b1214; }
+      /* …and, when the page opens on the factory opening, its poster frame in the same framing;
+         the app replaces it in place. */
+      .boot { position: fixed; inset: 0; background: #2a3336 url(/media/intro/factory-loop-720.webp) 50% 50% / cover no-repeat; }
+      @media (max-aspect-ratio: 57/100) { .boot { background-image: url(/media/intro/factory-loop-portrait.webp); } }
+      .boot-skip .boot { display: none; }
+    </style>
+    <script>
+      // Show the boot frame only if the journey will open at the opening (not a restored place or a chapter link).
+      try {
+        var nav = performance.getEntriesByType('navigation')[0];
+        var returning = nav && (nav.type === 'reload' || nav.type === 'back_forward');
+        var place = returning ? JSON.parse(sessionStorage.getItem('convalt:journey-place') || 'null') : null;
+        var opening = place ? typeof place.intro === 'number' && place.intro < 0.002 : !/^#(overview|module|power-generation|data-centers|portfolio|company)$/.test(location.hash);
+        if (!opening) document.documentElement.classList.add('boot-skip');
+        var dark = place ? (typeof place.dc === 'number' && place.dc > 0.05) || typeof place.after === 'number' : /^#(data-centers|portfolio|company)$/.test(location.hash);
+        if (dark) {
+          document.documentElement.dataset.scene = 'dark';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0B1214');
+        }
+      } catch (e) {}
+    </script>
+    <noscript><style>.boot { display: none; }</style></noscript>
+  </head>
+  <body>
+    <div id="root"><div class="boot" aria-hidden="true"></div></div>
+    <noscript>
+      <div style="max-width: 44rem; margin: 0 auto; padding: 96px 24px; font: 18px/1.5 system-ui, sans-serif">
+        <img src="/brand/convalt-logo-petrol.png" alt="Convalt Energy" width="400" height="122" style="height: 44px; width: auto" />
+        <h1 style="font-size: 48px; line-height: 1; letter-spacing: -0.03em; margin: 48px 0 16px">Where energy takes shape.</h1>
+        <p>Explore the components behind solar energy—and the infrastructure they help make possible.</p>
+        <h2 style="font-size: 32px; margin: 48px 0 12px">Energy, connected.</h2>
+        <p><a href="https://www.convalt.com/projects/">View projects</a></p>
+        <h2 style="font-size: 32px; margin: 48px 0 12px">Precision, layer by layer.</h2>
+        <p>A closer look at the protective surfaces, cell assembly, and supporting structure of a solar module.</p>
+        <h3>Protection</h3>
+        <p>A transparent front surface—typically glass over a clear encapsulant—shields the cells from weather and impact while letting sunlight through.</p>
+        <h3>Cell assembly</h3>
+        <p>Solar cells, connected in strings by thin conductive ribbons, turn sunlight into electricity. This illustration shows a 72-cell layout: six rows of twelve.</p>
+        <h3>Structural support</h3>
+        <p>A rear backsheet seals the module from behind, and the surrounding frame adds rigidity and provides points for mounting.</p>
+        <p><small>Illustrative module anatomy — simplified for explanation; not a certified Convalt product, a specific cell technology or an engineering specification.</small></p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

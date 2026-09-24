@@ -1,0 +1,599 @@
+{
+  "generated": "2026-09-24T16:36:51.713Z",
+  "licence": "The archive contains no licence, readme or attribution file (the model appears to come from an online 3D viewer export). Terms must be confirmed with the supplier before production use.",
+  "archive": [
+    {
+      "file": "archive/Screenshot 2026-09-24 170556.zip",
+      "bytes": 4350626,
+      "depth": 0
+    },
+    {
+      "file": "archive/Screenshot 2026-09-24 170556/Screenshot 2026-09-24 170556.png",
+      "bytes": 798405,
+      "depth": 1
+    },
+    {
+      "file": "archive/Screenshot 2026-09-24 170556/Screenshot 2026-09-24 170528.png",
+      "bytes": 756241,
+      "depth": 1
+    },
+    {
+      "file": "archive/Screenshot 2026-09-24 170556/Screenshot 2026-09-24 170539.png",
+      "bytes": 1499778,
+      "depth": 1
+    },
+    {
+      "file": "archive/Screenshot 2026-09-24 170556/Screenshot 2026-09-24 170544.png",
+      "bytes": 1308509,
+      "depth": 1
+    },
+    {
+      "file": "archive/data-center-low-poly.zip",
+      "bytes": 584319,
+      "depth": 0
+    },
+    {
+      "file": "archive/data-center-low-poly/source/DataCenter.fbx",
+      "bytes": 515324,
+      "depth": 1
+    },
+    {
+      "file": "archive/data-center-low-poly/textures/x_0_0_0_14130174_800.jpeg",
+      "bytes": 52235,
+      "depth": 1
+    },
+    {
+      "file": "archive/data-center-low-poly/textures/internal_ground_ao_texture.jpeg",
+      "bytes": 16320,
+      "depth": 1
+    }
+  ],
+  "source": {
+    "fbx": "data-center-low-poly/source/DataCenter.fbx (binary FBX; node transforms −90° X, ×100)",
+    "nodes": [
+      {
+        "name": "Cluster",
+        "triangles": 22080,
+        "materialRuns": 901,
+        "materials": [
+          "MetalCase",
+          "Frente",
+          "Verde",
+          "Amarelo"
+        ]
+      },
+      {
+        "name": "Plane001",
+        "triangles": 200,
+        "materialRuns": 1,
+        "materials": [
+          "PisoBranco"
+        ]
+      },
+      {
+        "name": "LampTeto003",
+        "triangles": 180,
+        "materialRuns": 18,
+        "materials": [
+          "LampCase",
+          "LampTeto"
+        ]
+      },
+      {
+        "name": "Plane",
+        "triangles": 522,
+        "materialRuns": 1,
+        "materials": [
+          "PisoPreto"
+        ]
+      }
+    ],
+    "lights": 0,
+    "cameras": 0,
+    "materials": {
+      "MetalCase": {
+        "type": "MeshPhongMaterial",
+        "color": "#010101",
+        "specular": "#010101",
+        "shininess": 34.602,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "Frente": {
+        "type": "MeshPhongMaterial",
+        "color": "#cccccc",
+        "specular": "#cccccc",
+        "shininess": 14.619,
+        "map": true,
+        "emissive": "#000000"
+      },
+      "Verde": {
+        "type": "MeshPhongMaterial",
+        "color": "#cccccc",
+        "specular": "#cccccc",
+        "shininess": 36,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "Amarelo": {
+        "type": "MeshPhongMaterial",
+        "color": "#cccccc",
+        "specular": "#cccccc",
+        "shininess": 36,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "PisoBranco": {
+        "type": "MeshPhongMaterial",
+        "color": "#ffffff",
+        "specular": "#ffffff",
+        "shininess": 72.25,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "LampCase": {
+        "type": "MeshPhongMaterial",
+        "color": "#080808",
+        "specular": "#080808",
+        "shininess": 0.022,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "LampTeto": {
+        "type": "MeshPhongMaterial",
+        "color": "#cccccc",
+        "specular": "#cccccc",
+        "shininess": 36,
+        "map": false,
+        "emissive": "#000000"
+      },
+      "PisoPreto": {
+        "type": "MeshPhongMaterial",
+        "color": "#020202",
+        "specular": "#020202",
+        "shininess": 72.25,
+        "map": false,
+        "emissive": "#000000"
+      }
+    },
+    "frontTexture": {
+      "file": "textures/x_0_0_0_14130174_800.jpeg",
+      "size": "800×508",
+      "identicalToEmbedded": true
+    },
+    "unused": [
+      "textures/internal_ground_ao_texture.jpeg — a generic blurred ground shadow from the viewer export; no mesh references it"
+    ],
+    "walls": "none — the model is open: racks, a floating tiled platform and floating fixtures"
+  },
+  "findings": {
+    "racks": "5 rows × 6 cabinets = 30 cabinets, merged into one mesh (\"Cluster\"); fronts face +Z",
+    "indicators": "green (Verde) and amber (Amarelo) indicators are separate geometry with their own materials, no emissive values in the FBX → made emissive",
+    "fixtures": "9 ceiling fixtures: geometry only (dark casing + light face); no light objects → emissive faces + a small light rig at runtime",
+    "floor": "100 white tiles (0.749 m) + a separate dark grout mesh; coplanar but non-overlapping (no z-fighting)"
+  },
+  "output": {
+    "file": "public/models/datacenter.glb",
+    "kilobytes": 246.3,
+    "primitives": [
+      {
+        "source": "MetalCase",
+        "material": "RackCase",
+        "node": "Racks",
+        "triangles": 3180,
+        "vertices": 5640
+      },
+      {
+        "source": "Frente",
+        "material": "RackFront",
+        "node": "Racks",
+        "triangles": 5100,
+        "vertices": 3960
+      },
+      {
+        "source": "Verde",
+        "material": "LedGreen",
+        "node": "Racks",
+        "triangles": 12270,
+        "vertices": 22650
+      },
+      {
+        "source": "Amarelo",
+        "material": "LedAmber",
+        "node": "Racks",
+        "triangles": 1530,
+        "vertices": 2550
+      },
+      {
+        "source": "PisoBranco",
+        "material": "FloorTile",
+        "node": "Floor",
+        "triangles": 200,
+        "vertices": 400
+      },
+      {
+        "source": "LampCase",
+        "material": "FixtureCase",
+        "node": "Fixtures",
+        "triangles": 162,
+        "vertices": 252
+      },
+      {
+        "source": "LampTeto",
+        "material": "FixtureLight",
+        "node": "Fixtures",
+        "triangles": 18,
+        "vertices": 36
+      },
+      {
+        "source": "PisoPreto",
+        "material": "FloorGrout",
+        "node": "Floor",
+        "triangles": 522,
+        "vertices": 396
+      }
+    ],
+    "drawCalls": 8,
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 2,
+      "messages": [
+        {
+          "code": "UNSUPPORTED_EXTENSION",
+          "message": "Cannot validate an extension as it is not supported by the validator: 'EXT_meshopt_compression'.",
+          "severity": 2,
+          "pointer": "/extensionsUsed/0"
+        },
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 800x508.",
+          "severity": 2,
+          "pointer": "/images/0"
+        }
+      ]
+    }
+  },
+  "meta": {
+    "units": "metres; origin = platform centre on the floor, Y up, rack fronts face +Z",
+    "unitsToMetres": 0.00176991,
+    "scaleNote": "cabinets are 1130 units tall and set to 2 m (typical 42U cabinet); the stylised cabinets are then 0.934 m wide and 0.637 m deep",
+    "bounds": {
+      "min": [
+        -3.894,
+        0,
+        -3.894
+      ],
+      "max": [
+        3.894,
+        3.221,
+        3.894
+      ]
+    },
+    "platform": {
+      "half": 3.894,
+      "tiles": 100,
+      "tile": 0.749
+    },
+    "cabinet": {
+      "width": 0.934,
+      "height": 2,
+      "depth": 0.637,
+      "frontWidth": 0.849
+    },
+    "rows": [
+      {
+        "x0": -2.851,
+        "x1": 2.756,
+        "z0": 2.929,
+        "z1": 3.566,
+        "h": 2
+      },
+      {
+        "x0": -2.851,
+        "x1": 2.756,
+        "z0": 1.336,
+        "z1": 1.973,
+        "h": 2
+      },
+      {
+        "x0": -2.851,
+        "x1": 2.756,
+        "z0": -0.257,
+        "z1": 0.38,
+        "h": 2
+      },
+      {
+        "x0": -2.851,
+        "x1": 2.756,
+        "z0": -1.85,
+        "z1": -1.213,
+        "h": 2
+      },
+      {
+        "x0": -2.851,
+        "x1": 2.756,
+        "z0": -3.443,
+        "z1": -2.805,
+        "h": 2
+      }
+    ],
+    "fronts": [
+      {
+        "x0": -2.808,
+        "x1": -1.959,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": -1.874,
+        "x1": -1.024,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": -0.939,
+        "x1": -0.09,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": -0.005,
+        "x1": 0.845,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": 0.93,
+        "x1": 1.779,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": 1.864,
+        "x1": 2.714,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 3.54
+      },
+      {
+        "x0": -2.808,
+        "x1": -1.959,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": -1.874,
+        "x1": -1.024,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": -0.939,
+        "x1": -0.09,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": -0.005,
+        "x1": 0.845,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": 0.93,
+        "x1": 1.779,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": 1.864,
+        "x1": 2.714,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 1.947
+      },
+      {
+        "x0": -2.808,
+        "x1": -1.959,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": -1.874,
+        "x1": -1.024,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": -0.939,
+        "x1": -0.09,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": -0.005,
+        "x1": 0.845,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": 0.93,
+        "x1": 1.779,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": 1.864,
+        "x1": 2.714,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": 0.354
+      },
+      {
+        "x0": -2.808,
+        "x1": -1.959,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": -1.874,
+        "x1": -1.024,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": -0.939,
+        "x1": -0.09,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": -0.005,
+        "x1": 0.845,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": 0.93,
+        "x1": 1.779,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": 1.864,
+        "x1": 2.714,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -1.239
+      },
+      {
+        "x0": -2.808,
+        "x1": -1.959,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      },
+      {
+        "x0": -1.874,
+        "x1": -1.024,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      },
+      {
+        "x0": -0.939,
+        "x1": -0.09,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      },
+      {
+        "x0": -0.005,
+        "x1": 0.845,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      },
+      {
+        "x0": 0.93,
+        "x1": 1.779,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      },
+      {
+        "x0": 1.864,
+        "x1": 2.714,
+        "y0": 0.248,
+        "y1": 1.876,
+        "z": -2.832
+      }
+    ],
+    "fixtures": [
+      {
+        "cx": 3.107,
+        "cz": -3.008,
+        "w": 0.383,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": -3.097,
+        "cz": -3.008,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": 0,
+        "cz": -3.008,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": 3.107,
+        "cz": -0.05,
+        "w": 0.383,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": -3.097,
+        "cz": -0.05,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": 0,
+        "cz": -0.05,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": 3.107,
+        "cz": 2.909,
+        "w": 0.383,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": -3.097,
+        "cz": 2.909,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      },
+      {
+        "cx": 0,
+        "cz": 2.909,
+        "w": 0.382,
+        "d": 1.515,
+        "y": 3.15
+      }
+    ]
+  }
+}

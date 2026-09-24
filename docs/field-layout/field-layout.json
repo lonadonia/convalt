@@ -1,0 +1,31 @@
+{
+ "tier": "desktop",
+ "modules": 672,
+ "tables": 48,
+ "supportBoxes": 912,
+ "rejected": [],
+ "array": {
+  "rows": 12,
+  "tablesPerRow": 4,
+  "modulesPerTable": 14,
+  "tiltDeg": 25,
+  "gcr": 0.4
+ },
+ "dims": {
+  "tableLength": 13.329,
+  "slopeLength": 1.907,
+  "pitch": 4.768,
+  "rowWidth": 59.916,
+  "depth": 60.171
+ },
+ "clearanceM": [
+  0.75,
+  0.826
+ ],
+ "legM": [
+  0.705,
+  1.342
+ ],
+ "rollMax": 0.031,
+ "revealMax": 303.28
+}

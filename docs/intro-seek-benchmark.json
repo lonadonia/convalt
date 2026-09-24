@@ -1,0 +1,355 @@
+{
+  "meta": {
+    "date": "2026-09-24T13:54:37.173Z",
+    "chrome": "153.0.8010.50",
+    "headless": true,
+    "rangeRequests": 7,
+    "fullRequests": 0,
+    "note": "Latency = time from setting currentTime to the requested frame being presented (requestVideoFrameCallback); quantized to the 60 Hz display. Files fully buffered before measuring."
+  },
+  "results": [
+    {
+      "label": "1080p GOP 1 (comparison)",
+      "kilobytes": 9141,
+      "url": "/bench/gop1.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 151,
+      "fullyBufferedMs": 203.7,
+      "frames": 143,
+      "scrub": {
+        "seeks": 247,
+        "distinctFramesShown": 140,
+        "lagFrames": {
+          "n": 315,
+          "p50": 1,
+          "p90": 2,
+          "p99": 4,
+          "max": 4
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 15.5
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 16.7,
+        "p90": 16.9,
+        "p99": 20.9,
+        "max": 49.9
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 16.7,
+        "p90": 17.3,
+        "p99": 19.2,
+        "max": 19.6
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 16.7,
+        "p90": 17.5,
+        "p99": 18.2,
+        "max": 18.2
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "1080p GOP 12 (comparison)",
+      "kilobytes": 4198,
+      "url": "/bench/gop12.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 45.4,
+      "fullyBufferedMs": 45.4,
+      "frames": 143,
+      "scrub": {
+        "seeks": 154,
+        "distinctFramesShown": 107,
+        "lagFrames": {
+          "n": 308,
+          "p50": 2,
+          "p90": 6,
+          "p99": 8,
+          "max": 12
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 15.2
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 20.4,
+        "p90": 40.5,
+        "p99": 77.5,
+        "max": 167.9
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 19,
+        "p90": 40.4,
+        "p99": 50.5,
+        "max": 67.1
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 18.9,
+        "p90": 40.4,
+        "p99": 66.7,
+        "max": 66.7
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "1080p GOP 24 (comparison)",
+      "kilobytes": 3694,
+      "url": "/bench/gop24.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 35.9,
+      "fullyBufferedMs": 36,
+      "frames": 143,
+      "scrub": {
+        "seeks": 114,
+        "distinctFramesShown": 90,
+        "lagFrames": {
+          "n": 314,
+          "p50": 4,
+          "p90": 9,
+          "p99": 16,
+          "max": 24
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 73.6
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 36.6,
+        "p90": 54.1,
+        "p99": 62.3,
+        "max": 96.3
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 37.4,
+        "p90": 52.1,
+        "p99": 59.9,
+        "max": 60.1
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 39.2,
+        "p90": 53.7,
+        "p99": 91.4,
+        "max": 91.4
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "1080p GOP 12 + B-frames (comparison)",
+      "kilobytes": 3932,
+      "url": "/bench/gop12-bframes.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 37.4,
+      "fullyBufferedMs": 37.6,
+      "frames": 143,
+      "scrub": {
+        "seeks": 124,
+        "distinctFramesShown": 97,
+        "lagFrames": {
+          "n": 310,
+          "p50": 3,
+          "p90": 8,
+          "p99": 16,
+          "max": 20
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 69.4
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 25.6,
+        "p90": 41,
+        "p99": 50.1,
+        "max": 50.1
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 24.2,
+        "p90": 39.4,
+        "p99": 50.2,
+        "max": 50.4
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 23.2,
+        "p90": 41.9,
+        "p99": 50,
+        "max": 50
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "1080p GOP 6 — delivered",
+      "kilobytes": 5186,
+      "url": "/media/factory-assembly-1080.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 77.8,
+      "fullyBufferedMs": 77.9,
+      "frames": 143,
+      "scrub": {
+        "seeks": 184,
+        "distinctFramesShown": 118,
+        "lagFrames": {
+          "n": 308,
+          "p50": 2,
+          "p90": 4,
+          "p99": 8,
+          "max": 8
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 26.1
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 17.6,
+        "p90": 45.3,
+        "p99": 57.5,
+        "max": 67
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 18,
+        "p90": 44.1,
+        "p99": 58,
+        "max": 59
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 17.3,
+        "p90": 46.3,
+        "p99": 71.5,
+        "max": 71.5
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "720p GOP 6 — delivered",
+      "kilobytes": 2571,
+      "url": "/media/factory-assembly-720.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 30.5,
+      "fullyBufferedMs": 30.6,
+      "frames": 143,
+      "scrub": {
+        "seeks": 231,
+        "distinctFramesShown": 135,
+        "lagFrames": {
+          "n": 314,
+          "p50": 1,
+          "p90": 4,
+          "p99": 5,
+          "max": 5
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 16.4
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 16.7,
+        "p90": 17.9,
+        "p99": 23.6,
+        "max": 25.4
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 16.6,
+        "p90": 17.4,
+        "p99": 23.1,
+        "max": 23.6
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 16.7,
+        "p90": 18.9,
+        "p99": 21,
+        "max": 21
+      },
+      "wrongFrames": 0
+    },
+    {
+      "label": "720×1280 portrait GOP 6 — delivered",
+      "kilobytes": 2079,
+      "url": "/media/factory-assembly-portrait.mp4",
+      "decoding": {
+        "supported": true,
+        "smooth": true,
+        "powerEfficient": true
+      },
+      "firstFrameMs": 36.1,
+      "fullyBufferedMs": 36.1,
+      "frames": 143,
+      "scrub": {
+        "seeks": 229,
+        "distinctFramesShown": 133,
+        "lagFrames": {
+          "n": 315,
+          "p50": 1,
+          "p90": 4,
+          "p99": 8,
+          "max": 8
+        },
+        "finalShown": 60,
+        "finalDesired": 60,
+        "settleMs": 16.4
+      },
+      "forwardStepMs": {
+        "n": 142,
+        "p50": 16.7,
+        "p90": 17.3,
+        "p99": 31.7,
+        "max": 34.8
+      },
+      "backwardStepMs": {
+        "n": 142,
+        "p50": 16.6,
+        "p90": 16.9,
+        "p99": 21.4,
+        "max": 28.1
+      },
+      "randomJumpMs": {
+        "n": 60,
+        "p50": 16.7,
+        "p90": 17,
+        "p99": 22.9,
+        "max": 22.9
+      },
+      "wrongFrames": 0
+    }
+  ]
+}

@@ -1,0 +1,628 @@
+/* ---------------------------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------------------------- */
+/* The header has no surface of its own in any scene. It rides a track as tall as the pinned
+   journey: it stays at the top through every scene and, when the pinned stage is released into
+   the page below, scrolls away together with it (CSS sticky, exact with the scroll), so ordinary
+   content never passes beneath it. In the static (no-WebGL) document the track is only the
+   header's height: the header sits over the opening and scrolls away with the page. */
+.header-track {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  height: var(--header-h);
+  pointer-events: none;
+}
+
+html[data-layout='pinned'] .header-track {
+  height: calc(var(--journey-h, 100vh) - 100vh + var(--header-h));
+  height: calc(var(--journey-h, 100svh) - 100svh + var(--header-h));
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--header-h);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 0 var(--gutter);
+}
+
+/* No surface: a soft halo in the opposite tone hugs the logo, the links and the menu button, so
+   they stay readable where the scene behind them is busy (terrain and hedgerows, ceiling lights).
+   It follows the header's light/dark switch and vanishes against plain backgrounds. */
+.site-header {
+  --halo: color-mix(in srgb, rgb(5 17 19 / 0.82) calc(var(--on-dark) * 100%), rgb(245 244 238 / 0.7));
+}
+
+.site-header > .primary-nav,
+.site-header > .menu-toggle {
+  text-shadow: 0 0 1px var(--halo), 0 0 2px var(--halo), 0 0 5px var(--halo), 0 0 12px var(--halo);
+}
+
+.site-header .brand__logos,
+.site-header .menu-toggle__icon {
+  filter: drop-shadow(0 0 1px var(--halo)) drop-shadow(0 0 5px var(--halo));
+}
+
+/* The static document opens on the factory video: light header text there, as in the pinned
+   opening. */
+html[data-layout='static'] .site-header {
+  --on-dark: 1;
+}
+
+.brand {
+  position: relative;
+  z-index: 31; /* stays visible above the open mobile menu */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* The logo files are trimmed to the artwork (scripts/prepare-brand.mjs): this height is the
+   visible lettering height — ≈ 160 px of visible logo width on desktop. */
+.logo {
+  height: 48px;
+  width: auto;
+}
+
+.primary-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.6vw, 40px);
+}
+
+.primary-nav ul {
+  display: flex;
+  gap: clamp(18px, 2.2vw, 34px);
+}
+
+.primary-nav ul a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+}
+
+.primary-nav ul a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  height: 1px;
+  background: var(--teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+
+.primary-nav ul a:hover::after {
+  transform: scaleX(1);
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 29;
+  padding: calc(var(--header-h) + 24px) var(--gutter) 32px;
+  background: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mobile-menu ul {
+  display: grid;
+  gap: 4px;
+}
+
+.mobile-menu ul a {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.mobile-menu__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media (max-width: 1023px) {
+  .primary-nav {
+    display: none;
+  }
+
+  .menu-toggle {
+    position: relative;
+    z-index: 31;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 4px 0 12px;
+    background: none;
+    border: 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .menu-toggle__icon {
+    position: relative;
+    width: 22px;
+    height: 10px;
+  }
+
+  .menu-toggle__icon::before,
+  .menu-toggle__icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .menu-toggle__icon::before {
+    top: 0;
+  }
+
+  .menu-toggle__icon::after {
+    bottom: 0;
+  }
+
+  .menu-toggle__icon[data-open='true']::before {
+    transform: translateY(4.25px) rotate(45deg);
+  }
+
+  .menu-toggle__icon[data-open='true']::after {
+    transform: translateY(-4.25px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 1279px) {
+  .logo {
+    height: 42px;
+  }
+}
+
+@media (max-width: 759px) {
+  .logo {
+    height: 36px;
+  }
+}
+
+/* Mobile menu over the dark lower page: the same dark palette (links, lines, controls). */
+html[data-scene='dark'] .mobile-menu {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+html[data-scene='dark'] .mobile-menu ul a {
+  border-bottom-color: var(--dark-line);
+}
+
+html[data-scene='dark'] .mobile-menu .btn--ghost {
+  color: var(--dark-text-2);
+}
+
+html.menu-open[data-scene='dark'] .site-header {
+  --on-dark: 1 !important;
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Pinned story
+   --------------------------------------------------------------------------------------------- */
+.story {
+  position: relative;
+}
+
+.story__anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* A soft light pool behind the object keeps the ivory from feeling flat (not in the dark scenes). */
+html[data-scene='dark'] .stage::before {
+  opacity: 0;
+}
+
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 55% at 70% 52%, rgb(255 255 255 / 0.55), transparent 70%),
+    radial-gradient(90% 60% at 72% 100%, rgb(215 222 218 / 0.35), transparent 70%);
+  pointer-events: none;
+}
+
+.stage-media,
+.canvas-wrap,
+.poster {
+  position: absolute;
+  inset: 0;
+}
+
+.canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.leader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.leader path {
+  fill: none;
+  stroke: var(--teal);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+.leader circle {
+  fill: var(--teal);
+  opacity: 0;
+}
+
+.stage__content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: center;
+  padding: calc(var(--header-h) + 8px) var(--gutter) 96px;
+  pointer-events: none;
+}
+
+.chapter {
+  grid-area: 1 / 1 / 2 / 6;
+  pointer-events: auto;
+  will-change: opacity, transform;
+}
+
+/* Top-anchored so opening an explanation grows downward instead of shifting the headline. */
+.chapter--module {
+  grid-column: 1 / 6;
+  align-self: start;
+  margin-top: clamp(12px, 8.5vh, 104px);
+}
+
+.stage__footer {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 28px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.anatomy {
+  position: absolute;
+  z-index: 3;
+  right: var(--gutter);
+  top: calc(var(--header-h) + 20px);
+  max-width: 300px;
+  text-align: right;
+  opacity: 0;
+}
+
+@media (min-width: 760px) and (max-width: 1279px) {
+  .chapter,
+  .chapter--module {
+    grid-column: 1 / 7;
+  }
+
+  .layers__list {
+    max-width: 380px;
+  }
+}
+
+/* Short laptop screens: tighten vertical rhythm so the opened explanation stays in view. */
+@media (max-height: 820px) and (min-width: 760px) {
+  .chapter--module {
+    margin-top: clamp(8px, 4vh, 40px);
+  }
+
+  .layer__button {
+    min-height: 46px;
+  }
+
+  .swap {
+    margin-top: 18px;
+  }
+}
+
+/* Stacked composition: text above, object below (phones, portrait tablets). No control row runs
+   along the bottom any more, so the copy reaches down to the stage edge; only the opening copy
+   keeps clear of "Skip intro" (intro-hero). */
+html[data-tier='mobile'] .stage__content {
+  align-items: stretch;
+  grid-template-rows: minmax(0, 1fr);
+  padding: calc(var(--header-h) + 12px) var(--gutter) 16px;
+}
+
+html[data-tier='mobile'] .chapter {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+
+html[data-tier='mobile'] .chapter--module {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 0;
+}
+
+html[data-layout='pinned'][data-tier='mobile'] .chapter--module .swap {
+  margin-top: auto;
+}
+
+html[data-tier='mobile'] .stage__footer {
+  bottom: 16px;
+  grid-template-columns: 1fr auto;
+}
+
+html[data-tier='mobile'] .stage__footer .scroll-cue {
+  display: none;
+}
+
+html[data-tier='mobile'] .stage::before {
+  background: radial-gradient(80% 45% at 50% 66%, rgb(255 255 255 / 0.55), transparent 70%);
+}
+
+/* Stacked: the caption sits in the explanation slot under the layer controls and gives way to
+   the explanation when a layer is selected. */
+html[data-tier='mobile'] .anatomy {
+  top: auto;
+  bottom: 16px;
+  left: var(--gutter);
+  right: var(--gutter);
+  max-width: 560px;
+  text-align: left;
+}
+
+html[data-tier='mobile'][data-active-layer] .anatomy {
+  visibility: hidden;
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Static layout (no WebGL): a normal document
+   --------------------------------------------------------------------------------------------- */
+.static-story {
+  padding: calc(var(--header-h) + 40px) var(--gutter) 64px;
+  display: grid;
+  gap: clamp(56px, 9vw, 120px);
+}
+
+.static-chapter {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 32px;
+  align-items: center;
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+.static-chapter > .chapter {
+  grid-column: 1 / 6;
+}
+
+.static-figure {
+  grid-column: 6 / -1;
+}
+
+.static-figure img {
+  width: 100%;
+  height: auto;
+}
+
+.static-figure figcaption {
+  margin-top: 12px;
+  color: var(--ink-muted);
+  font-size: var(--text-small);
+}
+
+.static-chapter .motion-study {
+  grid-column: 6 / -1;
+}
+
+/* In the document layout the controls and the closing links follow each other. */
+html[data-layout='static'] .swap {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.static-note {
+  color: var(--ink-muted);
+  font-size: var(--text-small);
+}
+
+@media (max-width: 1023px) {
+  .static-chapter > .chapter,
+  .static-figure,
+  .static-chapter .motion-study {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------
+   Footer — the conclusion of the dark lower page
+   --------------------------------------------------------------------------------------------- */
+.site-footer {
+  --focus: var(--dark-accent);
+  background: var(--dark-bg);
+  color: var(--dark-text-2);
+  border-top: 1px solid var(--dark-line);
+  padding: clamp(48px, 7vw, 88px) var(--gutter) 40px;
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 40px 64px;
+  align-items: start;
+  padding-bottom: clamp(40px, 5vw, 64px);
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.site-footer__brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.site-footer__brand .logo {
+  height: 42px;
+}
+
+.site-footer__nav {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0 56px;
+}
+
+.site-footer__heading {
+  margin: 0 0 12px;
+  color: var(--dark-muted);
+  font-size: var(--text-micro);
+  font-weight: 550;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.site-footer__links {
+  display: grid;
+  gap: 2px;
+}
+
+.site-footer__links--cols {
+  grid-template-columns: repeat(2, auto);
+  column-gap: 48px;
+}
+
+@media (min-width: 760px) {
+  .site-footer__links a {
+    min-height: 36px;
+  }
+}
+
+.site-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--dark-text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.site-footer__links a:hover {
+  color: var(--dark-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--dark-accent);
+  text-underline-offset: 4px;
+}
+
+.site-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding-top: 28px;
+  color: var(--dark-muted);
+  font-size: var(--text-small);
+  line-height: 1.6;
+}
+
+.site-footer__legal p {
+  margin: 0;
+}
+
+@media (max-width: 759px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__nav {
+    gap: 0 32px;
+  }
+
+  .site-footer__legal {
+    flex-direction: column;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Poster capture mode (?capture=1): only the canvas, on a transparent page
+   --------------------------------------------------------------------------------------------- */
+html[data-capture='on'],
+html[data-capture='on'] body {
+  background: transparent;
+}
+
+html[data-capture='on'] .site-header,
+html[data-capture='on'] .stage__content,
+html[data-capture='on'] .stage__footer,
+html[data-capture='on'] .anatomy,
+html[data-capture='on'] .leader,
+html[data-capture='on'] .stage-status,
+html[data-capture='on'] .poster,
+html[data-capture='on'] .stage::before,
+html[data-capture='on'] .site-footer {
+  display: none !important;
+}

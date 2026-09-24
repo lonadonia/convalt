@@ -1,0 +1,114 @@
+/* ---------------------------------------------------------------------------------------------
+   Data centers (scene 04) — a scene-specific dark treatment, driven by scroll (never a site theme)
+   --------------------------------------------------------------------------------------------- */
+.dc-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--dark-bg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Copy in the left third, vertically centred beside the installation (contrast on --dark-bg:
+   headline 17:1, accent 10:1, lede 11:1, note 6.6:1, button text 12:1). */
+.chapter--dc {
+  --focus: var(--dark-accent);
+  grid-column: 1 / 6;
+  align-self: center;
+  color: var(--dark-text);
+}
+
+.chapter--dc .eyebrow {
+  color: var(--dark-text-2);
+}
+
+.chapter--dc .eyebrow__index {
+  color: var(--dark-accent);
+}
+
+.chapter--dc .eyebrow__rule {
+  background: var(--dark-accent);
+}
+
+.chapter--dc .display {
+  color: var(--dark-text);
+  text-wrap: balance;
+}
+
+/* Laptop and desktop widths: "Infrastructure for" stays on one line and the copy in the left third. */
+html:not([data-tier='mobile']) .chapter--dc .display {
+  font-size: min(var(--text-section), 3.6vw);
+}
+
+.chapter--dc .display__accent {
+  color: var(--dark-accent);
+}
+
+.chapter--dc .lede {
+  color: var(--dark-text-2);
+}
+
+.chapter--dc .chapter__note {
+  color: var(--dark-muted);
+}
+
+.chapter--dc .btn--primary {
+  background: #f5f4ee;
+  border-color: #f5f4ee;
+  color: #123336;
+}
+
+.chapter--dc .btn--primary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Legibility behind the copy (the scene there is already charcoal; this only softens the rows'
+   glow if a wide screen brings them close). */
+.dc-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to right, rgb(11 18 20 / 0.8) 0%, rgb(11 18 20 / 0.5) 28%, transparent 48%);
+}
+
+/* Status note over the dark scene. */
+.stage-status--dark {
+  color: var(--dark-text-2);
+}
+
+/* Phones: the installation above, the copy below it. */
+html[data-tier='mobile'] .chapter--dc {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin-bottom: 4px;
+}
+
+html[data-tier='mobile'] .dc-scrim {
+  background: linear-gradient(to top, rgb(11 18 20 / 0.94) 0%, rgb(11 18 20 / 0.78) 34%, transparent 56%);
+}
+
+html[data-capture='on'] .dc-scrim,
+html[data-capture='on'] .dc-backdrop {
+  display: none !important;
+}
+
+/* Document layout (no WebGL): the section on a dark panel, like the scene. */
+/* The static document turns dark from this section on (html[data-scene] follows the scroll there
+   too): the section and everything after it sit on the dark palette, edge to edge. */
+.static-dark {
+  margin: 0 calc(-1 * var(--gutter)) -64px;
+  padding: clamp(56px, 8vw, 104px) var(--gutter) clamp(56px, 8vw, 96px);
+  background: var(--dark-bg);
+  color: var(--dark-text-2);
+}
+
+.static-dark .static-note {
+  color: var(--dark-muted);
+}
+
+.static-figure--dark img {
+  border-radius: var(--radius);
+}

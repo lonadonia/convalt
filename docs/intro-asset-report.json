@@ -1,0 +1,340 @@
+{
+  "generated": "2026-09-24T13:30:01.462Z",
+  "colour": "Sources are untagged; derivatives are encoded and tagged BT.709 limited range; posters converted with the same matrix.",
+  "loop": {
+    "source": {
+      "file": "intro.zip › 1.mp4 (preserved; extracted to asset-source/intro/)",
+      "codec": "h264",
+      "size": "3840×2160",
+      "fps": "24/1",
+      "frames": 192,
+      "duration": 8,
+      "audio": true,
+      "kilobytes": 18974.5,
+      "seam": {
+        "frames": 192,
+        "medianStep": 0.401,
+        "maxStep": 1.844,
+        "wrap": 4.759
+      }
+    },
+    "loop": {
+      "start": 16,
+      "jumpFrom": 182,
+      "blend": 16,
+      "fps": 24,
+      "note": "Loop = frames 16…181 with frames 166…181 crossfaded into frames 0…15, so the last frame flows into the first."
+    },
+    "portraitCrop": {
+      "x": 1297,
+      "width": 1216,
+      "rect": [
+        0.3378,
+        0,
+        0.6544,
+        1
+      ]
+    },
+    "derivatives": [
+      {
+        "file": "public/media/intro/factory-loop-720.mp4",
+        "use": "small landscape screens, Save-Data",
+        "kilobytes": 1872.8,
+        "size": "1280×720",
+        "frames": 166,
+        "duration": 6.917,
+        "kbps": 2218,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "gop": 24,
+        "poster": "public/media/intro/factory-loop-720.webp",
+        "posterKilobytes": 166.6,
+        "seam": {
+          "frames": 166,
+          "medianStep": 0.323,
+          "maxStep": 2.223,
+          "wrap": 2.341
+        }
+      },
+      {
+        "file": "public/media/intro/factory-loop-1080.mp4",
+        "use": "desktop / tablet landscape",
+        "kilobytes": 3481.7,
+        "size": "1920×1080",
+        "frames": 166,
+        "duration": 6.917,
+        "kbps": 4123,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "gop": 24,
+        "poster": "public/media/intro/factory-loop-720.webp",
+        "posterKilobytes": 166.6,
+        "seam": {
+          "frames": 166,
+          "medianStep": 0.326,
+          "maxStep": 2.151,
+          "wrap": 2.061
+        }
+      },
+      {
+        "file": "public/media/intro/factory-loop-portrait.mp4",
+        "use": "phones / portrait",
+        "kilobytes": 1684.5,
+        "size": "720×1280",
+        "frames": 166,
+        "duration": 6.917,
+        "kbps": 1995,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "gop": 24,
+        "poster": "public/media/intro/factory-loop-portrait.webp",
+        "posterKilobytes": 142,
+        "seam": {
+          "frames": 166,
+          "medianStep": 0.362,
+          "maxStep": 2.597,
+          "wrap": 2.456
+        }
+      }
+    ]
+  },
+  "assembly": {
+    "source": {
+      "file": "2.mp4 (preserved at the project root)",
+      "codec": "h264",
+      "size": "3840×2160",
+      "fps": "24/1",
+      "frames": 143,
+      "duration": 5.974,
+      "audio": true,
+      "kilobytes": 22120.1,
+      "keyframes": [
+        0,
+        110
+      ]
+    },
+    "footage": {
+      "registration": "Frame 0 matches intro.zip › 3.png (scale 1.000, offset < 1 px); the last frame matches 5.png (scale 0.997, offset ≈ 2 px).",
+      "staticLeadIn": "Frames 0–6 are practically identical (step ≈ 0.6); motion starts at frame 7.",
+      "dissolve": "A cross-dissolve is baked into the footage (perspective → overhead), visible in frames ≈ 106–110.",
+      "motion": "Camera accelerates towards the panel (step 1 → 27 by frame 100), then decelerates in the overhead push-in (24 → 9.5).",
+      "steps": [
+        0.61,
+        0.57,
+        0.59,
+        0.7,
+        0.61,
+        0.65,
+        1.44,
+        2.43,
+        2.9,
+        3.47,
+        3.71,
+        4.09,
+        4.19,
+        4.23,
+        4.2,
+        4.48,
+        4.27,
+        4.06,
+        3.75,
+        3.51,
+        3.11,
+        2.56,
+        1.82,
+        1.24,
+        0.74,
+        0.74,
+        0.67,
+        0.78,
+        0.84,
+        0.77,
+        0.66,
+        0.81,
+        0.75,
+        0.75,
+        0.75,
+        0.86,
+        0.84,
+        0.72,
+        0.67,
+        0.85,
+        0.9,
+        1,
+        1.12,
+        1.33,
+        1.31,
+        3.1,
+        4.65,
+        5.82,
+        6.21,
+        6.51,
+        6.41,
+        6.83,
+        6.55,
+        6.45,
+        5.7,
+        5.45,
+        4.79,
+        3.64,
+        1.77,
+        1.34,
+        1.86,
+        2.09,
+        2.46,
+        3.43,
+        3.14,
+        3.35,
+        3.68,
+        4.41,
+        5.35,
+        5.91,
+        6.43,
+        7.04,
+        7.78,
+        8.77,
+        8.97,
+        9.87,
+        11.4,
+        12.25,
+        13.01,
+        13.97,
+        15.15,
+        16.25,
+        17.07,
+        17.91,
+        19.25,
+        20.33,
+        20.39,
+        21.26,
+        21.63,
+        22.62,
+        22.8,
+        23.48,
+        23.76,
+        24.24,
+        24.56,
+        25.45,
+        25.18,
+        26.23,
+        26.58,
+        27.68,
+        27.48,
+        27.9,
+        27.33,
+        28.18,
+        27.54,
+        27.38,
+        27.34,
+        28.33,
+        28.48,
+        33.14,
+        31.83,
+        32.56,
+        29.84,
+        27.82,
+        24.89,
+        24.51,
+        22.68,
+        21.95,
+        20.19,
+        19.63,
+        17.95,
+        17.58,
+        16.29,
+        16.05,
+        15.18,
+        14.56,
+        13.67,
+        13.4,
+        12.79,
+        12.42,
+        11.56,
+        11.79,
+        11.31,
+        11.02,
+        10.25,
+        10.26,
+        9.96,
+        9.94,
+        9.48,
+        9.02,
+        9.12,
+        9.01
+      ]
+    },
+    "portraitCrop": {
+      "x": 1312,
+      "width": 1216,
+      "rect": [
+        0.3417,
+        0,
+        0.6583,
+        1
+      ]
+    },
+    "derivatives": [
+      {
+        "file": "public/media/intro/factory-assembly-1080.mp4",
+        "use": "desktop / tablet landscape",
+        "kilobytes": 5185.8,
+        "size": "1920×1080",
+        "frames": 143,
+        "duration": 5.959,
+        "kbps": 7129,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "crf": 27,
+        "keyframeInterval": [
+          6
+        ],
+        "bFrames": 0
+      },
+      {
+        "file": "public/media/intro/factory-assembly-720.mp4",
+        "use": "small landscape screens, Save-Data",
+        "kilobytes": 2571.5,
+        "size": "1280×720",
+        "frames": 143,
+        "duration": 5.959,
+        "kbps": 3535,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "crf": 28,
+        "keyframeInterval": [
+          6
+        ],
+        "bFrames": 0
+      },
+      {
+        "file": "public/media/intro/factory-assembly-portrait.mp4",
+        "use": "phones / portrait",
+        "kilobytes": 2079.2,
+        "size": "720×1280",
+        "frames": 143,
+        "duration": 5.959,
+        "kbps": 2858,
+        "streams": [
+          "video"
+        ],
+        "colorSpace": "bt709",
+        "crf": 28,
+        "keyframeInterval": [
+          6
+        ],
+        "bFrames": 0
+      }
+    ]
+  },
+  "seekBenchmark": "docs/intro-seek-benchmark.json"
+}

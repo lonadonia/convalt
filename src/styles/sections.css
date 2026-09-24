@@ -1,0 +1,350 @@
+/* ---------------------------------------------------------------------------------------------
+   Lower page after the data centers: project portfolio and company. Ordinary document flow on
+   the dark palette (the scene stays "dark" from the data centers through the footer).
+   Contrast on --dark-surface / --dark-bg: text 16–17:1, secondary 9.5–10:1, muted 6:1, accent 9–10:1.
+   --------------------------------------------------------------------------------------------- */
+.lp-section {
+  --focus: var(--dark-accent);
+  position: relative;
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  padding: clamp(72px, 9vw, 136px) var(--gutter);
+}
+
+.lp-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.lp-eyebrow {
+  color: var(--dark-text-2);
+}
+
+.lp-eyebrow .eyebrow__rule {
+  background: var(--dark-accent);
+}
+
+.lp-title {
+  color: var(--dark-text);
+}
+
+/* Laptop and desktop widths: the same cap as the data-center headline, so the lines set well. */
+html:not([data-tier='mobile']) .lp-title {
+  font-size: min(var(--text-section), 3.6vw);
+}
+
+/* Each sentence on its own balanced line(s): no orphaned last word. */
+.lp-line {
+  display: block;
+  text-wrap: balance;
+}
+
+.lp-title .display__accent {
+  color: var(--dark-accent);
+}
+
+.lp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
+  margin-bottom: clamp(36px, 4.5vw, 64px);
+}
+
+.lp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--dark-accent);
+  font-size: 0.9375rem;
+  font-weight: 550;
+  text-decoration: underline;
+  text-decoration-color: rgb(95 211 196 / 0.4);
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+
+.lp-link:hover {
+  text-decoration-color: var(--dark-accent);
+}
+
+/* Regional tabs */
+.regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: clamp(28px, 3.4vw, 44px);
+}
+
+.regions__tab {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--dark-line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dark-text-2);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+
+.regions__tab:hover {
+  border-color: var(--dark-accent);
+  color: var(--dark-text);
+}
+
+.regions__tab[aria-selected='true'] {
+  border-color: var(--dark-text);
+  background: var(--dark-text);
+  color: var(--dark-bg);
+}
+
+.regions__empty {
+  color: var(--dark-text-2);
+}
+
+/* The released data-center scene already ends in dark space: a lighter top for the portfolio. */
+.portfolio {
+  padding-top: clamp(40px, 5vw, 80px);
+}
+
+/* Project grid: one column on phones, two on tablets, three on wide screens. */
+.project-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 24px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .project-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 56px 32px;
+  }
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-line);
+  transition: border-color 0.4s var(--ease);
+}
+
+.project-card:hover {
+  border-color: var(--dark-line-strong);
+}
+
+.project-card:has(.project-card__link:focus-visible) {
+  outline: 2px solid var(--dark-accent);
+  outline-offset: 4px;
+}
+
+.project-card__media {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--dark-raised);
+}
+
+.project-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.project-card:hover .project-card__media img {
+  transform: scale(1.035);
+}
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px 26px;
+}
+
+/* Location reads above the title; the title stays first for assistive technology. */
+.project-card__location {
+  order: -1;
+  color: var(--dark-muted);
+  font-size: var(--text-small);
+  letter-spacing: 0.01em;
+}
+
+.project-card__title {
+  color: var(--dark-text);
+  font-size: clamp(1.25rem, 1.08rem + 0.5vw, 1.625rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.project-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-card__link:focus-visible {
+  outline: none;
+}
+
+.project-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.project-card__last {
+  white-space: nowrap;
+}
+
+.project-card__arrow {
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--dark-accent);
+  font-size: 0.8em;
+  transition: transform 0.35s var(--ease);
+}
+
+.project-card:hover .project-card__arrow {
+  transform: translate(2px, -2px);
+}
+
+.project-card__desc {
+  color: var(--dark-text-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.project-card__category {
+  color: var(--dark-accent);
+}
+
+/* Status: a solid chip on the image (readable over any photo), with a quiet colour key. */
+.project-card__status {
+  --dot: var(--dark-muted);
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgb(11 18 20 / 0.86);
+  border: 1px solid var(--dark-line);
+  color: var(--dark-text);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.project-card__status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.project-card__status[data-status='under-financing'] { --dot: #5fd3c4; }
+.project-card__status[data-status='under-development'] { --dot: #9cc4e8; }
+.project-card__status[data-status='on-hold'] { --dot: #e2b95a; }
+.project-card__status[data-status='operating'] { --dot: #7fd88f; }
+.project-card__status[data-status='sold'] { --dot: #b5c2c1; }
+
+/* Company: image and copy side by side, stacked on narrow screens. */
+.company {
+  padding-top: 0;
+}
+
+.company__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(40px, 5vw, 88px);
+  padding-top: clamp(72px, 9vw, 136px);
+  border-top: 1px solid var(--dark-line);
+}
+
+.company__media {
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  background: var(--dark-raised);
+  border: 1px solid var(--dark-line);
+}
+
+.company__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lp-body {
+  margin-top: clamp(20px, 2.6vw, 32px);
+  max-width: 46ch;
+  color: var(--dark-text-2);
+  font-size: var(--text-lede);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.lp-cta {
+  margin-top: clamp(28px, 3.4vw, 40px);
+}
+
+.lp-section .btn--primary {
+  background: #f5f4ee;
+  border-color: #f5f4ee;
+  color: #123336;
+}
+
+.lp-section .btn--primary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+@media (max-width: 899px) {
+  .company__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Entrance: fade and a short rise, once. Only with motion; never in capture mode. */
+html[data-motion='on'] [data-reveal] {
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
+
+html[data-motion='on'] [data-reveal='pending'] {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+html[data-capture='on'] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html[data-motion='off'] .project-card__media img,
+html[data-motion='off'] .project-card__arrow {
+  transition: none;
+}

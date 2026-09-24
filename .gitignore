@@ -1,0 +1,14 @@
+node_modules
+dist
+*.local
+.DS_Store
+# Extracted source archive (regenerate with: npm run assets)
+asset-source/
+# Capture output
+captures/
+# Kept local, not published: original source archives, the loose 4K source video,
+# client documents and the website image crawl (see README › Repository contents)
+/*.zip
+/2.mp4
+/*.pdf
+/Convalt_Energy_Images/

@@ -1,0 +1,170 @@
+[
+  {
+    "engine": "chrome",
+    "launched": true,
+    "version": "153.0.8010.50",
+    "readyMs": 2188,
+    "status": "ready",
+    "webgl": true,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "layout": "pinned",
+    "maskComposite": true,
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "progress": 1,
+    "video": "idle",
+    "footageFrames": {
+      "footage": "82/82"
+    },
+    "sections": {
+      "field": "ready",
+      "field-rows": "field:10",
+      "field-final": "field:5",
+      "dc": "ready",
+      "dc-closeup": "datacenter:14",
+      "dc-final": "datacenter:14",
+      "portfolio": "cols:3 images:5/5",
+      "company": "cols:3 images:1/1"
+    },
+    "shots": [
+      "opening",
+      "departure",
+      "footage",
+      "handoff",
+      "overview",
+      "component",
+      "field-rows",
+      "field-final",
+      "dc-closeup",
+      "dc-final",
+      "portfolio",
+      "company"
+    ],
+    "issues": []
+  },
+  {
+    "engine": "edge",
+    "launched": true,
+    "version": "153.0.4234.48",
+    "readyMs": 2867,
+    "status": "ready",
+    "webgl": true,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0",
+    "layout": "pinned",
+    "maskComposite": true,
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "progress": 1,
+    "video": "idle",
+    "footageFrames": {
+      "footage": "82/82"
+    },
+    "sections": {
+      "field": "ready",
+      "field-rows": "field:10",
+      "field-final": "field:5",
+      "dc": "ready",
+      "dc-closeup": "datacenter:14",
+      "dc-final": "datacenter:14",
+      "portfolio": "cols:3 images:5/5",
+      "company": "cols:3 images:1/1"
+    },
+    "shots": [
+      "opening",
+      "departure",
+      "footage",
+      "handoff",
+      "overview",
+      "component",
+      "field-rows",
+      "field-final",
+      "dc-closeup",
+      "dc-final",
+      "portfolio",
+      "company"
+    ],
+    "issues": []
+  },
+  {
+    "engine": "firefox",
+    "launched": true,
+    "version": "155.0",
+    "readyMs": 4962,
+    "status": "ready",
+    "webgl": true,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "layout": "pinned",
+    "maskComposite": true,
+    "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+    "progress": 1,
+    "video": "idle",
+    "footageFrames": {
+      "footage": "81/82"
+    },
+    "sections": {
+      "field": "ready",
+      "field-rows": "field:10",
+      "field-final": "field:5",
+      "dc": "ready",
+      "dc-closeup": "datacenter:15",
+      "dc-final": "datacenter:14",
+      "portfolio": "cols:3 images:5/5",
+      "company": "cols:3 images:1/1"
+    },
+    "shots": [
+      "opening",
+      "departure",
+      "footage",
+      "handoff",
+      "overview",
+      "component",
+      "field-rows",
+      "field-final",
+      "dc-closeup",
+      "dc-final",
+      "portfolio",
+      "company"
+    ],
+    "issues": []
+  },
+  {
+    "engine": "webkit",
+    "launched": true,
+    "version": "26.6",
+    "readyMs": 3122,
+    "status": "ready",
+    "webgl": true,
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+    "layout": "pinned",
+    "maskComposite": true,
+    "renderer": "Apple GPU",
+    "progress": 1,
+    "video": "idle",
+    "footageFrames": {
+      "footage": "70/70"
+    },
+    "sections": {
+      "field": "ready",
+      "field-rows": "field:10",
+      "field-final": "field:5",
+      "dc": "ready",
+      "dc-closeup": "datacenter:14",
+      "dc-final": "datacenter:14",
+      "portfolio": "cols:3 images:5/5",
+      "company": "cols:3 images:1/1"
+    },
+    "shots": [
+      "opening",
+      "departure",
+      "footage",
+      "handoff",
+      "overview",
+      "component",
+      "field-rows",
+      "field-final",
+      "dc-closeup",
+      "dc-final",
+      "portfolio",
+      "company"
+    ],
+    "issues": []
+  }
+]

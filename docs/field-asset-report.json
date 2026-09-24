@@ -1,0 +1,325 @@
+{
+  "generated": "2026-09-24T14:51:27.475Z",
+  "licence": "Neither archive contains a licence, readme or attribution file. Terms must be confirmed with the supplier before production use.",
+  "archives": {
+    "solar-panel.zip": [
+      "source/model.fbx",
+      "textures/SolarPanel_Albedo.png",
+      "textures/SolarPanel_Normal.png",
+      "textures/SolarPanel_Metalness.png"
+    ],
+    "lorton-field.zip": [
+      "source/model.zip › model.obj, model.mtl, model.jpg, model1.jpg",
+      "textures/model.jpeg",
+      "textures/model1.jpeg"
+    ]
+  },
+  "scaleAssumptions": {
+    "module": "Visualization scale: the new module is scaled uniformly to the Module scene's panel width (1.864 m). Real 72-cell modules are typically ≈ 1.95–2.0 m × ≈ 1.0 m; this is an illustrative installation, not a product specification.",
+    "terrain": "10 m per scan unit, estimated from recognizable features (lanes, road markings, sheep); an estimate, not survey data."
+  },
+  "module": {
+    "source": {
+      "mesh": "SolarPanel",
+      "nodeRotation": [
+        -0.7853981852531433,
+        0,
+        0
+      ],
+      "triangles": 1854,
+      "components": 15,
+      "loaderWarnings": []
+    },
+    "kept": {
+      "slabTriangles": 28,
+      "junctionBoxTriangles": 66
+    },
+    "dropped": [
+      {
+        "triangles": 10,
+        "sizeCm": [
+          162.08,
+          5.51,
+          1.23
+        ]
+      },
+      {
+        "triangles": 10,
+        "sizeCm": [
+          162.08,
+          5.51,
+          1.23
+        ]
+      },
+      {
+        "triangles": 44,
+        "sizeCm": [
+          158.4,
+          46.77,
+          46.77
+        ]
+      },
+      {
+        "triangles": 120,
+        "sizeCm": [
+          4.05,
+          41.9,
+          42.02
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          6.12,
+          1.77,
+          1.77
+        ]
+      },
+      {
+        "triangles": 164,
+        "sizeCm": [
+          5.64,
+          82.37,
+          2.76
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          4.58,
+          1.77,
+          1.77
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          6.12,
+          1.77,
+          1.77
+        ]
+      },
+      {
+        "triangles": 120,
+        "sizeCm": [
+          4.05,
+          41.9,
+          42.02
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          6.12,
+          1.77,
+          1.77
+        ]
+      },
+      {
+        "triangles": 164,
+        "sizeCm": [
+          5.64,
+          82.37,
+          2.76
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          4.58,
+          1.77,
+          1.77
+        ]
+      },
+      {
+        "triangles": 188,
+        "sizeCm": [
+          6.12,
+          1.77,
+          1.77
+        ]
+      }
+    ],
+    "sourceSizeCm": [
+      165.26,
+      82.63,
+      4.09
+    ],
+    "uniformScale": 0.011418,
+    "cellFieldMatch": {
+      "target": {
+        "hx": 0.9215,
+        "hy": 0.457
+      },
+      "provisional": {
+        "hx": 0.915,
+        "hy": 0.4491,
+        "cx": -0.0031,
+        "cy": 0.0061
+      },
+      "factor": 1.01233
+    },
+    "size": [
+      1.887,
+      0.9435,
+      0.0467
+    ],
+    "frontZ": 0.0234,
+    "glassZ": 0.0175,
+    "cellField": {
+      "hx": 0.9263,
+      "hy": 0.4546,
+      "cx": -0.0031,
+      "cy": 0.0062
+    },
+    "outputs": {
+      "2k": {
+        "file": "public/models/field-module-2k.glb",
+        "kilobytes": 751.5,
+        "textureKilobytes": {
+          "baseColor": 342.6,
+          "normal": 222.8,
+          "metallicRoughness": 170.1
+        },
+        "validation": {
+          "errors": 0,
+          "warnings": 0,
+          "infos": 0
+        }
+      },
+      "1k": {
+        "file": "public/models/field-module-1k.glb",
+        "kilobytes": 244.5,
+        "textureKilobytes": {
+          "baseColor": 111.9,
+          "normal": 58.7,
+          "metallicRoughness": 57.8
+        },
+        "validation": {
+          "errors": 0,
+          "warnings": 0,
+          "infos": 0
+        }
+      }
+    }
+  },
+  "terrain": {
+    "source": {
+      "vertices": 723344,
+      "triangles": 1441326,
+      "materials": [
+        "model",
+        "model1"
+      ],
+      "atlas": "2 × 8192² JPEG",
+      "boundsUnits": {
+        "min": [
+          -15.499062538146973,
+          -0.5721380114555359,
+          -19.48442840576172
+        ],
+        "max": [
+          15.509613990783691,
+          2.425558090209961,
+          19.48657989501953
+        ]
+      }
+    },
+    "heightfield": {
+      "cellM": 0.25,
+      "width": 1241,
+      "height": 1559,
+      "holesFilled": 13087,
+      "vegetation": {
+        "maxAboveGroundM": 21.07,
+        "canopyClampM": 5
+      }
+    },
+    "meta": {
+      "frame": "field frame: scan units × 10 (metres), Y up; x right, z down in the orthophoto",
+      "metresPerScanUnit": 10,
+      "scan": {
+        "x0": -154.99062538146973,
+        "z0": -194.8442840576172,
+        "x1": 155.0961399078369,
+        "z1": 194.8657989501953
+      },
+      "extent": {
+        "x0": -455,
+        "z0": -495,
+        "x1": 456,
+        "z1": 495
+      },
+      "site": {
+        "x": 15,
+        "z": -25,
+        "inset": 192
+      },
+      "layers": {
+        "inset": {
+          "x0": -81,
+          "z0": -121,
+          "x1": 111,
+          "z1": 71
+        },
+        "scan": {
+          "x0": -154.99062538146973,
+          "z0": -194.8442840576172,
+          "x1": 155.0961399078369,
+          "z1": 194.8657989501953
+        },
+        "apron": {
+          "x0": -455,
+          "z0": -495,
+          "x1": 456,
+          "z1": 495
+        }
+      },
+      "meanGround": -1.601
+    },
+    "meshes": {
+      "desktop": {
+        "file": "public/models/field/terrain-desktop.glb",
+        "kilobytes": 837.2,
+        "triangles": 180000,
+        "vertices": 91902,
+        "maxErrorM": 0.0105
+      },
+      "mobile": {
+        "file": "public/models/field/terrain-mobile.glb",
+        "kilobytes": 361,
+        "triangles": 70000,
+        "vertices": 36902,
+        "maxErrorM": 0.0329
+      }
+    },
+    "textures": {
+      "inset": {
+        "desktop": {
+          "file": "public/models/field/terrain-inset-desktop.webp",
+          "kilobytes": 559
+        },
+        "mobile": {
+          "file": "public/models/field/terrain-inset-mobile.webp",
+          "kilobytes": 263.3
+        }
+      },
+      "scan": {
+        "desktop": {
+          "file": "public/models/field/terrain-scan-desktop.webp",
+          "kilobytes": 314.1
+        },
+        "mobile": {
+          "file": "public/models/field/terrain-scan-mobile.webp",
+          "kilobytes": 90.2
+        }
+      },
+      "apron": {
+        "all": {
+          "file": "public/models/field/terrain-apron.webp",
+          "kilobytes": 8.2
+        }
+      }
+    }
+  }
+}

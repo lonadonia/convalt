@@ -1,0 +1,607 @@
+{
+  "meta": {
+    "date": "2026-09-24T18:02:43.886Z",
+    "url": "http://localhost:4173/",
+    "headless": true,
+    "chrome": "153.0.8010.50"
+  },
+  "results": {
+    "reference": {
+      "viewport": {
+        "width": 1903,
+        "height": 843,
+        "deviceScaleFactor": 1
+      },
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vsyncMs": 16.7,
+      "rafIntervalMs": {
+        "samples": 5100,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 33.1,
+        "p99": 50,
+        "max": 466.6,
+        "droppedPct": 5.22,
+        "below60fpsPct": 5.22
+      },
+      "rafIntervalIntroMs": {
+        "samples": 4409,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 33.2,
+        "p99": 50,
+        "max": 466.6,
+        "droppedPct": 5.9,
+        "below60fpsPct": 5.9
+      },
+      "rafIntervalStoryMs": {
+        "samples": 691,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 16.9,
+        "p99": 17.4,
+        "max": 49.9,
+        "droppedPct": 0.87,
+        "below60fpsPct": 0.87
+      },
+      "rafIntervalFieldMs": {
+        "samples": 1635,
+        "p50": 16.7,
+        "p90": 16.9,
+        "p95": 33.4,
+        "p99": 50.2,
+        "max": 216.6,
+        "droppedPct": 8.75,
+        "below60fpsPct": 8.75
+      },
+      "rafIntervalDataCentersMs": {
+        "samples": 2119,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 33.1,
+        "p99": 49.6,
+        "max": 466.6,
+        "droppedPct": 5.33,
+        "below60fpsPct": 5.33
+      },
+      "renderedFrameIntervalMs": {
+        "samples": 2108,
+        "p50": 16.7,
+        "p90": 17.1,
+        "p95": 19.2,
+        "p99": 45,
+        "max": 183.5,
+        "droppedPct": 3.65,
+        "below60fpsPct": 3.65
+      },
+      "footage": {
+        "seeks": 235,
+        "seekMsRecent": {
+          "samples": 40,
+          "p50": 19.7,
+          "p95": 36.7,
+          "p99": 40.4,
+          "max": 40.4
+        },
+        "lagFrames": {
+          "p50": 0,
+          "p90": 1,
+          "max": 3
+        }
+      },
+      "gpuFrameMs": {
+        "samples": 2636,
+        "p50": 2.56,
+        "p95": 11.55,
+        "p99": 20.38,
+        "max": 41.21
+      },
+      "cpuRenderMs": {
+        "samples": 3851,
+        "p50": 0.2,
+        "p95": 1.1,
+        "p99": 2.7,
+        "max": 451.6
+      },
+      "dprUsed": [
+        "1.00"
+      ],
+      "powerGeneration": {
+        "fieldStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1350,
+          "p50": 16.7,
+          "p90": 20.6,
+          "p95": 27.6,
+          "p99": 44.2,
+          "max": 65.9,
+          "droppedPct": 5.93,
+          "below60fpsPct": 5.93
+        },
+        "gpuFrameMs": {
+          "samples": 1997,
+          "p50": 5.18,
+          "p95": 12.39,
+          "p99": 29.09,
+          "max": 35.11
+        },
+        "cpuRenderMs": {
+          "samples": 3320,
+          "p50": 0.3,
+          "p95": 2,
+          "p99": 3.2,
+          "max": 6
+        },
+        "dprUsed": [
+          "1.00"
+        ],
+        "drawCalls": {
+          "samples": 1635,
+          "p50": 6,
+          "p95": 12,
+          "p99": 12,
+          "max": 12
+        },
+        "triangles": {
+          "samples": 1635,
+          "p50": 220552,
+          "p95": 299632,
+          "p99": 328176,
+          "max": 330432
+        }
+      },
+      "dataCenters": {
+        "dcStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1167,
+          "p50": 16.7,
+          "p90": 21.5,
+          "p95": 27.9,
+          "p99": 43.6,
+          "max": 118.3,
+          "droppedPct": 6.17,
+          "below60fpsPct": 6.17
+        },
+        "gpuFrameMs": {
+          "samples": 2260,
+          "p50": 2.91,
+          "p95": 12.28,
+          "p99": 28.65,
+          "max": 46.12
+        },
+        "cpuRenderMs": {
+          "samples": 2296,
+          "p50": 0.5,
+          "p95": 2.4,
+          "p99": 3.3,
+          "max": 7.8
+        },
+        "dprUsed": [
+          "1.00"
+        ],
+        "drawCalls": {
+          "samples": 2119,
+          "p50": 14,
+          "p95": 14,
+          "p99": 21,
+          "max": 21
+        },
+        "drawCallsInBand": {
+          "samples": 61,
+          "p50": 6,
+          "p95": 21,
+          "p99": 21,
+          "max": 21
+        },
+        "triangles": {
+          "samples": 2119,
+          "p50": 45242,
+          "p95": 45244,
+          "p99": 301566,
+          "max": 301566
+        }
+      },
+      "issues": []
+    },
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vsyncMs": 16.7,
+      "rafIntervalMs": {
+        "samples": 4923,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 33.3,
+        "p99": 50.3,
+        "max": 283.4,
+        "droppedPct": 6.64,
+        "below60fpsPct": 6.64
+      },
+      "rafIntervalIntroMs": {
+        "samples": 4226,
+        "p50": 16.7,
+        "p90": 16.9,
+        "p95": 33.4,
+        "p99": 50.5,
+        "max": 283.4,
+        "droppedPct": 7.74,
+        "below60fpsPct": 7.74
+      },
+      "rafIntervalStoryMs": {
+        "samples": 697,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 16.9,
+        "p99": 17.1,
+        "max": 17.4,
+        "droppedPct": 0,
+        "below60fpsPct": 0
+      },
+      "rafIntervalFieldMs": {
+        "samples": 1494,
+        "p50": 16.7,
+        "p90": 33.3,
+        "p95": 49.9,
+        "p99": 116.3,
+        "max": 183.3,
+        "droppedPct": 13.25,
+        "below60fpsPct": 13.25
+      },
+      "rafIntervalDataCentersMs": {
+        "samples": 2083,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 33.2,
+        "p99": 50.1,
+        "max": 283.4,
+        "droppedPct": 5.71,
+        "below60fpsPct": 5.71
+      },
+      "renderedFrameIntervalMs": {
+        "samples": 1957,
+        "p50": 16.7,
+        "p90": 26,
+        "p95": 37.7,
+        "p99": 55.6,
+        "max": 119.7,
+        "droppedPct": 10.17,
+        "below60fpsPct": 10.17
+      },
+      "footage": {
+        "seeks": 234,
+        "seekMsRecent": {
+          "samples": 40,
+          "p50": 18.9,
+          "p95": 36,
+          "p99": 37.2,
+          "max": 37.2
+        },
+        "lagFrames": {
+          "p50": 0,
+          "p90": 1,
+          "max": 4
+        }
+      },
+      "gpuFrameMs": {
+        "samples": 2459,
+        "p50": 1.25,
+        "p95": 25.8,
+        "p99": 37.62,
+        "max": 43.92
+      },
+      "cpuRenderMs": {
+        "samples": 3760,
+        "p50": 0.2,
+        "p95": 3,
+        "p99": 4.4,
+        "max": 255.5
+      },
+      "dprUsed": [
+        "1.00"
+      ],
+      "powerGeneration": {
+        "fieldStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1286,
+          "p50": 16.7,
+          "p90": 20.2,
+          "p95": 29.8,
+          "p99": 54.1,
+          "max": 175.8,
+          "droppedPct": 6.92,
+          "below60fpsPct": 6.92
+        },
+        "gpuFrameMs": {
+          "samples": 1892,
+          "p50": 4.4,
+          "p95": 15.1,
+          "p99": 27.54,
+          "max": 31.37
+        },
+        "cpuRenderMs": {
+          "samples": 2812,
+          "p50": 0.3,
+          "p95": 2.3,
+          "p99": 3.5,
+          "max": 6.7
+        },
+        "dprUsed": [
+          "1.00"
+        ],
+        "drawCalls": {
+          "samples": 1494,
+          "p50": 6,
+          "p95": 12,
+          "p99": 12,
+          "max": 12
+        },
+        "triangles": {
+          "samples": 1494,
+          "p50": 206052,
+          "p95": 296624,
+          "p99": 327988,
+          "max": 330432
+        }
+      },
+      "dataCenters": {
+        "dcStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1210,
+          "p50": 16.7,
+          "p90": 17.2,
+          "p95": 21.4,
+          "p99": 41.4,
+          "max": 150,
+          "droppedPct": 4.38,
+          "below60fpsPct": 4.38
+        },
+        "gpuFrameMs": {
+          "samples": 2365,
+          "p50": 2.17,
+          "p95": 9.88,
+          "p99": 25.78,
+          "max": 42.14
+        },
+        "cpuRenderMs": {
+          "samples": 2386,
+          "p50": 0.4,
+          "p95": 2.5,
+          "p99": 3.4,
+          "max": 7.1
+        },
+        "dprUsed": [
+          "1.00"
+        ],
+        "drawCalls": {
+          "samples": 2083,
+          "p50": 14,
+          "p95": 14,
+          "p99": 21,
+          "max": 21
+        },
+        "drawCallsInBand": {
+          "samples": 58,
+          "p50": 6,
+          "p95": 21,
+          "p99": 21,
+          "max": 21
+        },
+        "triangles": {
+          "samples": 2083,
+          "p50": 45242,
+          "p95": 45244,
+          "p99": 301566,
+          "max": 301566
+        }
+      },
+      "issues": []
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 3,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vsyncMs": 16.7,
+      "rafIntervalMs": {
+        "samples": 5299,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 17.1,
+        "p99": 33.6,
+        "max": 199.6,
+        "droppedPct": 2.83,
+        "below60fpsPct": 2.83
+      },
+      "rafIntervalIntroMs": {
+        "samples": 4571,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 17.1,
+        "p99": 33.7,
+        "max": 199.6,
+        "droppedPct": 3.26,
+        "below60fpsPct": 3.26
+      },
+      "rafIntervalStoryMs": {
+        "samples": 728,
+        "p50": 16.7,
+        "p90": 16.8,
+        "p95": 16.9,
+        "p99": 17.2,
+        "max": 65.6,
+        "droppedPct": 0.14,
+        "below60fpsPct": 0.14
+      },
+      "rafIntervalFieldMs": {
+        "samples": 1715,
+        "p50": 16.7,
+        "p90": 16.9,
+        "p95": 17.9,
+        "p99": 50,
+        "max": 199.6,
+        "droppedPct": 4.96,
+        "below60fpsPct": 4.96
+      },
+      "rafIntervalDataCentersMs": {
+        "samples": 2258,
+        "p50": 16.7,
+        "p90": 16.9,
+        "p95": 17.1,
+        "p99": 33.4,
+        "max": 115.8,
+        "droppedPct": 2.39,
+        "below60fpsPct": 2.39
+      },
+      "renderedFrameIntervalMs": {
+        "samples": 2130,
+        "p50": 16.7,
+        "p90": 19.1,
+        "p95": 25.9,
+        "p99": 40.6,
+        "max": 100.7,
+        "droppedPct": 5.31,
+        "below60fpsPct": 5.31
+      },
+      "footage": {
+        "seeks": 250,
+        "seekMsRecent": {
+          "samples": 40,
+          "p50": 16.7,
+          "p95": 24.8,
+          "p99": 69.1,
+          "max": 69.1
+        },
+        "lagFrames": {
+          "p50": 0,
+          "p90": 0,
+          "max": 2
+        }
+      },
+      "gpuFrameMs": {
+        "samples": 2792,
+        "p50": 0.9,
+        "p95": 12.09,
+        "p99": 20.8,
+        "max": 47.12
+      },
+      "cpuRenderMs": {
+        "samples": 4247,
+        "p50": 0.2,
+        "p95": 3.2,
+        "p99": 5.4,
+        "max": 28.6
+      },
+      "dprUsed": [
+        "1.75",
+        "1.49",
+        "1.26"
+      ],
+      "powerGeneration": {
+        "fieldStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1415,
+          "p50": 16.7,
+          "p90": 17.1,
+          "p95": 18.1,
+          "p99": 30.2,
+          "max": 195,
+          "droppedPct": 1.27,
+          "below60fpsPct": 1.27
+        },
+        "gpuFrameMs": {
+          "samples": 2166,
+          "p50": 1.62,
+          "p95": 9.68,
+          "p99": 12.87,
+          "max": 16.13
+        },
+        "cpuRenderMs": {
+          "samples": 3392,
+          "p50": 0.3,
+          "p95": 3.1,
+          "p99": 4.5,
+          "max": 6.9
+        },
+        "dprUsed": [
+          "1.26",
+          "1.07"
+        ],
+        "drawCalls": {
+          "samples": 1715,
+          "p50": 6,
+          "p95": 12,
+          "p99": 12,
+          "max": 12
+        },
+        "triangles": {
+          "samples": 1715,
+          "p50": 93850,
+          "p95": 185228,
+          "p99": 218176,
+          "max": 220432
+        }
+      },
+      "dataCenters": {
+        "dcStatus": "ready",
+        "renderedFrameIntervalMs": {
+          "samples": 1239,
+          "p50": 16.7,
+          "p90": 17.8,
+          "p95": 19.7,
+          "p99": 30.8,
+          "max": 132.4,
+          "droppedPct": 2.26,
+          "below60fpsPct": 2.26
+        },
+        "gpuFrameMs": {
+          "samples": 2423,
+          "p50": 1.42,
+          "p95": 11.16,
+          "p99": 12.81,
+          "max": 31.3
+        },
+        "cpuRenderMs": {
+          "samples": 2425,
+          "p50": 0.5,
+          "p95": 3.8,
+          "p99": 6.1,
+          "max": 12.4
+        },
+        "dprUsed": [
+          "1.07",
+          "1.00"
+        ],
+        "drawCalls": {
+          "samples": 2258,
+          "p50": 14,
+          "p95": 14,
+          "p99": 21,
+          "max": 21
+        },
+        "drawCallsInBand": {
+          "samples": 54,
+          "p50": 6,
+          "p95": 21,
+          "p99": 21,
+          "max": 21
+        },
+        "triangles": {
+          "samples": 2258,
+          "p50": 45242,
+          "p95": 45244,
+          "p99": 191566,
+          "max": 191566
+        }
+      },
+      "issues": []
+    }
+  }
+}

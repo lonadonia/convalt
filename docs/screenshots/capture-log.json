@@ -1,0 +1,458 @@
+{
+  "reference": {
+    "readyMs": 3665,
+    "handoffCornerErrorPx": 0.15047135733201733,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "01-departure": "6/6",
+      "02-footage-robot": "26/26",
+      "03-footage-release": "73/73",
+      "04-footage-approach": "95/95",
+      "05-footage-overhead": "124/124",
+      "06-last-frame-push-in": "142/142",
+      "07-handoff-crossfade": "142/142",
+      "08-handoff-factory-out": "142/142",
+      "09-handoff-travel": "142/142",
+      "10-overview": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "17-field-centred-module": {
+        "reveal": 0,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 0,
+        "supportsArriving": 0,
+        "heroSwap": 0,
+        "text": 0,
+        "calls": 2,
+        "triangles": 46
+      },
+      "18-field-environment": {
+        "reveal": 0,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 0,
+        "supportsArriving": 0,
+        "heroSwap": 0.3167844152169991,
+        "text": 0,
+        "calls": 5,
+        "triangles": 182440
+      },
+      "19-field-first-panel": {
+        "reveal": 0,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 19,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 4,
+        "triangles": 182530
+      },
+      "20-field-small-group": {
+        "reveal": 6.164929958878143,
+        "placed": 5,
+        "arriving": 6,
+        "supportsPlaced": 19,
+        "supportsArriving": 19,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 12,
+        "triangles": 185376
+      },
+      "21-field-rows": {
+        "reveal": 89.84280362243392,
+        "placed": 191,
+        "arriving": 6,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 226272
+      },
+      "22-field-installation": {
+        "reveal": 305.8872982145205,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 5,
+        "triangles": 256320
+      },
+      "23-field-text": {
+        "reveal": 305.8872982145205,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 256320
+      },
+      "dcStatus": "ready",
+      "24-dc-transition": {
+        "mode": "band",
+        "calls": 21,
+        "triangles": 301566,
+        "text": 0
+      },
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "26-dc-pullback": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "27-dc-final-view": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  },
+  "desktop": {
+    "readyMs": 1159,
+    "handoffCornerErrorPx": 0.12651296465304857,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "02-footage-robot": "26/26",
+      "05-footage-overhead": "124/124",
+      "07-handoff-crossfade": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "21-field-rows": {
+        "reveal": 89.88749458749167,
+        "placed": 192,
+        "arriving": 5,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 226272
+      },
+      "23-field-text": {
+        "reveal": 305.8872982145205,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 256320
+      },
+      "dcStatus": "ready",
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  },
+  "wide": {
+    "readyMs": 949,
+    "handoffCornerErrorPx": 0.15181555757875015,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "02-footage-robot": "26/26",
+      "05-footage-overhead": "124/124",
+      "07-handoff-crossfade": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "21-field-rows": {
+        "reveal": 89.84119867690774,
+        "placed": 191,
+        "arriving": 6,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 226272
+      },
+      "23-field-text": {
+        "reveal": 305.8872982145205,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 256320
+      },
+      "dcStatus": "ready",
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  },
+  "tablet": {
+    "readyMs": 675,
+    "handoffCornerErrorPx": 0.1079577298341862,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "02-footage-robot": "26/26",
+      "05-footage-overhead": "124/124",
+      "07-handoff-crossfade": "142/142",
+      "10-overview": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "21-field-rows": {
+        "reveal": 89.83843943044903,
+        "placed": 191,
+        "arriving": 6,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 226272
+      },
+      "23-field-text": {
+        "reveal": 305.8872982145205,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 256320
+      },
+      "dcStatus": "ready",
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  },
+  "tabletPortrait": {
+    "readyMs": 786,
+    "handoffCornerErrorPx": 0.11608358047224389,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "02-footage-robot": "26/26",
+      "05-footage-overhead": "124/124",
+      "07-handoff-crossfade": "142/142",
+      "10-overview": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "21-field-rows": {
+        "reveal": 89.90693801640849,
+        "placed": 192,
+        "arriving": 5,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 116272
+      },
+      "23-field-text": {
+        "reveal": 305.8872532255835,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 146320
+      },
+      "dcStatus": "ready",
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  },
+  "mobile": {
+    "readyMs": 791,
+    "handoffCornerErrorPx": 0.09567826359135825,
+    "footageFrames": {
+      "00-opening": "6/6",
+      "01-departure": "6/6",
+      "02-footage-robot": "27/27",
+      "03-footage-release": "73/73",
+      "04-footage-approach": "95/95",
+      "05-footage-overhead": "124/124",
+      "06-last-frame-push-in": "142/142",
+      "07-handoff-crossfade": "142/142",
+      "08-handoff-factory-out": "142/142",
+      "09-handoff-travel": "142/142",
+      "10-overview": "142/142"
+    },
+    "field": {
+      "status": "ready",
+      "17-field-centred-module": {
+        "reveal": 0,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 0,
+        "supportsArriving": 0,
+        "heroSwap": 0,
+        "text": 0,
+        "calls": 2,
+        "triangles": 46
+      },
+      "18-field-environment": {
+        "reveal": 0,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 0,
+        "supportsArriving": 0,
+        "heroSwap": 0.3156993293538271,
+        "text": 0,
+        "calls": 5,
+        "triangles": 72440
+      },
+      "19-field-first-panel": {
+        "reveal": 0.000039534742138398225,
+        "placed": 0,
+        "arriving": 0,
+        "supportsPlaced": 19,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 6,
+        "triangles": 72852
+      },
+      "20-field-small-group": {
+        "reveal": 6.15281059920178,
+        "placed": 5,
+        "arriving": 6,
+        "supportsPlaced": 19,
+        "supportsArriving": 19,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 12,
+        "triangles": 75376
+      },
+      "21-field-rows": {
+        "reveal": 89.86570591101977,
+        "placed": 191,
+        "arriving": 6,
+        "supportsPlaced": 285,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 10,
+        "triangles": 116272
+      },
+      "22-field-installation": {
+        "reveal": 305.8872532255835,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 0,
+        "calls": 5,
+        "triangles": 146320
+      },
+      "23-field-text": {
+        "reveal": 305.8872532255835,
+        "placed": 671,
+        "arriving": 0,
+        "supportsPlaced": 912,
+        "supportsArriving": 0,
+        "heroSwap": 1,
+        "text": 1,
+        "calls": 5,
+        "triangles": 146320
+      },
+      "dcStatus": "ready",
+      "24-dc-transition": {
+        "mode": "band",
+        "calls": 21,
+        "triangles": 191566,
+        "text": 0
+      },
+      "25-dc-closeup": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "26-dc-pullback": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "27-dc-final-view": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 0
+      },
+      "28-dc-text": {
+        "mode": "datacenter",
+        "calls": 14,
+        "triangles": 45242,
+        "text": 1
+      }
+    },
+    "log": []
+  }
+}

@@ -1,0 +1,47 @@
+:root {
+  /* Palette (proposal values; confirm against the brand files) */
+  --ivory: #f5f4ee;
+  --petrol: #123336;
+  --teal: #008f89;
+  --mist: #d7deda;
+
+  /* Derived — contrast checked on ivory */
+  --ink: var(--petrol);                 /* 12.3:1 */
+  --ink-soft: #3b5557;                  /* ≈ 7.3:1, body copy */
+  --ink-muted: #56696a;                 /* ≈ 5.3:1, captions */
+  --teal-text: #00736e;                 /* ≈ 5.0:1, small teal text */
+  --line: rgb(18 51 54 / 0.14);
+  --line-strong: rgb(18 51 54 / 0.28);
+  --focus: #00736e;
+
+  /* Lower page (data centers → footer): one dark palette. Contrast measured on --dark-bg. */
+  --dark-bg: #0b1214;
+  --dark-surface: #111d20;
+  --dark-raised: #17272a;
+  --dark-text: #f2f5f2;                 /* 17.6:1 */
+  --dark-text-2: #b5c2c1;               /* 10.5:1 */
+  --dark-muted: #8a9a98;                /* 6.6:1, captions and legal text */
+  --dark-accent: #5fd3c4;               /* 10.2:1, teal for text on dark */
+  --dark-line: rgb(242 245 242 / 0.12);
+  --dark-line-strong: rgb(242 245 242 / 0.26);
+
+  --font: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --gutter: clamp(20px, 5.2vw, 88px);
+  --header-h: 84px;
+  --radius: 2px;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+
+  /* Width-driven, but capped by height so short laptop screens keep room for the controls. */
+  --text-display: clamp(2.5rem, min(1.15rem + 4.5vw, 10vh), 5.5rem);   /* 40 → 88 px */
+  --text-section: clamp(2.25rem, min(1rem + 3.5vw, 7.8vh), 4.5rem);    /* 36 → 72 px */
+  --text-lede: clamp(1.0625rem, 0.97rem + 0.3vw, 1.25rem);  /* 17 → 20 px */
+  --text-small: 0.8125rem;
+  --text-micro: 0.75rem;
+}
+
+@media (max-width: 759px) {
+  :root {
+    --header-h: 68px;
+  }
+}
