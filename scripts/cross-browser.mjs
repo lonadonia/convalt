@@ -38,14 +38,14 @@ const STATES = [
   ['field-final', { field: 0.94 }],
   ['dc-closeup', { dc: 0.1 }],
   ['dc-final', { dc: 0.95 }],
-  ['portfolio', { el: '#portfolio .regions' }],
+  ['portfolio', { el: '#portfolio .pf-item[data-index="1"]', offsetVh: 0.13 }],
   ['company', { el: '#company' }],
 ];
 
 async function goTo(page, pos) {
   if ('el' in pos) {
     // Sections below the journey (ordinary flow): element at the top; visible images decoded.
-    await page.evaluate((sel) => { const e = document.querySelector(sel); window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY - 24)); }, pos.el);
+    await page.evaluate(({ el, offsetVh = 0 }) => { const e = document.querySelector(el); window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY - 24 + offsetVh * window.innerHeight)); }, pos);
     await page.waitForFunction(() => [...document.querySelectorAll('.lp-section img')].filter((i) => { const r = i.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < window.innerHeight; }).every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => undefined);
     await page.waitForTimeout(1300);
     return;
@@ -106,7 +106,7 @@ for (const [name, launch] of engines) {
       if ('dc' in pos && !sections.dc) sections.dc = await page.waitForFunction(() => ['ready', 'error'].includes(window.__convalt.ui.get().dcStatus) && window.__convalt.ui.get().dcStatus, null, { timeout: 90000 }).then((h) => h.jsonValue()).catch(() => 'timeout');
       await goTo(page, pos);
       if ('field' in pos || 'dc' in pos) sections[label] = await page.evaluate(() => { const r = window.__convaltPerf?.render ?? {}; return `${r.mode}:${r.calls}`; });
-      if ('el' in pos) sections[label] = await page.evaluate(() => { const g = document.querySelector('#region-panel-united-states .project-grid'); const vis = [...document.querySelectorAll('.lp-section img')].filter((i) => { const r = i.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight; }); return `cols:${getComputedStyle(g).gridTemplateColumns.split(' ').length} images:${vis.filter((i) => i.complete && i.naturalWidth > 0).length}/${vis.length}`; });
+      if ('el' in pos) sections[label] = await page.evaluate(() => { const s = document.querySelector('#portfolio'); const active = [...s.querySelectorAll('.pf-item')].findIndex((it) => it.dataset.active === 'true'); const vis = [...document.querySelectorAll('.lp-section img')].filter((im) => { const r = im.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight; }); return `mode:${s.dataset.mode} active:${active} images:${vis.filter((im) => im.complete && im.naturalWidth > 0).length}/${vis.length}`; });
       if ('intro' in pos && pos.intro > 0.1 && pos.intro < 0.8) {
         frames[label] = await page.evaluate(() => {
           const c = window.__convalt, sc = window.__convaltPerf?.scrub;

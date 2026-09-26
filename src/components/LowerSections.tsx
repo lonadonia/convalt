@@ -1,131 +1,99 @@
-import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
-import { COMPANY, PORTFOLIO, type Project } from '../content/portfolio';
+import { useRef, type CSSProperties } from 'react';
+import { COMPANY, PORTFOLIO } from '../content/portfolio';
 import { PORTFOLIO_MEDIA } from '../content/portfolioMedia';
+import { usePortfolioScroll } from '../hooks/usePortfolioScroll';
 import { useReveal } from '../hooks/useReveal';
 
 const statusKey = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
 
-/**
- * One project: the image with its status, then location, title and scope. The title is the only
- * link; its hit area covers the whole card (no nested interactive elements).
- */
-function ProjectCard({ project: p }: { project: Project }) {
-  const img = PORTFOLIO_MEDIA[p.image];
-  const cut = p.title.lastIndexOf(' ');
-  const lead = cut > 0 ? p.title.slice(0, cut + 1) : '';
-  const last = p.title.slice(cut + 1);
-  return (
-    <article className="project-card">
-      <div className="project-card__media">
-        <img
-          src={img.src}
-          srcSet={img.srcSet}
-          sizes="(min-width: 1100px) 30vw, (min-width: 640px) 46vw, 92vw"
-          width={img.width}
-          height={img.height}
-          alt={p.alt}
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <div className="project-card__body">
-        <h3 className="project-card__title">
-          <a className="project-card__link" href={p.href}>
-            {lead}
-            {/* The arrow stays with the last word (never alone on a line). */}
-            <span className="project-card__last">
-              {last}
-              <span className="project-card__arrow" aria-hidden="true">↗</span>
-            </span>
-          </a>
-        </h3>
-        <p className="project-card__status" data-status={statusKey(p.status)}>
-          <span className="visually-hidden">Status: </span>
-          {p.status}
-        </p>
-        <p className="project-card__location">{p.location}</p>
-        <p className="project-card__desc">
-          {p.description} · <span className="project-card__category">{p.category}</span>
-        </p>
-      </div>
-    </article>
-  );
-}
-
-/**
- * Project portfolio: regional tabs (WAI-ARIA tabs, automatic activation: arrow keys, Home and
- * End move and select; Tab moves into the projects). United States is selected at first.
- */
+/** Project portfolio: one article per project; CSS chooses the stacked list or the scroll layout. */
 export function Portfolio() {
   const root = useRef<HTMLElement>(null);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-  const regions = PORTFOLIO.regions;
+  const projects = PORTFOLIO.projects;
+  const { mode, active, goTo } = usePortfolioScroll(root, projects.length);
   useReveal(root);
-
-  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
-    const n = regions.length;
-    const next = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
-    if (next < 0) return;
-    e.preventDefault();
-    setActive(next);
-    tabs.current[next]?.focus();
-  };
+  const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
-    <section className="lp-section portfolio" id={PORTFOLIO.id} aria-labelledby="portfolio-title" ref={root}>
-      <div className="lp-inner">
-        <div className="lp-head" data-reveal>
-          <div>
-            <p className="eyebrow lp-eyebrow">
-              <span className="eyebrow__rule" aria-hidden="true" />
-              {PORTFOLIO.eyebrow}
-            </p>
-            <h2 id="portfolio-title" className="display display--section lp-title">
-              <span className="lp-line">{PORTFOLIO.headline[0]}</span>
-              <span className="lp-line display__accent">{PORTFOLIO.headline[1]}</span>
-            </h2>
-          </div>
-          <a className="lp-link" href={PORTFOLIO.allProjects.href}>
-            {PORTFOLIO.allProjects.label} <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-        <div className="regions" role="tablist" aria-label={PORTFOLIO.regionsLabel} data-reveal>
-          {regions.map((r, i) => (
-            <button
-              key={r.id}
-              ref={(el) => { tabs.current[i] = el; }}
-              type="button"
-              role="tab"
-              id={`region-tab-${r.id}`}
-              className="regions__tab"
-              aria-selected={i === active}
-              aria-controls={`region-panel-${r.id}`}
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
-              onKeyDown={(e) => onKeyDown(e, i)}
-            >
-              {r.label}
-            </button>
-          ))}
-        </div>
-        {regions.map((r, i) => (
-          <div key={r.id} role="tabpanel" id={`region-panel-${r.id}`} aria-labelledby={`region-tab-${r.id}`} className="regions__panel" hidden={i !== active}>
-            {r.projects.length > 0 ? (
-              <ul className="project-grid">
-                {r.projects.map((p, k) => (
-                  <li key={p.href} data-reveal style={{ '--reveal-i': k % 3 } as CSSProperties}>
-                    <ProjectCard project={p} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="regions__empty">
-                {PORTFOLIO.empty} <a className="lp-link" href={PORTFOLIO.allProjects.href}>{PORTFOLIO.allProjects.label} <span aria-hidden="true">↗</span></a>
-              </p>
-            )}
-          </div>
-        ))}
+    <section className="lp-section pf" id={PORTFOLIO.id} aria-labelledby="portfolio-title" data-mode={mode} ref={root}>
+      <div className="lp-inner pf-intro" data-reveal>
+        <p className="eyebrow lp-eyebrow">
+          <span className="eyebrow__rule" aria-hidden="true" />
+          {PORTFOLIO.eyebrow}
+        </p>
+        <h2 id="portfolio-title" className="display display--section lp-title">
+          <span className="lp-line">{PORTFOLIO.headline[0]}</span>
+          <span className="lp-line display__accent">{PORTFOLIO.headline[1]}</span>
+        </h2>
+      </div>
+      <div className="lp-inner pf-body">
+        {/* Which project is in focus (scroll layout): an index that follows the scroll. */}
+        <nav className="pf-rail" aria-label="Projects in this section">
+          <ol>
+            {projects.map((p, i) => (
+              <li key={p.id}>
+                <a
+                  href={`#${p.id}`}
+                  aria-current={active === i ? 'true' : undefined}
+                  onClick={(e) => { e.preventDefault(); goTo(i); }}
+                >
+                  <span className="pf-rail__num">{pad(i + 1)}</span>
+                  <span className="pf-rail__name">{p.title}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+          <span className="pf-rail__meter" aria-hidden="true"><span /></span>
+        </nav>
+        <ol className="pf-list">
+          {projects.map((p, i) => {
+            const img = PORTFOLIO_MEDIA[p.image];
+            return (
+              <li key={p.id} id={p.id} className="pf-item" data-index={i} data-active={active === i ? 'true' : undefined}>
+                <article className="pf-item__text" aria-labelledby={`${p.id}-title`} data-reveal>
+                  <p className="pf-item__num" aria-hidden="true">
+                    {pad(i + 1)} <span>/ {pad(projects.length)}</span>
+                  </p>
+                  <p className="pf-status" data-status={statusKey(p.status)}>
+                    <span className="visually-hidden">Status: </span>
+                    {p.status}
+                  </p>
+                  <h3 id={`${p.id}-title`} className="pf-item__title">{p.title}</h3>
+                  <p className="pf-item__location">{p.location}</p>
+                  <p className="pf-item__summary">{p.summary}</p>
+                  <p className="pf-item__scope">
+                    {p.scope} · <span className="pf-item__category">{p.category}</span>
+                  </p>
+                  <a className="lp-link pf-item__link" href={p.href}>
+                    {PORTFOLIO.projectLink}
+                    <span className="visually-hidden">: {p.title}</span> <span aria-hidden="true">↗</span>
+                  </a>
+                </article>
+                <div className="pf-item__media">
+                  {/* The image opens the project too (pointer convenience; the link above is the real one). */}
+                  <a className="pf-frame" href={p.href} tabIndex={-1} aria-hidden="true">
+                    <img
+                      src={img.src}
+                      srcSet={img.srcSet}
+                      sizes="(min-width: 900px) 58vw, 92vw"
+                      width={img.width}
+                      height={img.height}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                  <span className="visually-hidden" role="img" aria-label={p.alt} />
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+      <div className="lp-inner pf-outro" data-reveal>
+        <a className="pf-all" href={PORTFOLIO.allProjects.href}>
+          {PORTFOLIO.allProjects.label} <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
   );

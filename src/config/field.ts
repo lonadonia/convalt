@@ -18,7 +18,6 @@ type Vec2 = readonly [number, number];
 type Vec3 = readonly [number, number, number];
 
 export const FIELD_ASSETS = {
-  module: { desktop: '/models/field-module-2k.glb', mobile: '/models/field-module-1k.glb' },
   terrain: { desktop: '/models/field/terrain-desktop.glb', mobile: '/models/field/terrain-mobile.glb' },
   layers: {
     inset: { desktop: '/models/field/terrain-inset-desktop.webp', mobile: '/models/field/terrain-inset-mobile.webp' },
@@ -96,8 +95,9 @@ export const HERO_MOUNT: Vec3 = [0, -0.26, 0];
  * Field progress windows. Treat as tuning values; everything re-derives.
  *  0.00–0.12  brief approach toward the centred panel
  *  0.05–0.24  ivory → outdoor light, sky and terrain
- *  0.10–0.26  the Module scene's panel hands over to the supplied field module (aligned crossfade,
- *             carried by the light change and the settle so the colour shift reads as light)
+ *  0.00       the hero is the Module scene's panel itself (same mesh, same material values): it
+ *             switches to the field's copy at the first step, while the light is still the
+ *             studio's — identical pixels, no crossfade, and its sun shadow grows with the sun
  *  0.15–0.30  the panel settles onto its mounting table (its structure appears just before)
  *  0.30–0.78  reveal: small group → table → row → rows → installation; camera retreats and rises
  *  0.78–0.88  camera settles; section text appears
@@ -106,7 +106,7 @@ export const HERO_MOUNT: Vec3 = [0, -0.26, 0];
 export const FIELD_RANGES = {
   approach: [0.0, 0.12],
   environment: [0.05, 0.24],
-  handoff: [0.1, 0.26],
+  handoff: [0.0, 0.002],
   settle: [0.15, 0.3],
   heroTable: [0.19, 0.28],
   studioOut: [0.05, 0.16],

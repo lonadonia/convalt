@@ -12,7 +12,7 @@ export type FieldSample = {
   environment: number;
   /** Exponential-squared haze density: dense ivory at first, subtle atmosphere after. */
   fog: number;
-  /** Module scene's panel → supplied field module (aligned crossfade). */
+  /** > 0 once the field's copy of the panel has taken over (same mesh, same pose: invisible). */
   heroSwap: number;
   /** The panel's settle onto its table (0 = centred in the studio, 1 = mounted). */
   settle: number;

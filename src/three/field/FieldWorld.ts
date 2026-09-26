@@ -5,7 +5,7 @@ import type { Tier } from '../../state/store';
 import { clamp, easeOutCubic, smoothstep } from '../../lib/math';
 import { compileWhenReady } from '../compile';
 import { EnvironmentBlend } from './environmentBlend';
-import type { FieldAssets } from './fieldAssets';
+import type { FieldAssets, FieldModuleAsset } from './fieldAssets';
 import { createSky, createTerrainMaterial, withInstanceOpacity, type SkyUniforms } from './fieldMaterials';
 
 /** Per-frame inputs from the scene controller (all derived from the journey progress). */
@@ -18,7 +18,7 @@ export type FieldFrame = {
   t: number;
   /** Progress of the hero table's structure (appears just before the panel settles). */
   heroTable: number;
-  /** Hero crossfade: 0 = Module scene's panel, 1 = supplied field module. */
+  /** > 0: the field's copy of the panel stands in for the Module scene's panel (same mesh). */
   heroSwap: number;
   camera: THREE.Camera;
 };
@@ -57,14 +57,15 @@ function instanceSet(geometry: THREE.BufferGeometry, base: THREE.MeshStandardMat
 }
 
 /**
- * The outdoor scene: terrain, sky, the installation (instanced modules and supports) and the hero
- * module that takes over from the Module scene's panel. Built once when its assets arrive; the
- * controller drives it with one FieldFrame per rendered frame.
+ * The outdoor scene: terrain, sky, the installation (instanced modules and supports) and the hero.
+ * Every module is the Module scene's panel (same geometry and material values); the hero is its
+ * exact stand-in in the pose root. Built once when its assets arrive; the controller drives it with
+ * one FieldFrame per rendered frame.
  */
 export class FieldWorld {
   readonly root = new THREE.Group();
   readonly layout: FieldLayout;
-  /** The supplied module as the hero (child of the pose root; registered to the Module scene's panel). */
+  /** The hero: the panel's field copy (child of the pose root, exactly where the panel is). */
   readonly hero: THREE.Mesh;
   /** Pose-root pose at which the hero module sits exactly in its slot. */
   readonly heroRootPose: { position: THREE.Vector3; quaternion: THREE.Quaternion };
@@ -87,8 +88,7 @@ export class FieldWorld {
   private readonly moduleReveal: Float32Array;
   private readonly supportTableEnd: number[];
   private readonly supportMatrices: THREE.Matrix4[];
-  private readonly heroMaterial: THREE.MeshStandardMaterial;
-  private readonly heroFade: THREE.MeshStandardMaterial;
+  private readonly moduleMaterial: THREE.MeshStandardMaterial;
   private readonly env: EnvironmentBlend;
   private readonly fog: THREE.FogExp2;
   private disposed = false;
@@ -113,14 +113,14 @@ export class FieldWorld {
     lights: FieldLights,
     studioEnvironment: () => THREE.Texture | null,
     assets: FieldAssets,
-    heroOriginalThickness: number,
+    mod: FieldModuleAsset,
     tier: Tier,
   ) {
     this.renderer = renderer;
     this.scene = scene;
     this.lights = lights;
     this.studioEnvironment = studioEnvironment;
-    const mod = assets.module;
+    this.moduleMaterial = mod.material;
     this.layout = buildLayout(assets.terrain.sampler, { width: mod.size[0], height: mod.size[1], thickness: mod.size[2] });
     const L = this.layout;
     this.root.name = 'PowerGeneration';
@@ -174,23 +174,13 @@ export class FieldWorld {
     for (const b of boxes) this.bounds.union(new THREE.Box3().setFromCenterAndSize(b.position, b.scale));
     for (const set of [this.modules, this.supports]) this.root.add(set.opaque, set.fading);
 
-    // Hero: the supplied module, registered to the Module scene's panel (cell-field centres, its glass
-    // 1 mm in front of the old front face so the crossfade blends over it without z-fighting).
-    this.heroMaterial = mod.material;
-    this.heroFade = mod.material.clone();
-    this.heroFade.transparent = true;
-    this.heroFade.opacity = 0;
-    this.hero = new THREE.Mesh(mod.geometry, this.heroFade);
-    this.hero.name = 'HeroFieldModule';
+    // Hero: the same mesh as the Module scene's panel at the same local pose (no offset), so the
+    // switch between the two is pixel-identical; it settles into its slot with the pose root.
+    this.hero = new THREE.Mesh(mod.geometry, mod.material);
+    this.hero.name = 'HeroPanel';
     this.hero.castShadow = true;
     this.hero.visible = false;
-    this.hero.renderOrder = 2;
-    const align = new THREE.Vector3(-mod.cellField.cx, -mod.cellField.cy, heroOriginalThickness / 2 + 0.001 - mod.glassZ);
-    this.hero.position.copy(align);
-    this.heroRootPose = {
-      quaternion: L.hero.quaternion.clone(),
-      position: L.hero.position.clone().sub(align.clone().applyQuaternion(L.hero.quaternion)),
-    };
+    this.heroRootPose = { quaternion: L.hero.quaternion.clone(), position: L.hero.position.clone() };
 
     // Lights: sun shadow covers the installation only (one map).
     const sun = lights.sun;
@@ -255,7 +245,7 @@ export class FieldWorld {
 
   /** Applies one frame. Returns whether the shadow map needs re-rendering. */
   update(f: FieldFrame): boolean {
-    const active = f.environment > 0.0005 || f.heroSwap > 0;
+    const active = f.environment > 0.0005;
     this.root.visible = active;
     // Light and reflections: studio → outdoors.
     const b = f.environment;
@@ -274,11 +264,9 @@ export class FieldWorld {
     this.fog.density = active ? f.fog : 0;
     this.sky.position.copy((f.camera as THREE.PerspectiveCamera).position);
 
-    // Hero crossfade (the new module blends over the Module scene's panel, then replaces it).
+    // Hero: stands in for the Module scene's panel from the field's first step (same mesh and pose).
     const swap = clamp(f.heroSwap);
-    this.hero.visible = swap > 0.001;
-    if (swap >= 0.999) { this.hero.material = this.heroMaterial; this.hero.renderOrder = 0; }
-    else { this.hero.material = this.heroFade; this.heroFade.opacity = swap; this.hero.renderOrder = 2; }
+    this.hero.visible = swap > 0;
 
     const R = this.revealAt(f.t), band = REVEAL.band;
     let shadowDirty = active && (R !== this.last.reveal || f.heroTable !== this.last.heroTable || swap !== this.last.heroSwap);
@@ -374,7 +362,8 @@ export class FieldWorld {
     (this.terrain.material as THREE.Material).dispose();
     (this.sky.material as THREE.Material).dispose();
     this.sky.geometry.dispose();
-    this.heroFade.dispose();
+    // The geometry and textures belong to the panel asset; only the field's material copies go.
+    this.moduleMaterial.dispose();
     this.root.removeFromParent();
     this.hero.removeFromParent();
   }

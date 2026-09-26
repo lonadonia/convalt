@@ -12,20 +12,20 @@
   "gcr": 0.4
  },
  "dims": {
-  "tableLength": 13.329,
-  "slopeLength": 1.907,
-  "pitch": 4.768,
-  "rowWidth": 59.916,
-  "depth": 60.171
+  "tableLength": 13.168,
+  "slopeLength": 1.89,
+  "pitch": 4.725,
+  "rowWidth": 59.272,
+  "depth": 59.688
  },
  "clearanceM": [
   0.75,
-  0.826
+  0.827
  ],
  "legM": [
-  0.705,
-  1.342
+  0.718,
+  1.338
  ],
- "rollMax": 0.031,
- "revealMax": 303.28
+ "rollMax": 0.0308,
+ "revealMax": 302.89
 }

@@ -12,7 +12,10 @@
  *   lorton-field.zip  source/model.zip › model.obj (photogrammetry, 723 k vertices, 1.44 M triangles,
  *                     no normals, 31 × 39 × 3 scan units) + two 8192² texture atlases.
  *
- * Module → public/models/field-module-{2k,1k}.glb
+ * The installation reuses the Overview / Module scene's own panel (public/models/solar-panel-*.glb);
+ * the module below is no longer used by the page and is only built with --legacy-module.
+ *
+ * Module → public/models/field-module-{2k,1k}.glb  (--legacy-module)
  *   Keeps the module (slab + junction box); the stand is dropped (the installation gets procedural
  *   mounting tables). Normalized: metres, centred, front face +Z, long side X, uniformly scaled to the
  *   Module scene's panel width (1.864 m) — aspect 2.000 vs 1.994, so no stretching is needed.
@@ -599,8 +602,11 @@ async function main() {
   const { panelDir, fieldDir } = extractSources();
   fs.mkdirSync(OUT_MODELS, { recursive: true });
   const onlyModule = process.argv.includes('--module-only');
-  const module = await prepareModule(panelDir);
-  log('Module:', JSON.stringify({ size: module.size, frontZ: module.frontZ, glassZ: module.glassZ, cellField: module.cellField }));
+  const legacyModule = onlyModule || process.argv.includes('--legacy-module');
+  const module = legacyModule
+    ? await prepareModule(panelDir)
+    : { note: 'The installation reuses the Overview / Module scene panel (public/models/solar-panel-{2k,1k}.glb, 44 triangles, 1.864 × 0.935 × 0.030 m); no separate field module is built.' };
+  if (legacyModule) log('Module:', JSON.stringify({ size: module.size, frontZ: module.frontZ, glassZ: module.glassZ, cellField: module.cellField }));
   const reportFile = path.join(DOCS, 'field-asset-report.json');
   const previous = fs.existsSync(reportFile) ? JSON.parse(fs.readFileSync(reportFile, 'utf8')) : {};
   const terrain = onlyModule ? previous.terrain : await prepareTerrain(fieldDir);
@@ -610,7 +616,7 @@ async function main() {
     licence: 'Neither archive contains a licence, readme or attribution file. Terms must be confirmed with the supplier before production use.',
     archives: { 'solar-panel.zip': ['source/model.fbx', 'textures/SolarPanel_Albedo.png', 'textures/SolarPanel_Normal.png', 'textures/SolarPanel_Metalness.png'], 'lorton-field.zip': ['source/model.zip › model.obj, model.mtl, model.jpg, model1.jpg', 'textures/model.jpeg', 'textures/model1.jpeg'] },
     scaleAssumptions: {
-      module: `Visualization scale: the new module is scaled uniformly to the Module scene's panel width (${MODULE_WIDTH} m). Real 72-cell modules are typically ≈ 1.95–2.0 m × ≈ 1.0 m; this is an illustrative installation, not a product specification.`,
+      module: 'Visualization scale: every installed module is the Module scene panel at 1:1 (1.864 × 0.935 m). Real 72-cell modules are typically ≈ 1.95–2.0 m × ≈ 1.0 m; this is an illustrative installation, not a product specification.',
       terrain: `${SCALE} m per scan unit, estimated from recognizable features (lanes, road markings, sheep); an estimate, not survey data.`,
     },
     module,

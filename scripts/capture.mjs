@@ -230,9 +230,9 @@ async function scrollToJourney(page, j) {
  */
 async function goTo(page, pos, settleMs = 400) {
   if (typeof pos === 'object' && 'el' in pos) {
-    await page.evaluate(({ el, offset = 0 }) => {
+    await page.evaluate(({ el, offset = 0, offsetVh = 0 }) => {
       const e = document.querySelector(el);
-      window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY + offset));
+      window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY + offset + offsetVh * window.innerHeight));
     }, pos);
     // Visible images decoded, entrance finished.
     await page.waitForFunction(() => [...document.querySelectorAll('.lp-section img')]
@@ -395,12 +395,12 @@ const STATES = [
   { name: '30-footer', pos: { bottom: true } },
   // The sections after the data centers, in ordinary flow.
   { name: '31-portfolio', pos: { el: '#portfolio' } },
-  { name: '32-portfolio-grid', pos: { el: '#portfolio .regions', offset: -24 } },
+  { name: '32-portfolio-project', pos: { el: '#portfolio .pf-item[data-index="1"]', offsetVh: 0.13 } },
   { name: '33-company', pos: { el: '#company' } },
 ];
 /** Full state set at the reference size and on the phone; key states elsewhere. */
 const FULL_SETS = ['reference', 'mobile'];
-const KEY_STATES = ['31-portfolio', '32-portfolio-grid', '33-company', '00-opening', '02-footage-robot', '05-footage-overhead', '07-handoff-crossfade', '10-overview', '13-component-inspection', '21-field-rows', '23-field-text', '25-dc-closeup', '28-dc-text', '30-footer'];
+const KEY_STATES = ['31-portfolio', '32-portfolio-project', '33-company', '00-opening', '02-footage-robot', '05-footage-overhead', '07-handoff-crossfade', '10-overview', '13-component-inspection', '21-field-rows', '23-field-text', '25-dc-closeup', '28-dc-text', '30-footer'];
 const statesFor = (vpName) => (FULL_SETS.includes(vpName) ? STATES : STATES.filter((st) => KEY_STATES.includes(st.name)));
 
 async function shots() {
@@ -1052,9 +1052,9 @@ async function checks() {
     const fs1 = await waitField(page);
     await goTo(page, { field: 0.94 }, 800);
     const pf = await fieldState(page);
-    const assets = await page.evaluate(() => performance.getEntriesByType('resource').map((r) => r.name.split('/').pop()).filter((n) => /terrain|field-module/.test(n)));
+    const assets = await page.evaluate(() => performance.getEntriesByType('resource').map((r) => r.name.split('/').pop()).filter((n) => /terrain|field-module|solar-panel/.test(n)));
     const cta = await page.locator('.stage .chapter--field a.btn--primary').boundingBox();
-    record('phone: power generation uses the light assets (mobile terrain, 1K module) and completes', fs1 === 'ready' && assets.includes('terrain-mobile.glb') && assets.includes('field-module-1k.glb') && !assets.some((n) => /desktop|2k/.test(n)) && pf.live?.placed === pf.stats.modules - 1 && pf.text > 0.99,
+    record('phone: power generation uses the light assets (mobile terrain, the 1K Overview panel — no separate field module) and completes', fs1 === 'ready' && assets.includes('terrain-mobile.glb') && assets.includes('solar-panel-1k.glb') && !assets.some((n) => /desktop|2k|field-module/.test(n)) && pf.live?.placed === pf.stats.modules - 1 && pf.text > 0.99,
       JSON.stringify({ status: fs1, assets, placed: pf.live?.placed, text: pf.text }));
     record('phone: projects link is a comfortable touch target', cta && cta.height >= 44, JSON.stringify(cta));
     const ds = await waitDc(page);
@@ -1229,6 +1229,45 @@ async function checks() {
 
   // 7. Power generation: background loading, deterministic layout, reveal order, reverse scrolling,
   //    text timing, projects link, deep link, reload, resize across tiers, fast scrolling, cost.
+  if (want(7)) {
+    // One panel for Overview and Power Generation: the installation, the hero and the Module scene's
+    // panel share one geometry and the same textures, and the switch between the panel and the
+    // field's hero at the start of the field is invisible (same pixels).
+    const { context, page } = await newPage();
+    await page.goto(BASE + '?inspect=1', { waitUntil: 'domcontentloaded' });
+    await waitReady(page);
+    await waitField(page);
+    await goTo(page, { field: 0.004 }, 600);
+    const shared = await page.evaluate(() => {
+      const { scene } = window.__three;
+      const byName = (n) => { let o = null; scene.traverse((x) => { if (!o && x.name === n) o = x; }); return o; };
+      const panel = byName('SuppliedSolarPanel'), hero = byName('HeroPanel'), modules = byName('Modules-placed'), arriving = byName('Modules-arriving');
+      const maps = (m) => [m.map, m.normalMap, m.roughnessMap, m.metalnessMap].map((t) => t?.uuid ?? null).join();
+      return {
+        found: Boolean(panel && hero && modules && arriving),
+        geometry: panel && hero && modules ? hero.geometry === panel.geometry && modules.geometry === panel.geometry : false,
+        textures: panel && hero && modules && arriving ? [hero, modules, arriving].every((m) => maps(m.material) === maps(panel.material)) : false,
+        values: panel && modules ? ['roughness', 'metalness', 'envMapIntensity'].every((k) => modules.material[k] === panel.material[k]) : false,
+        triangles: panel ? panel.geometry.index.count / 3 : 0,
+        visible: { panel: panel?.visible, hero: hero?.visible },
+      };
+    });
+    const pixels = await page.evaluate(async () => {
+      const { gl, scene, camera } = window.__three;
+      const byName = (n) => { let o = null; scene.traverse((x) => { if (!o && x.name === n) o = x; }); return o; };
+      const panel = byName('SuppliedSolarPanel'), hero = byName('HeroPanel');
+      const grab = () => { gl.render(scene, camera); const c = gl.domElement; const w = c.width, h = c.height; const px = new Uint8Array(w * h * 4); const ctx = gl.getContext(); ctx.readPixels(0, 0, w, h, ctx.RGBA, ctx.UNSIGNED_BYTE, px); return px; };
+      const a = grab();
+      hero.visible = false; panel.visible = true;
+      const b = grab();
+      hero.visible = true; panel.visible = false;
+      let diff = 0, n = 0, max = 0;
+      for (let k = 0; k < a.length; k += 4 * 7) { const d = Math.abs(a[k] - b[k]) + Math.abs(a[k + 1] - b[k + 1]) + Math.abs(a[k + 2] - b[k + 2]); diff += d; n++; if (d > max) max = d; }
+      return { mean: +(diff / n / 3).toFixed(3), max };
+    });
+    record('Overview and Power Generation use the same panel: one geometry, the same textures and values for the hero and all installed modules; the handoff switch changes no pixels', shared.found && shared.geometry && shared.textures && shared.values && shared.visible.hero === true && shared.visible.panel === false && pixels.mean < 0.5, JSON.stringify({ ...shared, switchPixelDiff: pixels }));
+    await context.close();
+  }
   if (want(7)) {
     const { context, page } = await newPage();
     const log = [];
@@ -1628,35 +1667,47 @@ async function checks() {
     await context.close();
   }
 
-  // 10. The sections after the data centers: project portfolio (regional tabs) and company.
+  // 10. The sections after the data centers: the scroll-driven project portfolio and the company.
   if (want(10)) {
-    const US = [["Project Solis","UNDER FINANCING","New Mexico, U.S.A.","3.6 GW cells / 3.0 GW modules · Manufacturing","https://www.convalt.com/project-solis/index.html","project-solis"],["Watertown Factory","ON HOLD","Watertown, New York, U.S.A.","2 GW planned solar cell production · Manufacturing","https://www.convalt.com/projects/watertown-factory/index.html","watertown-factory"],["River Drivers Solar","UNDER DEVELOPMENT","East Millinocket, Maine, U.S.A.","12 MW · Power Generation","https://www.convalt.com/projects/river-drivers-solar/index.html","river-drivers-solar"],["New Mexico Panel Recycling","UNDER DEVELOPMENT","New Mexico, U.S.A.","1 GW · Recycling","https://www.convalt.com/projects/new-mexico-panel-recycling/index.html","new-mexico-panel-recycling"],["Northern Maine Data Center","UNDER DEVELOPMENT","Maine, U.S.A.","Integrated infrastructure · Data Centers","https://www.convalt.com/projects/northern-maine-data-center/index.html","northern-maine-data-center"]];
-    const REGIONS = {"africa":["Chad Solar","Chad Rural Electrification","Sierra Leone Solar","Kobong Hybrid Infrastructure"],"india":["Redan Waste-to-Energy","Vizhag Waste-to-Energy"],"southeast-asia":["Mandalay Solar","Lao Solar"]};
-    const cardsIn = (page, panel) => page.evaluate((panel) => [...document.querySelectorAll(`#region-panel-${panel} .project-card`)].map((c) => {
-      const img = c.querySelector('img');
-      return {
-        title: c.querySelector('.project-card__link').textContent.replace('↗', '').replace(/\s+/g, ' ').trim(),
-        status: c.querySelector('.project-card__status').textContent.replace('Status:', '').trim(),
-        location: c.querySelector('.project-card__location').textContent.trim(),
-        desc: c.querySelector('.project-card__desc').textContent.trim(),
-        href: c.querySelector('.project-card__link').getAttribute('href'),
-        img: img.currentSrc || img.src, alt: img.alt, w: img.getAttribute('width'), h: img.getAttribute('height'), loaded: img.complete && img.naturalWidth > 0,
-      };
-    }), panel);
+    const PROJECTS = [
+      ['project-solis', 'Project Solis', 'UNDER FINANCING', 'New Mexico, U.S.A.', '3.6 GW cells / 3.0 GW modules · Manufacturing', 'https://www.convalt.com/project-solis/index.html', 'A proposed advanced-manufacturing campus'],
+      ['watertown-factory', 'Watertown Factory', 'ON HOLD', 'Watertown, New York, U.S.A.', '2 GW planned solar cell production · Manufacturing', 'https://www.convalt.com/projects/watertown-factory/index.html', 'A planned solar cell manufacturing facility'],
+      ['river-drivers-solar', 'River Drivers Solar', 'UNDER DEVELOPMENT', 'East Millinocket, Maine, U.S.A.', '12 MW · Power Generation', 'https://www.convalt.com/projects/river-drivers-solar/index.html', 'Convalt is developing a 12 MW community solar project'],
+      ['new-mexico-panel-recycling', 'New Mexico Panel Recycling', 'UNDER DEVELOPMENT', 'New Mexico, U.S.A.', '1 GW · Recycling', 'https://www.convalt.com/projects/new-mexico-panel-recycling/index.html', 'Convalt’s first recycling facility'],
+      ['northern-maine-data-center', 'Northern Maine Data Center', 'UNDER DEVELOPMENT', 'Maine, U.S.A.', 'Integrated infrastructure · Data Centers', 'https://www.convalt.com/projects/northern-maine-data-center/index.html', 'Convalt Data Center is developing a major site'],
+    ];
+    const HOLD = 0.26; // --pf-hold (svh), see usePortfolioScroll
+    /** The portfolio's state: layout, the project in focus, the rail, which image is on top, text placement. */
+    const pfState = (page) => page.evaluate(() => {
+      const s = document.querySelector('#portfolio');
+      const items = [...s.querySelectorAll('.pf-item')];
+      const activeIdx = items.findIndex((i) => i.dataset.active === 'true');
+      const rail = [...s.querySelectorAll('.pf-rail a')].findIndex((a) => a.getAttribute('aria-current') === 'true');
+      const media = items[0].querySelector('.pf-item__media').getBoundingClientRect();
+      const hit = document.elementFromPoint(media.left + media.width / 2, window.innerHeight / 2);
+      const onTop = items.findIndex((i) => i.contains(hit));
+      const texts = items.map((i) => { const r = i.querySelector('.pf-item__text').getBoundingClientRect(); return { centre: Math.round((r.top + r.bottom) / 2 - window.innerHeight / 2), opacity: +getComputedStyle(i.querySelector('.pf-item__text')).opacity }; });
+      return { mode: s.dataset.mode, active: activeIdx, rail, onTop, texts, y: Math.round(window.scrollY) };
+    });
+    /** Scroll position where project k is in focus: the middle of its image's hold. */
+    const focusY = (page, k) => page.evaluate(([k, hold]) => {
+      const it = document.querySelectorAll('#portfolio .pf-item')[k];
+      return Math.round(it.getBoundingClientRect().top + window.scrollY + hold * window.innerHeight);
+    }, [k, HOLD / 2]);
+    const scrollToY = async (page, y) => { await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y); await page.waitForTimeout(700); };
+
     const { context, page } = await newPage();
     const log = [];
     watch(page, log);
-    // Layout shifts in the lower page (the pinned journey's own changes are transforms).
     await context.addInitScript(() => {
       window.__cls = 0;
-      new PerformanceObserver((list) => { for (const e of list.getEntries()) if (!e.hadRecentInput && document.querySelector('#portfolio') && e.sources?.some((src) => src.node?.closest?.('.lp-section'))) window.__cls += e.value; }).observe({ type: 'layout-shift', buffered: true });
+      new PerformanceObserver((list) => { for (const e of list.getEntries()) if (!e.hadRecentInput && e.sources?.some((src) => src.node?.closest?.('.lp-section'))) window.__cls += e.value; }).observe({ type: 'layout-shift', buffered: true });
     });
     await page.goto(BASE, { waitUntil: 'domcontentloaded' });
     await waitReady(page);
     const order = await page.evaluate(() => {
       const main = document.querySelector('main');
-      const kids = [...main.children].map((e) => e.id || e.className.split(' ')[0]);
-      return { kids, afterMain: main.nextElementSibling?.className, companyFollows: document.querySelector('#portfolio').nextElementSibling?.id === 'company' };
+      return { kids: [...main.children].map((e) => e.id || e.className.split(' ')[0]), afterMain: main.nextElementSibling?.className, companyFollows: document.querySelector('#portfolio').nextElementSibling?.id === 'company' };
     });
     record('sections in order: the journey (ending with the data centers), then the portfolio, then the company section, then the footer', order.kids.join(',') === 'story,portfolio,company' && order.companyFollows && order.afterMain === 'site-footer', JSON.stringify(order));
 
@@ -1668,94 +1719,168 @@ async function checks() {
       const p = document.querySelector('#portfolio');
       const story = document.querySelector('.story').getBoundingClientRect();
       const eyebrow = p.querySelector('.lp-eyebrow').getBoundingClientRect();
-      const all = p.querySelector('.lp-head .lp-link');
-      return { eyebrow: p.querySelector('.lp-eyebrow').textContent.trim(), title: p.querySelector('h2').innerText.replace(/\s+/g, ' ').trim(), all: all.textContent.replace(/\s+/g, ' ').trim(), allHref: all.getAttribute('href'), gapAfterStage: Math.round(eyebrow.top - story.bottom), headerBottom: Math.round(document.querySelector('.site-header').getBoundingClientRect().bottom), scene: document.documentElement.dataset.scene, bg: getComputedStyle(p).backgroundColor };
+      return { mode: p.dataset.mode, eyebrow: p.querySelector('.lp-eyebrow').textContent.trim(), title: p.querySelector('h2').innerText.replace(/\s+/g, ' ').trim(), gapAfterStage: Math.round(eyebrow.top - story.bottom), headerBottom: Math.round(document.querySelector('.site-header').getBoundingClientRect().bottom), scene: document.documentElement.dataset.scene, bg: getComputedStyle(p).backgroundColor };
     });
-    record('portfolio heading: eyebrow, headline and "View all projects ↗" as supplied; close after the released stage; header clear; dark', head.eyebrow === 'Our project portfolio' && head.title === 'Local foundations. Global aspiration.' && head.all === 'View all projects ↗' && head.allHref === 'https://www.convalt.com/projects/index.html' && head.gapAfterStage >= 0 && head.gapAfterStage <= 140 && head.headerBottom <= 0 && head.scene === 'dark' && head.bg === 'rgb(11, 18, 20)', JSON.stringify(head));
+    record('portfolio heading as supplied, scroll layout on a wide screen, close after the released stage; header clear; dark', head.mode === 'scroll' && head.eyebrow === 'Our project portfolio' && head.title === 'Local foundations. Global aspiration.' && head.gapAfterStage >= 0 && head.gapAfterStage <= 140 && head.headerBottom <= 0 && head.scene === 'dark' && head.bg === 'rgb(11, 18, 20)', JSON.stringify(head));
 
-    await goTo(page, { el: '#portfolio .regions', offset: -24 }, 300);
-    for (let y = 0; y < 3; y++) { await page.mouse.wheel(0, 500); await page.waitForTimeout(500); }
-    await goTo(page, { el: '#portfolio .regions', offset: -24 }, 300);
-    const us = await cardsIn(page, 'united-states');
-    const usOk = us.length === 5 && US.every(([t, st, loc, desc, href, img], i) => us[i] && us[i].title === t && us[i].status === st && us[i].location === loc && us[i].desc === desc && us[i].href === href && us[i].img.includes(`/media/portfolio/${img}-`) && us[i].alt.length > 8 && !/imagery/i.test(us[i].alt) && us[i].w && us[i].h);
-    record('United States: the five projects in order, with exact title, status, location, description, link and image', usOk, us.map((c) => `${c.title} [${c.status}] ${c.location} · ${c.desc} → ${c.href.replace('https://www.convalt.com', '')}`).join(' | '));
-    const loaded = await page.evaluate(() => [...document.querySelectorAll('#region-panel-united-states img')].map((i) => i.complete && i.naturalWidth > 0));
-    record('United States: every project image loads (fixed dimensions, no placeholder)', loaded.length === 5 && loaded.every(Boolean), JSON.stringify(loaded));
-
-    // Regional tabs: semantics and keyboard (arrow keys, Home, End; Tab moves into the projects).
-    const tabState = () => page.evaluate(() => ({
-      tabs: [...document.querySelectorAll('#portfolio [role="tab"]')].map((t) => ({ label: t.textContent.trim(), selected: t.getAttribute('aria-selected'), tabindex: t.tabIndex })),
-      focus: document.activeElement?.textContent?.trim().slice(0, 40),
-      visible: [...document.querySelectorAll('#portfolio [role="tabpanel"]')].filter((p) => !p.hidden).map((p) => p.id),
+    // Content: the five projects in order, statuses as published, summaries from the official pages.
+    const content = await page.evaluate(() => [...document.querySelectorAll('#portfolio .pf-item')].map((it) => {
+      const link = it.querySelector('.pf-item__link'); const frame = it.querySelector('.pf-frame'); const img = frame.querySelector('img');
+      return {
+        id: it.id, title: it.querySelector('.pf-item__title').textContent.trim(),
+        status: it.querySelector('.pf-status').textContent.replace('Status:', '').trim(),
+        location: it.querySelector('.pf-item__location').textContent.trim(),
+        scope: it.querySelector('.pf-item__scope').textContent.trim(),
+        summary: it.querySelector('.pf-item__summary').textContent.trim(),
+        href: link.getAttribute('href'), linkName: link.textContent.replace(/\s+/g, ' ').trim(),
+        imageLink: { href: frame.getAttribute('href'), hidden: frame.getAttribute('aria-hidden') === 'true' && frame.tabIndex === -1 },
+        img: img.getAttribute('src'), w: img.getAttribute('width'), h: img.getAttribute('height'),
+        described: it.querySelector('[role="img"]')?.getAttribute('aria-label') ?? '',
+      };
     }));
-    const t0 = await tabState();
-    await page.focus('#region-tab-united-states');
-    const steps = [];
-    for (const key of ['ArrowRight', 'ArrowRight', 'End', 'Home', 'ArrowLeft']) { await page.keyboard.press(key); await page.waitForTimeout(250); const st = await tabState(); steps.push({ key, selected: st.tabs.find((t) => t.selected === 'true')?.label, focus: st.focus, visible: st.visible.join() }); }
-    const expected = ['Africa', 'India', 'Southeast Asia', 'United States', 'Southeast Asia'];
-    const semantics = await page.evaluate(() => ({ list: document.querySelector('#portfolio [role="tablist"]')?.getAttribute('aria-label'), controls: [...document.querySelectorAll('#portfolio [role="tab"]')].every((t) => document.getElementById(t.getAttribute('aria-controls'))?.getAttribute('aria-labelledby') === t.id), buttons: [...document.querySelectorAll('#portfolio [role="tab"]')].every((t) => t.tagName === 'BUTTON') }));
-    record('regional tabs: labelled tablist of buttons, United States first and selected; arrows, Home and End select and focus; one panel shown', t0.tabs.map((t) => t.label).join('/') === 'United States/Africa/India/Southeast Asia' && t0.tabs[0].selected === 'true' && t0.visible.join() === 'region-panel-united-states' && steps.every((st, i) => st.selected === expected[i] && st.focus === expected[i] && !st.visible.includes(',')) && semantics.controls && semantics.buttons && !!semantics.list, JSON.stringify({ steps, semantics }));
-    await page.keyboard.press('Home');
-    await page.keyboard.press('Tab');
-    const afterTab = await page.evaluate(() => document.activeElement?.closest('.project-card')?.querySelector('.project-card__link')?.textContent.trim());
-    record('Tab from the regional tabs moves into the projects (first card link)', afterTab?.startsWith('Project Solis'), `focus: ${afterTab}`);
+    const contentOk = content.length === 5 && PROJECTS.every(([id, t, st, loc, scope, href, lead], i) => {
+      const c = content[i];
+      return c && c.id === id && c.title === t && c.status === st && c.location === loc && c.scope === scope && c.href === href && c.summary.startsWith(lead) && c.linkName.includes(t) && c.imageLink.href === href && c.imageLink.hidden && c.img.includes(`/media/portfolio/${id}-`) && c.w && c.h && c.described.length > 8;
+    });
+    record('five projects in order: exact title, status, location, scope, official summary, one real link each (image link hidden from assistive tech), described image', contentOk, content.map((c) => `${c.title} [${c.status}] ${c.location} · ${c.scope} → ${c.href.replace('https://www.convalt.com', '')}`).join(' | '));
 
-    const regional = {};
-    for (const [id, titles] of Object.entries(REGIONS)) {
-      await page.click(`#region-tab-${id}`); // a real click: its layout change is user-initiated
-      await page.waitForTimeout(1300);
-      const cards = await cardsIn(page, id);
-      regional[id] = { ok: cards.length === titles.length && cards.every((c, i) => c.title === titles[i] && c.status && c.location && c.desc.includes(' · ') && /^https:\/\/www\.convalt\.com\/projects\/[a-z-]+\/index\.html$/.test(c.href) && c.loaded), cards: cards.map((c) => `${c.title} [${c.status}]`) };
+    // Forward through the projects, then back: the project in focus, its image on top, its text centred.
+    const forward = [];
+    for (let k = 0; k < 5; k++) { await scrollToY(page, await focusY(page, k)); forward.push(await pfState(page)); }
+    const reverse = [];
+    for (let k = 4; k >= 0; k--) { await scrollToY(page, await focusY(page, k)); reverse.push(await pfState(page)); }
+    const inFocus = (st, k, vh) => st.active === k && st.rail === k && st.onTop === k && Math.abs(st.texts[k].centre) < vh * 0.15 && st.texts[k].opacity > 0.95 && st.texts.every((t, i) => i === k || t.opacity < 0.5);
+    const vh = 900;
+    record('scrolling forward, each project comes into focus in turn: its text centred and emphasized, its image on top, the rail marking it', forward.every((st, k) => inFocus(st, k, vh)), JSON.stringify(forward.map((st) => ({ active: st.active, rail: st.rail, onTop: st.onTop, centre: st.texts[Math.max(0, st.active)]?.centre }))));
+    record('scrolling back up, the same states in reverse', reverse.every((st, i) => inFocus(st, 4 - i, vh)), JSON.stringify(reverse.map((st) => ({ active: st.active, onTop: st.onTop }))));
+
+    // Mouse wheel through the whole portfolio and back: focus advances in order, and the page stays
+    // exactly where the wheel leaves it (no snapping).
+    await scrollToY(page, (await focusY(page, 0)) - 300);
+    const wheelSeq = [];
+    for (let i = 0; i < 40; i++) {
+      await page.mouse.move(700, 450);
+      await page.mouse.wheel(0, 140);
+      await page.waitForTimeout(160);
+      const st = await pfState(page);
+      if (wheelSeq.at(-1) !== st.active) wheelSeq.push(st.active);
     }
-    const dupes = Object.values(regional).flatMap((r) => r.cards).some((c) => US.some(([t]) => c.startsWith(t)));
-    record('other regions: only the official regional projects (no U.S. duplicates), each with status, location, scope, working link and image', Object.values(regional).every((r) => r.ok) && !dupes, JSON.stringify(regional));
-    await page.click('#region-tab-united-states');
+    const wheelBack = [];
+    for (let i = 0; i < 40; i++) { await page.mouse.wheel(0, -140); await page.waitForTimeout(160); const st = await pfState(page); if (wheelBack.at(-1) !== st.active) wheelBack.push(st.active); }
+    // No snapping: after a wheel step mid-transition, once the scroll has settled it stays put.
+    let drift = 0;
+    for (const k of [1, 3]) {
+      await scrollToY(page, (await focusY(page, k)) - 200);
+      await page.mouse.wheel(0, 90);
+      await page.waitForTimeout(700);
+      const y1 = await page.evaluate(() => window.scrollY);
+      await page.waitForTimeout(900);
+      const y2 = await page.evaluate(() => window.scrollY);
+      drift = Math.max(drift, Math.abs(y2 - y1));
+    }
+    record('mouse wheel: focus advances 1 → 5 in order and back 5 → 1; no snapping (the page rests where the wheel leaves it)', wheelSeq.join() === '0,1,2,3,4' && wheelBack.join() === '4,3,2,1,0' && drift <= 1, JSON.stringify({ forward: wheelSeq, back: wheelBack, driftPx: drift }));
+
+    // Keyboard: Tab from the rail through the project links; each focused link brings its project into focus.
+    await scrollToY(page, (await focusY(page, 0)) - 200);
+    await page.focus('#portfolio .pf-rail a');
+    const kb = [];
+    for (let i = 0; i < 5; i++) await page.keyboard.press('Tab'); // past the rail's five links
+    for (let k = 0; k < 5; k++) {
+      if (k) await page.keyboard.press('Tab');
+      await page.waitForTimeout(500);
+      const f = await page.evaluate(() => document.activeElement?.closest('.pf-item')?.dataset.index);
+      const st = await pfState(page);
+      kb.push({ focus: Number(f), active: st.active, onTop: st.onTop });
+    }
+    record('keyboard: Tab reaches each project link in order and brings that project into focus', kb.every((s, k) => s.focus === k && s.active === k && s.onTop === k), JSON.stringify(kb));
+
+    // Rail: a click scrolls to the project and it comes into focus.
+    await page.click('#portfolio .pf-rail li:nth-child(4) a');
+    await page.waitForTimeout(2200);
+    const railSt = await pfState(page);
+    record('index rail: a project number scrolls to that project and it comes into focus', railSt.active === 3 && railSt.onTop === 3, JSON.stringify({ active: railSt.active, onTop: railSt.onTop }));
+
+    // End of the portfolio: every image loaded, "View all projects", then the company section.
+    const loaded = await page.evaluate(() => [...document.querySelectorAll('#portfolio .pf-frame img')].map((i) => i.complete && i.naturalWidth > 0));
+    await goTo(page, { el: '#portfolio .pf-outro', offset: -300 }, 300);
+    const outro = await page.evaluate(() => { const a = document.querySelector('#portfolio .pf-all'); const r = a.getBoundingClientRect(); return { text: a.textContent.replace(/\s+/g, ' ').trim(), href: a.getAttribute('href'), visible: r.top > 0 && r.bottom < window.innerHeight, last: !a.closest('.pf-outro').nextElementSibling }; });
+    record('the portfolio ends with a visible "View all projects ↗"; all five images loaded', outro.text === 'View all projects ↗' && outro.href === 'https://www.convalt.com/projects/index.html' && outro.visible && loaded.length === 5 && loaded.every(Boolean), JSON.stringify({ ...outro, loaded }));
+
+    // No WebGL frames while the portfolio alone is on screen (the released stage is out of view).
+    await goTo(page, { el: '#portfolio .pf-item[data-index="1"]' }, 300);
+    const r0 = await page.evaluate(() => window.__convaltPerf.render.count);
+    for (let i = 0; i < 8; i++) { await page.mouse.wheel(0, 120); await page.waitForTimeout(150); }
+    await page.waitForTimeout(800);
+    const r1 = await page.evaluate(() => window.__convaltPerf.render.count);
+    record('no 3D rendering within the portfolio (WebGL frames while scrolling through it)', r1 - r0 === 0, `frames rendered: ${r1 - r0}`);
 
     await goTo(page, { el: '#company' }, 300);
     const company = await page.evaluate(() => {
       const c = document.querySelector('#company'); const img = c.querySelector('img'); const cta = c.querySelector('.lp-cta');
-      return { eyebrow: c.querySelector('.lp-eyebrow').textContent.trim(), title: c.querySelector('h2').innerText.replace(/\s+/g, ' ').trim(), body: c.querySelector('.lp-body').textContent.trim(), cta: cta.textContent.replace(/\s+/g, ' ').trim(), href: cta.getAttribute('href'), img: img.currentSrc, alt: img.alt, loaded: img.complete && img.naturalWidth > 0, bg: getComputedStyle(c).backgroundColor, scene: document.documentElement.dataset.scene, headerBottom: Math.round(document.querySelector('.site-header').getBoundingClientRect().bottom) };
+      return { eyebrow: c.querySelector('.lp-eyebrow').textContent.trim(), title: c.querySelector('h2').innerText.replace(/\s+/g, ' ').trim(), body: c.querySelector('.lp-body').textContent.trim(), cta: cta.textContent.replace(/\s+/g, ' ').trim(), href: cta.getAttribute('href'), img: img.currentSrc, loaded: img.complete && img.naturalWidth > 0, bg: getComputedStyle(c).backgroundColor, scene: document.documentElement.dataset.scene, headerBottom: Math.round(document.querySelector('.site-header').getBoundingClientRect().bottom) };
     });
-    record('company section: eyebrow, headline, paragraph, "Meet our team ↗" and image as supplied; dark; header clear', company.eyebrow === 'Construct with capital and conscience' && company.title === 'Built for the next generation. And the one after that.' && company.body === 'Founded in 2011, Convalt brings together more than 150 professionals across regions and energy disciplines. We plan with a 50-year horizon, with a commitment to sustainable growth, meaningful employment, and opportunities for veterans and the military community.' && company.cta === 'Meet our team ↗' && company.href === 'https://www.convalt.com/team/index.html' && company.img.includes('/media/portfolio/integrated-energy-infrastructure-') && company.loaded && company.bg === 'rgb(11, 18, 20)' && company.scene === 'dark' && company.headerBottom <= 0, JSON.stringify({ ...company, body: company.body.slice(0, 40) + '…' }));
+    record('company section follows: eyebrow, headline, paragraph, "Meet our team ↗" and image as supplied; dark; header clear', company.eyebrow === 'Construct with capital and conscience' && company.title === 'Built for the next generation. And the one after that.' && company.body.startsWith('Founded in 2011, Convalt brings together more than 150 professionals') && company.cta === 'Meet our team ↗' && company.href === 'https://www.convalt.com/team/index.html' && company.img.includes('/media/portfolio/integrated-energy-infrastructure-') && company.loaded && company.bg === 'rgb(11, 18, 20)' && company.scene === 'dark' && company.headerBottom <= 0, JSON.stringify({ ...company, body: company.body.slice(0, 30) + '…' }));
     await goTo(page, { bottom: true }, 300);
     const cls = await page.evaluate(() => +window.__cls.toFixed(4));
-    record('no layout shift in the new sections while scrolling through them and switching regions (CLS contribution)', cls < 0.01, `cls=${cls}`);
+    record('no layout shift in the portfolio and company sections (CLS contribution)', cls < 0.01, `cls=${cls}`);
     record('no console errors / failed requests (portfolio, company)', log.length === 0, log.join(' | '));
     await context.close();
   }
   if (want(10)) {
-    // Columns and overflow on a wide screen, a tablet and a phone.
-    const layouts = [];
-    for (const [name, vp] of [['desktop', { width: 1440, height: 900 }], ['tablet', { width: 1024, height: 768, deviceScaleFactor: 2, isMobile: true, hasTouch: true }], ['mobile', { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true }]]) {
-      const { width, height, ...rest } = vp;
-      const { context, page } = await newPage({ viewport: { width, height }, ...rest });
-      await page.goto(BASE, { waitUntil: 'domcontentloaded' });
-      await waitReady(page);
-      await goTo(page, { el: '#portfolio .regions', offset: -24 }, 200);
-      const l = await page.evaluate(() => {
-        const grid = document.querySelector('#region-panel-united-states .project-grid');
-        const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
-        const company = document.querySelector('#company .company__inner');
-        const media = document.querySelector('#company .company__media').getBoundingClientRect(); const copy = document.querySelector('#company .company__copy').getBoundingClientRect();
-        const lastCard = [...grid.querySelectorAll('.project-card')].at(-1).getBoundingClientRect();
-        return { cols, overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth, split: media.top === copy.top || Math.abs((media.top + media.bottom) / 2 - (copy.top + copy.bottom) / 2) < 40 ? 'side by side' : 'stacked', gapToCompany: Math.round(company.getBoundingClientRect().top - lastCard.bottom) };
-      });
-      layouts.push({ name, ...l });
-      await context.close();
-    }
-    const want3 = { desktop: 3, tablet: 2, mobile: 1 };
-    record('project grid: three columns on a wide screen, two on a tablet, one on a phone; company split stacks on the phone; no overflow, no oversized gaps', layouts.every((l) => l.cols === want3[l.name] && l.overflow === 0 && l.gapToCompany <= 220) && layouts.find((l) => l.name === 'desktop').split === 'side by side' && layouts.find((l) => l.name === 'mobile').split === 'stacked', JSON.stringify(layouts));
-  }
-  if (want(10)) {
-    // Reduced motion: the sections are simply there — no hidden state, no entrance movement.
-    const { context, page } = await newPage({ reducedMotion: 'reduce' });
+    // Touch: a tablet (scroll layout) driven by real touch scroll gestures, forward and back.
+    const { context, page } = await newPage({ viewport: { width: 1024, height: 768 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     await page.goto(BASE, { waitUntil: 'domcontentloaded' });
     await waitReady(page);
-    await page.evaluate(() => window.scrollTo(0, document.querySelector('#portfolio').getBoundingClientRect().top + window.scrollY));
-    await page.waitForTimeout(150);
-    const rm = await page.evaluate(() => [...document.querySelectorAll('#portfolio [data-reveal]')].filter((e) => e.offsetParent).map((e) => ({ o: getComputedStyle(e).opacity, t: getComputedStyle(e).transform })));
-    record('reduced motion: the new sections are visible at once (no entrance animation)', rm.length > 0 && rm.every((e) => e.o === '1' && e.t === 'none'), JSON.stringify(rm.slice(0, 3)));
+    await goTo(page, { el: '#portfolio .pf-item[data-index="0"]', offset: -100 }, 300);
+    const cdp = await context.newCDPSession(page);
+    // Real touch drags (touchstart, moves, touchend): the finger moving up scrolls the page down.
+    const swipe = async (dy) => {
+      const y0 = dy < 0 ? 620 : 150;
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 512, y: y0 }] });
+      for (let i = 1; i <= 12; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 512, y: y0 + (dy * i) / 12 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    };
+    const pf = () => page.evaluate(() => ({ mode: document.querySelector('#portfolio').dataset.mode, active: [...document.querySelectorAll('#portfolio .pf-item')].findIndex((i) => i.dataset.active === 'true'), y: Math.round(window.scrollY) }));
+    const seq = [];
+    const start = await pf();
+    for (let i = 0; i < 12; i++) { await swipe(-260); await page.waitForTimeout(250); const s = await pf(); if (seq.at(-1) !== s.active) seq.push(s.active); }
+    const back = [];
+    for (let i = 0; i < 12; i++) { await swipe(260); await page.waitForTimeout(250); const s = await pf(); if (back.at(-1) !== s.active) back.push(s.active); }
+    const end = await pf();
+    record('touch (tablet, scroll layout): swipes move through the projects in order and back', start.mode === 'scroll' && seq.join() === '0,1,2,3,4' && back.at(-1) === 0 && end.y < start.y + 400, JSON.stringify({ mode: start.mode, forward: seq, back, from: start.y, to: end.y }));
     await context.close();
+  }
+  if (want(10)) {
+    // Layouts: scroll layout on wide screens; a plain list on phones and with reduced motion.
+    const layouts = [];
+    for (const [name, opts] of [
+      ['desktop', { viewport: { width: 1440, height: 900 } }],
+      ['mobile', { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }],
+      ['reduced', { viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' }],
+    ]) {
+      const { context, page } = await newPage(opts);
+      await page.goto(BASE, { waitUntil: 'domcontentloaded' });
+      await waitReady(page);
+      await page.evaluate(() => window.scrollTo(0, document.querySelector('#portfolio .pf-item').getBoundingClientRect().top + window.scrollY - 40));
+      await page.waitForTimeout(400);
+      const l = await page.evaluate(() => {
+        const s = document.querySelector('#portfolio'); const it = s.querySelector('.pf-item');
+        const media = it.querySelector('.pf-item__media').getBoundingClientRect(); const text = it.querySelector('.pf-item__text').getBoundingClientRect();
+        const reveal = [...s.querySelectorAll('[data-reveal]')].filter((e) => e.getBoundingClientRect().top < window.innerHeight).map((e) => getComputedStyle(e).opacity === '1' && getComputedStyle(e).transform === 'none');
+        return {
+          mode: s.dataset.mode, rail: getComputedStyle(s.querySelector('.pf-rail')).display !== 'none', sticky: getComputedStyle(it.querySelector('.pf-item__media')).position,
+          arrangement: media.bottom <= text.top + 1 ? 'image above text' : Math.abs(media.top - text.top) < media.height ? 'side by side' : 'other',
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          still: reveal.every(Boolean), sectionH: Math.round(s.getBoundingClientRect().height / window.innerHeight * 10) / 10,
+        };
+      });
+      layouts.push({ name, ...l });
+      if (name !== 'desktop') await shoot(page, path.join(OUT, `portfolio-${name}-list.png`));
+      await context.close();
+    }
+    const [d, m, r] = layouts;
+    record('layouts: scroll layout (sticky images, rail) on a wide screen; simple list on a phone (image above text) and with reduced motion (side by side, no pinning, no animation); no overflow', d.mode === 'scroll' && d.rail && d.sticky === 'sticky' && m.mode === 'list' && !m.rail && m.sticky !== 'sticky' && m.arrangement === 'image above text' && r.mode === 'list' && !r.rail && r.sticky !== 'sticky' && r.arrangement === 'side by side' && r.still && layouts.every((l) => l.overflow === 0), JSON.stringify(layouts));
+    record('the scroll layout is not excessively long (section height in screens)', d.sectionH <= 5.5, `desktop ${d.sectionH} screens for five projects (phone ${m.sectionH})`);
   }
   if (want(10)) {
     // A link to #portfolio lands on the section, dark from the first paint; the no-WebGL document has both sections.
@@ -1769,8 +1894,8 @@ async function checks() {
     record('a #portfolio link lands on the portfolio, dark from the first paint', firstScene === 'dark' && Math.abs(deep.top) <= 2 && deep.scene === 'dark', JSON.stringify({ firstScene, ...deep }));
     await page.goto(BASE + '?webgl=0', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => document.documentElement.dataset.layout === 'static', null, { timeout: 15000 }).catch(() => undefined);
-    const st = await page.evaluate(() => ({ layout: document.documentElement.dataset.layout, kids: [...document.querySelector('main').children].map((e) => e.id || e.className.split(' ')[0]), cards: document.querySelectorAll('#region-panel-united-states .project-card').length }));
-    record('no-WebGL document: the portfolio and company sections follow its data-center section', st.layout === 'static' && st.kids.slice(-2).join() === 'portfolio,company' && st.cards === 5, JSON.stringify(st));
+    const st = await page.evaluate(() => ({ layout: document.documentElement.dataset.layout, kids: [...document.querySelector('main').children].map((e) => e.id || e.className.split(' ')[0]), projects: document.querySelectorAll('#portfolio .pf-item').length }));
+    record('no-WebGL document: the portfolio and company sections follow its data-center section', st.layout === 'static' && st.kids.slice(-2).join() === 'portfolio,company' && st.projects === 5, JSON.stringify(st));
     await context.close();
   }
 

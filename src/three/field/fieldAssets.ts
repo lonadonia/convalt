@@ -4,20 +4,29 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 import { FIELD_ASSETS } from '../../config/field';
 import { createTerrainSampler, type TerrainSampler } from '../../field/terrainSampler';
 import type { Tier } from '../../state/store';
+import type { PanelAsset } from '../panelAsset';
 
 type Rect = { x0: number; z0: number; x1: number; z1: number };
 
+/**
+ * The module the installation is built from: the Overview / Module scene's own panel — the same
+ * geometry (shared, not copied), the same maps and the same material values — so the hero and every
+ * replicated module are that panel. Metres, centred, long edge X, short edge Y, front face +Z.
+ */
 export type FieldModuleAsset = {
   geometry: THREE.BufferGeometry;
+  /** A plain clone of the panel's material (shared textures; without the story-only overlays). */
   material: THREE.MeshStandardMaterial;
   size: [number, number, number];
-  frontZ: number;
-  glassZ: number;
-  cellField: { hx: number; hy: number; cx: number; cy: number };
 };
 
+export function panelAsFieldModule(panel: PanelAsset): FieldModuleAsset {
+  const material = panel.material.clone();
+  material.name = 'SuppliedSolarPanel (field)';
+  return { geometry: panel.geometry, material, size: [...panel.meta.size] };
+}
+
 export type FieldAssets = {
-  module: FieldModuleAsset;
   terrain: {
     geometry: THREE.BufferGeometry;
     /** Quantized mesh local → field frame (the glTF node transform). */
@@ -42,24 +51,12 @@ export async function loadFieldAssets(tier: Tier, anisotropy: number, onProgress
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   const textures = new THREE.TextureLoader();
   let done = 0;
-  const step = <T,>(p: Promise<T>) => p.then((v) => { done++; onProgress?.(done / 5); return v; });
+  const step = <T,>(p: Promise<T>) => p.then((v) => { done++; onProgress?.(done / 4); return v; });
 
-  const [moduleGltf, terrainGltf, inset, scan, apron] = await Promise.all([
-    step(withTimeout(loader.loadAsync(FIELD_ASSETS.module[tier]), 'field module')),
+  const [terrainGltf, inset, scan, apron] = await Promise.all([
     step(withTimeout(loader.loadAsync(FIELD_ASSETS.terrain[tier]), 'terrain')),
     ...(['inset', 'scan', 'apron'] as const).map((k) => step(withTimeout(textures.loadAsync(FIELD_ASSETS.layers[k][tier]), `terrain ${k}`))),
   ]);
-
-  // Module (one mesh, one material; dimensions and cell field measured by the asset pipeline).
-  let moduleMesh: THREE.Mesh | undefined;
-  let extras: Record<string, unknown> | undefined;
-  moduleGltf.scene.traverse((o) => {
-    if ((o as THREE.Mesh).isMesh && !moduleMesh) moduleMesh = o as THREE.Mesh;
-    if (o.userData?.cellField) extras = o.userData;
-  });
-  if (!moduleMesh || !extras) throw new Error('Unexpected field module structure');
-  const moduleMaterial = moduleMesh.material as THREE.MeshStandardMaterial;
-  for (const t of [moduleMaterial.map, moduleMaterial.normalMap, moduleMaterial.roughnessMap, moduleMaterial.metalnessMap]) if (t) t.anisotropy = anisotropy;
 
   // Terrain (quantized + meshopt): keep the node transform; decode field-frame positions for sampling.
   let terrainMesh: THREE.Mesh | undefined;
@@ -92,20 +89,9 @@ export async function loadFieldAssets(tier: Tier, anisotropy: number, onProgress
   }
 
   return {
-    module: {
-      geometry: moduleMesh.geometry,
-      material: moduleMaterial,
-      size: extras.size as [number, number, number],
-      frontZ: extras.frontZ as number,
-      glassZ: extras.glassZ as number,
-      cellField: extras.cellField as FieldModuleAsset['cellField'],
-    },
     terrain: { geometry: terrainMesh.geometry, localToField, sampler, meta },
     layers: { inset, scan, apron },
     dispose() {
-      moduleMesh?.geometry.dispose();
-      for (const t of [moduleMaterial.map, moduleMaterial.normalMap, moduleMaterial.roughnessMap, moduleMaterial.metalnessMap]) t?.dispose();
-      moduleMaterial.dispose();
       terrainMesh?.geometry.dispose();
       for (const t of [inset, scan, apron]) t.dispose();
     },

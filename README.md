@@ -7,9 +7,9 @@ One scroll-driven WebGL journey on a single canvas, followed by two ordinary sec
 | — | **Factory intro** | An ambient opening loop, then scroll-controlled assembly footage. The filmed panel hands off to the 3D model (sub-pixel registration). |
 | 01 | **Overview** — “Energy, connected.” | The supplied 72-cell panel at a three-quarter angle, a restrained settle and one light sweep. |
 | 02 | **Module** — “Precision, layer by layer.” | The panel opens into an *illustrative* three-group anatomy with accessible controls, then reassembles and centres. |
-| 03 | **Power generation** — “From one module. To a field of possibility.” | The same panel settles onto a ground mount in a green field. Neighbours, rows and a **672-module** installation appear while the camera pulls back and rises. |
+| 03 | **Power generation** — “From one module. To a field of possibility.” | The Overview panel itself settles onto a ground mount in a green field; neighbours, rows and a **672-module** installation appear — every module is that same panel (one mesh, instanced) — while the camera pulls back and rises. |
 | 04 | **Data centers** — “Infrastructure for a connected world.” | A quick scroll-driven change to a dark room. The camera starts close to server cabinets and pulls back to the supplied model's reference three-quarter view. |
-| — | **Project portfolio** — “Local foundations. Global aspiration.” | The pinned stage releases into a dark editorial grid of project cards, with regional tabs: United States, Africa, India, Southeast Asia. |
+| — | **Project portfolio** — “Local foundations. Global aspiration.” | A scroll-driven sequence of the five U.S. projects: each image holds while its text is in focus, then the next slides up over it; an index rail shows where you are. Ends with “View all projects”. |
 | — | **Company** — “Built for the next generation. And the one after that.” | An infrastructure image beside the founding story and “Meet our team”. |
 | — | **Footer** | Dark. **From the data centers to the footer the page stays dark.** |
 
@@ -26,6 +26,10 @@ npm run build && npm run preview     # production build at http://localhost:4173
 The npm scripts call `node node_modules/...` directly: npm's Windows `.cmd` shims break when the path contains `&` (as in `Freelance & bot`).
 
 `node scripts/serve.mjs <command>` runs one command against a temporary preview server (dist/, port 4173) and stops it afterwards. With `--dev`, it uses the dev server instead. All validation below was run this way, with no long-lived servers.
+
+### Deployment
+
+Production: **https://convalt-gilt.vercel.app** — the Vercel project `hakims-projects-8cc34b62/convalt`, connected to the GitHub repository `lonadonia/convalt`: every push to `main` is built (`npm run build`) and deployed by Vercel's Git integration. (`convalt.vercel.app` is an unrelated project.)
 
 ### Repository contents
 
@@ -49,7 +53,7 @@ The repository holds the source, the delivery assets in `public/` (everything th
 ```
 src/
   content/story.ts            all copy and links of the journey and footer
-  content/portfolio.ts        portfolio (by region) and company copy, links, statuses, alt text
+  content/portfolio.ts        portfolio projects and company copy: links, statuses, official summaries, alt text
   content/portfolioMedia.ts   generated image manifest (srcset, dimensions)
   config/journey.ts           the four journey segments (scroll lengths per tier) + place conversions
   config/intro.ts             factory intro timing, footage frame mapping, layer tracks
@@ -66,9 +70,10 @@ src/
   three/field/*               FieldWorld (terrain, sky, instanced installation), camera path, materials
   three/datacenter/*          DataCenterWorld (dark room, floor reflection, camera path), SceneBlend
   components/*                story chapters, stage media, intro, static document
-  components/LowerSections.tsx   project portfolio (regional tabs, cards) and company section
+  components/LowerSections.tsx   project portfolio (scroll sequence / list) and company section
+  hooks/usePortfolioScroll.ts the portfolio's scroll layout: arrival, cover, focus, index rail, keyboard
   hooks/useReveal.ts          restrained entrance for the lower sections (reduced-motion aware)
-  styles/sections.css         lower sections: grid, cards, status badges, tabs, split layout
+  styles/sections.css         lower sections: portfolio (scroll and list layouts), status badges, company split
 scripts/
   prepare-assets.mjs / prepare-intro.mjs / prepare-field.mjs / prepare-datacenter.mjs   asset pipelines
   field-layout-report.mjs     runs the layout generator in Node → counts, rejections, top-view plan
@@ -109,10 +114,7 @@ All archives are preserved untouched. Extraction is zip-slip safe, into `asset-s
 
 ### Power generation (scene 03) — `npm run assets:field`
 
-**`solar-panel.zip`**: an FBX with 15 components (1,854 triangles) and 4K PNG maps.
-- Kept: the module slab and junction box. Dropped: the archive's own mounting frame (13 parts), which is replaced by the procedural structure.
-- The module is scaled **uniformly** (no stretching) so its cell field matches scene 02's panel. That lets the two register exactly at the handoff (factor 1.0123). Result: 1.887 × 0.944 × 0.047 m.
-- Output: 2K GLB at 752 KB, 1K at 245 KB, validator 0/0.
+**The installation is the Overview panel.** Every module — the hero and the 671 instanced copies — uses the Module scene's own panel (`public/models/solar-panel-{2k,1k}.glb` from `simple-72-cell-solar-panel.zip`): the same mesh (shared, 44 triangles), the same maps and the same material values, at 1:1 (1.864 × 0.935 × 0.030 m). No separate field module is downloaded. (`solar-panel.zip`'s module, used before, is only built on request: `prepare-field.mjs --legacy-module`.)
 
 **`lorton-field.zip`**: a photogrammetry OBJ with 1.44 M triangles and two 8192² texture atlases.
 - The terrain is rasterised top-down into a 0.25 m heightfield. Trees and hedges up to 21 m are softened to at most 5 m, so they read as hedgerows, not walls. The mesh is simplified with an error bound: 180k triangles (≤ 1.1 cm error) for desktop and 70k (≤ 3.3 cm) for phones, meshopt-compressed.
@@ -121,7 +123,7 @@ All archives are preserved untouched. Extraction is zip-slip safe, into `asset-s
 
 **Scale assumptions** (estimates, not survey data):
 - **10 m per scan unit.** This comes from recognisable features: a single-track lane (≈ 3 m), UK road markings (6 m + 3 m period) and sheep.
-- The module is 1.887 m wide. Real 72-cell modules are ≈ 1.95–2.0 m, so it is slightly small. This is a visualisation scale, not a product specification.
+- The panel is 1.864 m wide. Real 72-cell modules are ≈ 1.95–2.0 m, so it is slightly small. This is a visualisation scale, not a product specification.
 
 ### Data centers (scene 04) — `npm run assets:datacenter`
 
@@ -147,10 +149,9 @@ All archives are preserved untouched. Extraction is zip-slip safe, into `asset-s
 
 ### Project portfolio and company — `npm run assets:portfolio`
 
-- **Sources:** the fourteen official convalt.com images. Each is taken from `Convalt_Energy_Images/`, matched by its original URL through `image_sources.csv`; if missing, the exact URL is downloaded into `asset-source/portfolio/`. Originals are never modified.
-- **United States cards** use exactly the supplied files (836 px, and 1,792 px for Project Solis).
-- **Sharper copies of the same pictures:** the other regions' card images come from the official homepage portfolio. Where that copy is small, the same photograph comes from the project's own page: Kobong (281 → 1,306 px), Lao (656 → 1,312 px) and Sierra Leone (594 → 1,188 px). The company image uses the supplied picture's 1,100 px original on convalt.com (the supplied `/pic/` copy is 598 px). The report records the pixel difference between each pair (1.7–12.6 / 255 at thumbnail scale: the same picture, reframed).
-- **Delivery:** one intentional crop per image (3:2 cards with a chosen focal point, 5:4 company image), WebP at 480/720/960 px (never wider than the crop), `srcset` + `sizes`, fixed `width`/`height` (no layout shift). 1.9 MB in total; a card loads one size.
+- **Sources:** official convalt.com images, taken from `Convalt_Energy_Images/` (matched by their original URL through `image_sources.csv`); if missing, the exact URL is downloaded into `asset-source/portfolio/`. Originals are never modified.
+- **The five projects** use the sharpest official copy of each picture: Project Solis's 1,792 px rendering, and the 1,672 px originals of the Watertown, River Drivers, New Mexico Recycling and Northern Maine images (the 836 px `/pic/` copies are reduced versions of the same pictures; the report records the difference). The company image uses the supplied picture's 1,100 px original (the `/pic/` copy is 598 px).
+- **Delivery:** one intentional crop per image (3:2 with a chosen focal point; 5:4 for the company), WebP at 640/960/1,280/≈1,500 px (never wider than the crop), `srcset` + `sizes`, fixed `width`/`height` (no layout shift). 3.2 MB in total; a visitor loads one size per image, lazily.
 - Details: `docs/portfolio-asset-report.json`.
 
 ## How the journey works
@@ -175,7 +176,7 @@ In-page links ("Skip intro", "Explore the module" and the anchors above) scroll 
 | (end of 02: story 82–100%) | The panel reassembles and moves to a centred presentation pose *(reassemble and centre)* |
 | 0–12% | A short approach toward the centred panel |
 | 5–24% | Studio → outdoors: ivory haze thins, sky and terrain appear, sun and sky light fade in, reflections re-rendered in 40 steps *(approach and environment reveal)* |
-| 10–26% | Scene 02's panel crossfades into the supplied module, registered by cell field (the swap rides the light change) |
+| 0% | The field's copy of the panel takes over from the Module scene's panel — the same mesh, material and pose, while the light is still the studio's: no crossfade, no size jump, no visible change (checked: 0 pixels differ) |
 | 15–30% | The same panel settles onto its table; the table's structure fades in beneath it *(settle)* |
 | 30–44% | First neighbours → its table *(first neighbours)* |
 | 44–78% | Its row → 3 rows → the first block → all 12 rows; the camera retreats and rises *(rows, retreat)* |
@@ -183,15 +184,15 @@ In-page links ("Skip intro", "Explore the module" and the anchors above) scroll 
 | 80–88% | Copy appears over a soft ivory haze *(text)* |
 | 88–100% | Reading interval *(reading)* |
 
-**Layout.** The generator is deterministic and runs from the module's measured size, the rendered terrain and the site polygon. `node scripts/field-layout-report.mjs` reproduces it in Node and writes `docs/field-layout/field-layout-plan.png`.
+**Layout.** The generator is deterministic and runs from the panel's measured size, the rendered terrain and the site polygon. `node scripts/field-layout-report.mjs` reproduces it in Node and writes `docs/field-layout/field-layout-plan.png`.
 
 | Parameter | Value |
 |---|---|
 | Modules | **672** (was 448, +50%): 12 rows × 4 tables × 14 (2 landscape levels × 7). No slot rejected. |
-| Table | 13.33 m long, 1.91 m along the slope; **tilt 25°**, facing the lane |
-| Row pitch | 4.77 m (ground-coverage ratio 0.4) |
+| Table | 13.17 m long (7 panels in landscape), 1.89 m along the slope; **tilt 25°**, facing the lane |
+| Row pitch | 4.73 m (ground-coverage ratio 0.4) |
 | Green corridors | 5 m north–south service corridor; 6 m east–west access corridor after row 6 (four blocks) |
-| Terrain | Tables are planar and roll with the ground along the row (≤ 3.1%). The lower edge keeps **0.75–0.83 m** clearance. **Legs are vertical, cut to the sampled ground plus a 12 cm embed (0.70–1.34 m)**. |
+| Terrain | Tables are planar and roll with the ground along the row (≤ 3.1%). The lower edge keeps **0.75–0.83 m** clearance. **Legs are vertical, cut to the sampled ground plus a 12 cm embed (0.72–1.34 m)**. |
 | Site | The central field, 8 m inside its traced boundary; slope ≤ 10% under every table |
 | Supports | 912 galvanised-steel boxes: 4 rails per table, and 5 posts of rafter plus front and rear leg |
 
@@ -267,15 +268,14 @@ In-page links ("Skip intro", "Explore the module" and the anchors above) scroll 
 
 ### Project portfolio and company (after the data centers)
 
-- **Placement:** in ordinary document flow, directly after the pinned journey and before the footer (also in the no-WebGL document). The released data-center scene scrolls away into the portfolio on the same charcoal, 72 px above its eyebrow on desktop: no blank band, no canvas left behind (the scene stops redrawing once it is out of view).
-- **Content:** the headline, links and the five United States projects exactly as supplied. **Africa, India and Southeast Asia** show the official convalt.com homepage records (read on 2026-09-24): Chad Solar, Chad Rural Electrification, Sierra Leone Solar, Kobong Hybrid Infrastructure; Redan and Vizhag Waste-to-Energy; Mandalay Solar and Lao Solar. Titles, statuses, locations, descriptions and links are verbatim, and nothing is added or duplicated. Every project link, "View all projects" and "Meet our team" returned HTTP 200.
-- **Statuses** appear exactly as published, on a solid chip over each image with a quiet colour key. Two differ from the rest because the official site says so: Redan Waste-to-Energy is **OPERATING**, Mandalay Solar **SOLD**.
-- **Cards:** the image, the status, the location, the title with a small ↗ (kept on the title's last word), then scope · category. The title is the card's only link, and its hit area covers the card. The grid has three columns from 1,100 px, two from 640 px and one below. Alt text describes each picture.
-- **Regional tabs:** a labelled WAI-ARIA tablist of buttons. Arrow keys, Home and End select and focus a region, Tab moves on into its projects, and one panel shows at a time. Every region has verified projects, so no tab is empty; an empty region would show a note and the official portfolio link.
+- **Placement:** in ordinary document flow, directly after the pinned journey and before the footer (also in the no-WebGL document). The released data-center scene scrolls away into the portfolio on the same charcoal: no blank band, no canvas left behind, and no WebGL frame is drawn while the portfolio is on screen.
+- **Content:** the five U.S. projects in the supplied order, with their statuses exactly as published (checked on the official project pages on 2026-09-26): Project Solis **UNDER FINANCING**, Watertown Factory **ON HOLD**, River Drivers Solar, New Mexico Panel Recycling and Northern Maine Data Center **UNDER DEVELOPMENT**. Each has its location, a one-sentence summary taken from its official page (only shortened where it did not stand alone — nothing is added, nothing is described as built), its scope · category, and a “View project ↗” link to its page. Every link answered HTTP 200. The section ends with “View all projects ↗”.
+- **Scroll layout (wide screens, motion allowed):** each project's image is `position: sticky` and the next one slides up over it while the text scrolls beside it — CSS does the positioning, so wheel, trackpad, touch, keyboard and reverse scrolling behave natively, with no snapping. Each image holds alone for 26 % of a screen, then the next covers it over exactly its own height; the project's text is centred on its hold. A script adds the finish: the arriving image settles inside its frame, the covered one recedes (scales back, dims), the project in focus is emphasized (the others dim), and an index rail (01–05, with progress) marks it. About 4.3 screens of scroll for the five projects.
+- **List layout (phones, reduced motion, before scripts):** each project as a plain card — image, then status, title, location, summary, scope and link — side by side on wide screens, stacked on narrow ones. No pinning, no animation.
+- **Accessibility:** one real link per project (its accessible name includes the title); the images also open the project for pointer users but are hidden from assistive technology, whose users get a description of each picture. Tabbing to a project link brings that project into focus; the rail's numbers are links too.
 - **Company:** a balanced split (image and copy side by side from 900 px, stacked below), the supplied copy, and "Meet our team ↗".
-- **Motion:** a short fade-and-rise the first time each block enters the view (transform and opacity only). With reduced motion everything is simply there.
 - **Links into the sections:** `#portfolio` and `#company` land on them, dark from the first paint. A reload in the lower page returns to the same place, re-applied once the web font has set the text.
-- **Header:** the transparent header leaves with the released stage, so it never overlaps the cards or the copy; the footer carries the logo and links.
+- **Header:** the transparent header leaves with the released stage, so it never overlaps the projects or the copy; the footer carries the logo and links.
 
 ## Accessibility and fallbacks
 
@@ -300,11 +300,11 @@ In-page links ("Skip intro", "Explore the module" and the anchors above) scroll 
 
 All validation ran locally against the production build. Each command ran under `node scripts/serve.mjs` (a temporary preview server), in headless Chrome 153 via Playwright unless noted.
 
-**Automated checks** — `node scripts/capture.mjs checks`: **126 of 126 pass** (`docs/screenshots/checks.json`). They drive the real page and assert, among other things:
+**Automated checks** — `node scripts/capture.mjs checks`: **131 of 131 pass** (`docs/screenshots/checks.json`). They drive the real page and assert, among other things:
 - **Intro:** the loop poster at first paint; silent 1080p derivatives only (never the 4K originals); the exact footage frame for each scroll position; coalesced seeks; the film-to-model handoff.
 - **Scenes 01–02:** the choreography, the anatomy controls, keyboard use and reduced motion.
 - **Failures:** model, footage, field, data centers, context loss and no WebGL each keep the copy and links working.
-- **Power generation:** 620–700 modules laid out with no rejected slot, the reveal order, identical states forward and in reverse, and the poster.
+- **Power generation:** the installation and the hero are the Overview panel (one geometry, the same textures and values; the handoff switch changes no pixels), 620–700 modules laid out with no rejected slot, the reveal order, identical states forward and in reverse, and the poster.
 - **Data centers:**
   - the camera path's clearance, and the band's render modes
   - no white frame and no empty black frame in the band; a readable close view
@@ -322,11 +322,12 @@ All validation ran locally against the production build. Each command ran under 
   - no horizontal overflow on phones, and the dark mobile menu
 - **Project portfolio and company:**
   - section order (journey → portfolio → company → footer), also in the no-WebGL document
-  - the heading, "View all projects ↗" and the five United States cards: exact title, status, location, scope, link and image, all images loaded
-  - regional tabs: semantics, arrow keys, Home and End, Tab into the projects; the official regional projects only, each with a working link and image
-  - the company copy, CTA and image exactly as supplied
-  - three, two and one columns at 1440, 1024 and 390 px; no overflow; no oversized gaps; no layout shift (CLS 0)
-  - reduced motion (no entrance animation), the `#portfolio` deep link (dark from the first paint), header clear of the sections, dark throughout
+  - the five projects: exact title, status, location, scope, official summary, link and image
+  - scroll layout, forward and in reverse: each project in turn has its text centred and emphasized, its image on top and the rail marking it
+  - mouse wheel (in order, and back; the page rests where the wheel leaves it), touch drags on a tablet, keyboard (Tab brings each project into focus), the rail's links
+  - no WebGL frames while the portfolio is on screen; no layout shift (CLS 0); all images loaded; "View all projects ↗" at the end
+  - phone and reduced motion: the plain list (no pinning, no animation); no overflow; the section's length
+  - the company copy, CTA and image exactly as supplied; the `#portfolio` deep link (dark from the first paint); header clear of the sections; dark throughout
 
 **Other artefacts:**
 
@@ -334,7 +335,7 @@ All validation ran locally against the production build. Each command ran under 
 |---|---|---|
 | Every state on six viewports: 1903×843 (the reference screenshot's), 1920×1080, 1440×900, 1024×768 and 768×1024 at 2×, 390×844 at 3×, including the portfolio heading, its grid and the company section (`31`–`33`). Plus fallbacks, reduced motion, keyboard focus and menus. | `capture.mjs shots`, `ui` | `docs/screenshots/` |
 | Scroll recordings (WebM, filmstrip, per-frame JSON), forward then reverse, desktop and phone | `capture.mjs record`, with `--field` or `--dc`, and `--mobile` | `docs/intro-recording/`, `docs/field-recording/`, `docs/datacenter-recording/` |
-| The header over the video, module, field (two views) and data centers (pullback and ending); the pin release; the portfolio (heading, United States grid, Africa); the company section; the footer; the phone menu over light and dark. Each frame logs the header's computed surface. | `scripts/page-frames.mjs`, with `--mobile` | `docs/page/` |
+| The header over the video, module, field (two views) and data centers (pullback and ending); the pin release; the portfolio (heading, each project in focus, a transition, the end); the company section; the footer; the phone menu over light and dark. Each frame logs the header's computed surface. | `scripts/page-frames.mjs`, with `--mobile` | `docs/page/` |
 | The final data-center view beside reference 170556, and the camera path | `node scripts/serve.mjs --dev node scripts/dc-lab-shots.mjs` | `docs/datacenter-lab/` |
 | Installation layout: counts, clearances, plan before (448) and after (672) | `npm run layout:field` | `docs/field-layout/` |
 
@@ -345,7 +346,7 @@ All validation ran locally against the production build. Each command ran under 
 
 **Cross-browser** — `scripts/cross-browser.mjs` (Playwright's browser builds, headless, on Windows):
 - Chrome 153, Edge 153, Firefox 155 (WebGL forced on) and WebKit 26.6 all reached the ready state with WebGL.
-- All four rendered the power-generation and data-center sections, the portfolio (three columns, all visible images loaded) and the company section, and logged no errors.
+- All four rendered the power-generation and data-center sections, the portfolio (scroll layout, the right project in focus, images loaded) and the company section, and logged no errors.
 - Footage frame presented against the frame mapped to the scroll position, final run: Chrome 82/82, Edge 82/82, Firefox 81/82, WebKit 82/82. In an earlier run WebKit showed frame 28 when frame 51 was mapped: its seeks can lag behind the scroll.
 
 ## Performance
@@ -390,14 +391,13 @@ Measured with `node scripts/capture.mjs perf`: a scripted scroll through the who
 
 ## Known limitations
 
-- **Portfolio records are a snapshot** of convalt.com on 2026-09-24 (regional projects) and of the supplied content (United States). Statuses can change: update `src/content/portfolio.ts`.
+- **Portfolio records are a snapshot:** the five projects' statuses and summaries were checked on convalt.com on 2026-09-26 and can change — update `src/content/portfolio.ts`. The regional tabs (Africa, India, Southeast Asia) of the previous version were replaced by this five-project sequence; the full portfolio is one link away ("View all projects").
 - **Official images:** the portfolio and company pictures are convalt.com's own; the archive carries no licence file, so confirm usage terms before production. The company image is only 1,100 px wide, so it may look slightly soft on very wide high-density screens.
 - **Licensing:** none of the four archives (module, factory footage, field scan, data center) contains a licence or attribution file. Terms must be confirmed before production.
 - **Scales are estimates:**
   - The field scan is taken as 10 m per unit, from recognisable features.
   - The data-center cabinets are set to 2.0 m tall. Their stylised proportions (0.93 m wide, 0.64 m deep) mean no single real scale fits every dimension.
 - **Close view:** the data-center front texture is 800×508 (embedded in the model), so cabinet fronts are soft at close range. The close view stays 1.4 m from the cabinets rather than magnifying it further.
-- **Handoff colour:** scene 02's panel and the supplied field module differ slightly in colour. Their crossfade rides the change of light.
 - **Illustrative interior:** the data center is a generic low-poly model, not a Convalt facility, and the page says so. The CTA opens the one data-center project page, because convalt.com has no data-centers page.
 - **Browsers:**
   - WebKit (Playwright's Windows build) can lag behind the scroll when seeking the footage (in one of two runs).

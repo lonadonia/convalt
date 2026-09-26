@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Whole-page review frames: the (transparent) header over each scene, the data-center pullback and
- * exit, the pin release into the project portfolio (United States and Africa), the company section
+ * exit, the pin release into the project portfolio (each project in focus, a transition, the end), the company section
  * and the footer, on desktop and phone (with the mobile menu open over a light and a dark scene).
  * Each frame logs the header's computed surface.
  *   node scripts/serve.mjs node scripts/page-frames.mjs [--out dir] [--vp 1440x900] [--mobile]
@@ -91,10 +91,12 @@ await toJourney('fromDc', 0.45); await snap('04a-dc-pullback');
 await toJourney('fromDc', 0.97); await snap('04-dc-ending');
 await past(Math.round(H * 0.45)); await snap('05-pin-release');
 await toSection('#portfolio'); await snap('06-portfolio');
-await toSection('#portfolio .regions', -24); await snap('07-portfolio-grid');
-await page.evaluate(() => document.querySelector('#region-tab-africa').click());
-await toSection('#portfolio .regions', -24); await snap('07b-portfolio-africa');
-await page.evaluate(() => document.querySelector('#region-tab-united-states').click());
+// Each project in focus (scroll layout: its text centred, its image arrived), one mid-transition
+// frame, and the closing link. On phones (stacked list) each project from its top.
+const focusOffset = await page.evaluate(() => document.querySelector("#portfolio").dataset.mode === "scroll" ? 0.13 * window.innerHeight : -24);
+for (const k of [0, 1, 2, 3, 4]) { await toSection(`#portfolio .pf-item[data-index="${k}"]`, focusOffset); await snap(`07-portfolio-${k + 1}`); }
+if (focusOffset > 0) { await toSection('#portfolio .pf-item[data-index="1"]', -0.25 * H); await snap('07t-portfolio-1to2'); }
+await toSection('#portfolio .pf-outro', -H * 0.4); await snap('07z-portfolio-end');
 await toSection('#company'); await snap('08-company');
 await past('bottom'); await snap('09-footer');
 if (mobile) {

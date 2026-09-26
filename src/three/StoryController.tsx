@@ -371,8 +371,8 @@ export function StoryController({ rig, quality }: { rig: SceneRig; quality: Qual
     if (rig.assembly && rig.original) {
       const open = explode > 0.0005;
       rig.assembly.root.visible = open;
-      // After the aligned crossfade the supplied field module carries on alone.
-      rig.original.visible = !open && !(inField && fieldWorld && fs.heroSwap >= 0.999);
+      // In the field the hero (the same panel mesh, same pose) stands in for it: one of the two.
+      rig.original.visible = !open && !(inField && fieldWorld && fs.heroSwap > 0);
       const selectable = sm.controls > 0.35 && explode > 0.5;
       for (const id of LAYER_IDS) {
         const hTarget = selectable && activeLayer === id ? 1 : 0;
@@ -509,6 +509,7 @@ export function StoryController({ rig, quality }: { rig: SceneRig; quality: Qual
     perf.render.calls = gl.info.render.calls;
     perf.render.triangles = gl.info.render.triangles;
     perf.render.mode = blend.mode;
+    perf.render.count++;
   }, 1);
 
   return null;
@@ -519,7 +520,8 @@ const perfHost = window as unknown as { __convaltPerf?: Record<string, unknown> 
 const perf = Object.assign((perfHost.__convaltPerf ??= {}), {
   /** Mean screen-space corner error of the photo → model handoff pose (validation). */
   handoffErrorPx: 0,
-  render: { calls: 0, triangles: 0, mode: 'field' as string },
+  /** Counters of the last rendered frame, and how many frames have been rendered in total. */
+  render: { calls: 0, triangles: 0, mode: 'field' as string, count: 0 },
   frames: [] as Array<[number, number, number]>,
   record(t: number, ms: number, dpr: number) {
     if (this.frames.length > 20000) this.frames.length = 0;

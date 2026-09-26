@@ -3,7 +3,7 @@
     "engine": "chrome",
     "launched": true,
     "version": "153.0.8010.50",
-    "readyMs": 2188,
+    "readyMs": 2079,
     "status": "ready",
     "webgl": true,
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
@@ -20,10 +20,10 @@
       "field-rows": "field:10",
       "field-final": "field:5",
       "dc": "ready",
-      "dc-closeup": "datacenter:14",
+      "dc-closeup": "datacenter:15",
       "dc-final": "datacenter:14",
-      "portfolio": "cols:3 images:5/5",
-      "company": "cols:3 images:1/1"
+      "portfolio": "mode:scroll active:1 images:3/3",
+      "company": "mode:scroll active:4 images:1/1"
     },
     "shots": [
       "opening",
@@ -45,7 +45,7 @@
     "engine": "edge",
     "launched": true,
     "version": "153.0.4234.48",
-    "readyMs": 2867,
+    "readyMs": 1941,
     "status": "ready",
     "webgl": true,
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0",
@@ -59,13 +59,13 @@
     },
     "sections": {
       "field": "ready",
-      "field-rows": "field:10",
+      "field-rows": "field:12",
       "field-final": "field:5",
       "dc": "ready",
       "dc-closeup": "datacenter:14",
       "dc-final": "datacenter:14",
-      "portfolio": "cols:3 images:5/5",
-      "company": "cols:3 images:1/1"
+      "portfolio": "mode:scroll active:1 images:3/3",
+      "company": "mode:scroll active:4 images:1/1"
     },
     "shots": [
       "opening",
@@ -87,7 +87,7 @@
     "engine": "firefox",
     "launched": true,
     "version": "155.0",
-    "readyMs": 4962,
+    "readyMs": 6578,
     "status": "ready",
     "webgl": true,
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
@@ -97,17 +97,17 @@
     "progress": 1,
     "video": "idle",
     "footageFrames": {
-      "footage": "81/82"
+      "footage": "83/82"
     },
     "sections": {
       "field": "ready",
-      "field-rows": "field:10",
+      "field-rows": "field:12",
       "field-final": "field:5",
       "dc": "ready",
       "dc-closeup": "datacenter:15",
       "dc-final": "datacenter:14",
-      "portfolio": "cols:3 images:5/5",
-      "company": "cols:3 images:1/1"
+      "portfolio": "mode:scroll active:1 images:3/3",
+      "company": "mode:scroll active:4 images:1/1"
     },
     "shots": [
       "opening",
@@ -129,7 +129,7 @@
     "engine": "webkit",
     "launched": true,
     "version": "26.6",
-    "readyMs": 3122,
+    "readyMs": 2657,
     "status": "ready",
     "webgl": true,
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
@@ -139,17 +139,17 @@
     "progress": 1,
     "video": "idle",
     "footageFrames": {
-      "footage": "70/70"
+      "footage": "6/28"
     },
     "sections": {
       "field": "ready",
       "field-rows": "field:10",
       "field-final": "field:5",
       "dc": "ready",
-      "dc-closeup": "datacenter:14",
+      "dc-closeup": "band:21",
       "dc-final": "datacenter:14",
-      "portfolio": "cols:3 images:5/5",
-      "company": "cols:3 images:1/1"
+      "portfolio": "mode:scroll active:1 images:3/3",
+      "company": "mode:scroll active:4 images:1/1"
     },
     "shots": [
       "opening",

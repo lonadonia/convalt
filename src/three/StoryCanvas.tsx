@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import type { QualityProfile } from '../config/quality';
 import { story, ui, useUI } from '../state/store';
 import { journeyLayout } from '../config/journey';
-import { loadFieldAssets, type FieldAssets } from './field/fieldAssets';
+import { loadFieldAssets, panelAsFieldModule, type FieldAssets } from './field/fieldAssets';
 import { loadDcAssets, type DcAssets } from './datacenter/dcAssets';
 import { DataCenterWorld } from './datacenter/DataCenterWorld';
 import { FieldWorld } from './field/FieldWorld';
@@ -77,7 +77,8 @@ function FieldLoader({ rig, quality }: { rig: SceneRig; quality: QualityProfile 
         .then(async (a) => {
           if (cancelled || !rig.asset || !rig.lights) { a.dispose(); return; }
           assets = a;
-          world = new FieldWorld(gl, scene, rig.lights, () => rig.studioEnv, a, rig.asset.meta.size[2], tier);
+          // The installation is built from the Overview / Module scene's own panel.
+          world = new FieldWorld(gl, scene, rig.lights, () => rig.studioEnv, a, panelAsFieldModule(rig.asset), tier);
           scene.add(world.root);
           rig.panelRoot.add(world.hero);
           await world.prepare(camera);
@@ -251,6 +252,9 @@ export default function StoryCanvas({ quality }: { quality: QualityProfile }) {
     <Canvas
       className="story-canvas"
       frameloop="demand"
+      // The stage is pinned while the canvas is in view, so its bounds never change with scrolling;
+      // measuring on scroll (R3F default) would only re-render an off-screen scene in the lower page.
+      resize={{ scroll: false }}
       // One sun shadow map, rendered only when the installation changes (see FieldWorld.update).
       // Passed through the prop: R3F sets gl.shadowMap.enabled from it on every configure.
       shadows={{ type: THREE.PCFShadowMap, autoUpdate: false }}

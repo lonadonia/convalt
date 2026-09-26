@@ -25,28 +25,18 @@ const DOWNLOADS = path.join(ROOT, 'asset-source/portfolio');
 const OUT = path.join(ROOT, 'public/media/portfolio');
 const IMG = 'https://www.convalt.com/assets/images/';
 
-const CARD = { aspect: 3 / 2, widths: [480, 720, 960] };
+/** Portfolio figures: large editorial images (3:2), so the sharpest official copy of each picture. */
+const FIGURE = { aspect: 3 / 2, widths: [640, 960, 1280, 1600] };
 /**
  * `url` is the file used. `supplied` records the URL given for the page when a sharper official
  * copy of the same picture is used instead (compared below: `sameAs`).
  */
 const IMAGES = [
-  // United States — the supplied files.
-  { id: 'project-solis', url: `${IMG}project_solis_gallup_campus_rendering.webp`, ...CARD, focus: [0.42, 0.55] },
-  { id: 'watertown-factory', url: `${IMG}pic/watertown_factory.webp`, ...CARD, focus: [0.5, 0.5] },
-  { id: 'river-drivers-solar', url: `${IMG}pic/river_drivers_solar.webp`, ...CARD, focus: [0.64, 0.45] },
-  { id: 'new-mexico-panel-recycling', url: `${IMG}pic/new_mexico_panel_recycling.webp`, ...CARD, focus: [0.55, 0.5] },
-  { id: 'northern-maine-data-center', url: `${IMG}pic/northern_maine_data_center.webp`, ...CARD, focus: [0.5, 0.5] },
-  // Other regions — the official homepage card images; where that copy is small, the same
-  // picture from the project's own page.
-  { id: 'redan-waste-to-energy', url: `${IMG}pic/redan_waste_to_energy.webp`, ...CARD, focus: [0.5, 0.5] },
-  { id: 'vizhag-waste-to-energy', url: `${IMG}pic/vizhag_waste_to_energy.webp`, ...CARD, focus: [0.56, 0.5] },
-  { id: 'mandalay-solar', url: `${IMG}pic/mandalay_solar.webp`, ...CARD, focus: [0.3, 0.5] },
-  { id: 'lao-solar', url: `${IMG}lao_solar.png`, supplied: `${IMG}pic/lao_solar.webp`, ...CARD, focus: [0.5, 0.5] },
-  { id: 'chad-solar', url: `${IMG}pic/chad_solar.webp`, ...CARD, focus: [0.5, 0.5] },
-  { id: 'chad-rural-electrification', url: `${IMG}pic/chad_rural_electrification.webp`, ...CARD, focus: [0.5, 0.5] },
-  { id: 'sierra-leone-solar', url: `${IMG}sierra_leone_solar.png`, supplied: `${IMG}pic/sierra_leone_solar.webp`, ...CARD, focus: [0.5, 0.62] },
-  { id: 'kobong-hybrid-infrastructure', url: `${IMG}kobong_hybrid_infrastructure.png`, supplied: `${IMG}pic/kobong_hybrid_infrastructure.webp`, ...CARD, focus: [0.5, 0.55] },
+  { id: 'project-solis', url: `${IMG}project_solis_gallup_campus_rendering.webp`, ...FIGURE, focus: [0.42, 0.55] },
+  { id: 'watertown-factory', url: `${IMG}watertown_factory.png`, supplied: `${IMG}pic/watertown_factory.webp`, ...FIGURE, focus: [0.5, 0.5] },
+  { id: 'river-drivers-solar', url: `${IMG}river_drivers_solar.png`, supplied: `${IMG}pic/river_drivers_solar.webp`, ...FIGURE, focus: [0.62, 0.45] },
+  { id: 'new-mexico-panel-recycling', url: `${IMG}new_mexico_panel_recycling.png`, supplied: `${IMG}pic/new_mexico_panel_recycling.webp`, ...FIGURE, focus: [0.55, 0.5] },
+  { id: 'northern-maine-data-center', url: `${IMG}northern_maine_data_center.png`, supplied: `${IMG}pic/northern_maine_data_center.webp`, ...FIGURE, focus: [0.5, 0.5] },
   // Company section: the supplied picture's 1100 px original (the supplied /pic/ copy is 598 px).
   { id: 'integrated-energy-infrastructure', url: `${IMG}integrated_energy_infrastructure.webp`, supplied: `${IMG}pic/integrated_energy_infrastructure.webp`, aspect: 5 / 4, widths: [640, 900, 1100], focus: [0.5, 0.5] },
 ];
@@ -96,6 +86,7 @@ function cropBox(w, h, aspect, [fx, fy]) {
 }
 
 const byUrl = archiveIndex();
+fs.rmSync(OUT, { recursive: true, force: true }); // only what the page uses
 fs.mkdirSync(OUT, { recursive: true });
 const manifest = {};
 const report = { generated: new Date().toISOString(), note: 'Official convalt.com images. No licence file accompanies the archive; confirm terms before production.', images: [] };

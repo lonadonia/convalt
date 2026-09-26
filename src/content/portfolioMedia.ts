@@ -3,82 +3,34 @@ export type MediaImage = { src: string; width: number; height: number; srcSet: s
 
 export const PORTFOLIO_MEDIA = {
   'project-solis': {
-    src: '/media/portfolio/project-solis-960.webp',
-    width: 960,
-    height: 640,
-    srcSet: '/media/portfolio/project-solis-480.webp 480w, /media/portfolio/project-solis-720.webp 720w, /media/portfolio/project-solis-960.webp 960w'
+    src: '/media/portfolio/project-solis-1512.webp',
+    width: 1512,
+    height: 1008,
+    srcSet: '/media/portfolio/project-solis-640.webp 640w, /media/portfolio/project-solis-960.webp 960w, /media/portfolio/project-solis-1280.webp 1280w, /media/portfolio/project-solis-1512.webp 1512w'
   },
   'watertown-factory': {
-    src: '/media/portfolio/watertown-factory-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/watertown-factory-480.webp 480w, /media/portfolio/watertown-factory-707.webp 707w'
+    src: '/media/portfolio/watertown-factory-1412.webp',
+    width: 1412,
+    height: 941,
+    srcSet: '/media/portfolio/watertown-factory-640.webp 640w, /media/portfolio/watertown-factory-960.webp 960w, /media/portfolio/watertown-factory-1280.webp 1280w, /media/portfolio/watertown-factory-1412.webp 1412w'
   },
   'river-drivers-solar': {
-    src: '/media/portfolio/river-drivers-solar-702.webp',
-    width: 702,
-    height: 468,
-    srcSet: '/media/portfolio/river-drivers-solar-480.webp 480w, /media/portfolio/river-drivers-solar-702.webp 702w'
+    src: '/media/portfolio/river-drivers-solar-1403.webp',
+    width: 1403,
+    height: 935,
+    srcSet: '/media/portfolio/river-drivers-solar-640.webp 640w, /media/portfolio/river-drivers-solar-960.webp 960w, /media/portfolio/river-drivers-solar-1280.webp 1280w, /media/portfolio/river-drivers-solar-1403.webp 1403w'
   },
   'new-mexico-panel-recycling': {
-    src: '/media/portfolio/new-mexico-panel-recycling-702.webp',
-    width: 702,
-    height: 468,
-    srcSet: '/media/portfolio/new-mexico-panel-recycling-480.webp 480w, /media/portfolio/new-mexico-panel-recycling-702.webp 702w'
+    src: '/media/portfolio/new-mexico-panel-recycling-1403.webp',
+    width: 1403,
+    height: 935,
+    srcSet: '/media/portfolio/new-mexico-panel-recycling-640.webp 640w, /media/portfolio/new-mexico-panel-recycling-960.webp 960w, /media/portfolio/new-mexico-panel-recycling-1280.webp 1280w, /media/portfolio/new-mexico-panel-recycling-1403.webp 1403w'
   },
   'northern-maine-data-center': {
-    src: '/media/portfolio/northern-maine-data-center-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/northern-maine-data-center-480.webp 480w, /media/portfolio/northern-maine-data-center-707.webp 707w'
-  },
-  'redan-waste-to-energy': {
-    src: '/media/portfolio/redan-waste-to-energy-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/redan-waste-to-energy-480.webp 480w, /media/portfolio/redan-waste-to-energy-707.webp 707w'
-  },
-  'vizhag-waste-to-energy': {
-    src: '/media/portfolio/vizhag-waste-to-energy-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/vizhag-waste-to-energy-480.webp 480w, /media/portfolio/vizhag-waste-to-energy-707.webp 707w'
-  },
-  'mandalay-solar': {
-    src: '/media/portfolio/mandalay-solar-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/mandalay-solar-480.webp 480w, /media/portfolio/mandalay-solar-707.webp 707w'
-  },
-  'lao-solar': {
-    src: '/media/portfolio/lao-solar-960.webp',
-    width: 960,
-    height: 640,
-    srcSet: '/media/portfolio/lao-solar-480.webp 480w, /media/portfolio/lao-solar-720.webp 720w, /media/portfolio/lao-solar-960.webp 960w'
-  },
-  'chad-solar': {
-    src: '/media/portfolio/chad-solar-707.webp',
-    width: 707,
-    height: 471,
-    srcSet: '/media/portfolio/chad-solar-480.webp 480w, /media/portfolio/chad-solar-707.webp 707w'
-  },
-  'chad-rural-electrification': {
-    src: '/media/portfolio/chad-rural-electrification-702.webp',
-    width: 702,
-    height: 468,
-    srcSet: '/media/portfolio/chad-rural-electrification-480.webp 480w, /media/portfolio/chad-rural-electrification-702.webp 702w'
-  },
-  'sierra-leone-solar': {
-    src: '/media/portfolio/sierra-leone-solar-960.webp',
-    width: 960,
-    height: 640,
-    srcSet: '/media/portfolio/sierra-leone-solar-480.webp 480w, /media/portfolio/sierra-leone-solar-720.webp 720w, /media/portfolio/sierra-leone-solar-960.webp 960w'
-  },
-  'kobong-hybrid-infrastructure': {
-    src: '/media/portfolio/kobong-hybrid-infrastructure-960.webp',
-    width: 960,
-    height: 640,
-    srcSet: '/media/portfolio/kobong-hybrid-infrastructure-480.webp 480w, /media/portfolio/kobong-hybrid-infrastructure-720.webp 720w, /media/portfolio/kobong-hybrid-infrastructure-960.webp 960w'
+    src: '/media/portfolio/northern-maine-data-center-1412.webp',
+    width: 1412,
+    height: 941,
+    srcSet: '/media/portfolio/northern-maine-data-center-640.webp 640w, /media/portfolio/northern-maine-data-center-960.webp 960w, /media/portfolio/northern-maine-data-center-1280.webp 1280w, /media/portfolio/northern-maine-data-center-1412.webp 1412w'
   },
   'integrated-energy-infrastructure': {
     src: '/media/portfolio/integrated-energy-infrastructure-1100.webp',

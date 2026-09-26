@@ -70,193 +70,96 @@ html:not([data-tier='mobile']) .lp-title {
   text-decoration-color: var(--dark-accent);
 }
 
-/* Regional tabs */
-.regions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: clamp(28px, 3.4vw, 44px);
-}
-
-.regions__tab {
-  min-height: 44px;
-  padding: 0 20px;
-  border: 1px solid var(--dark-line-strong);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--dark-text-2);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease);
-}
-
-.regions__tab:hover {
-  border-color: var(--dark-accent);
-  color: var(--dark-text);
-}
-
-.regions__tab[aria-selected='true'] {
-  border-color: var(--dark-text);
-  background: var(--dark-text);
-  color: var(--dark-bg);
-}
-
-.regions__empty {
-  color: var(--dark-text-2);
-}
-
-/* The released data-center scene already ends in dark space: a lighter top for the portfolio. */
-.portfolio {
+/* ---------------------------------------------------------------------------------------------
+   Project portfolio. One article per project. Two presentations of the same markup:
+   - list (default: phones, reduced motion, before scripts): image, then status, title, location,
+     summary, scope and link — side by side on wide screens, stacked on narrow ones;
+   - scroll (wide screens with motion, set by usePortfolioScroll): each project's image is sticky and
+     the next slides up over it while the text scrolls beside it; an index rail shows the focus.
+   --------------------------------------------------------------------------------------------- */
+.pf {
+  /* Scroll layout timing: each image holds alone for --pf-hold, then the next one covers it over
+     exactly its own height (--pf-h, measured), so projects arrive one step apart. */
+  --pf-hold: 26svh;
+  --pf-h: 50svh;
+  --pf-step: calc(var(--pf-hold) + var(--pf-h));
   padding-top: clamp(40px, 5vw, 80px);
 }
 
-/* Project grid: one column on phones, two on tablets, three on wide screens. */
-.project-grid {
+.pf-intro {
+  margin-bottom: clamp(40px, 6vw, 88px);
+}
+
+.pf-rail {
+  display: none;
+}
+
+.pf-list {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 28px;
+  gap: clamp(56px, 8vw, 96px);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-@media (min-width: 640px) {
-  .project-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px 24px;
-  }
+.pf-item {
+  display: grid;
+  gap: 24px;
 }
 
-@media (min-width: 1100px) {
-  .project-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 56px 32px;
-  }
+.pf-item__media {
+  order: -1;
 }
 
-.project-card {
+.pf-frame {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: var(--dark-surface);
-  border: 1px solid var(--dark-line);
-  transition: border-color 0.4s var(--ease);
-}
-
-.project-card:hover {
-  border-color: var(--dark-line-strong);
-}
-
-.project-card:has(.project-card__link:focus-visible) {
-  outline: 2px solid var(--dark-accent);
-  outline-offset: 4px;
-}
-
-.project-card__media {
+  display: block;
   aspect-ratio: 3 / 2;
   overflow: hidden;
   background: var(--dark-raised);
+  border: 1px solid var(--dark-line);
 }
 
-.project-card__media img {
+.pf-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.9s var(--ease);
 }
 
-.project-card:hover .project-card__media img {
-  transform: scale(1.035);
-}
-
-.project-card__body {
+.pf-item__text {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 22px 24px 26px;
+  align-items: flex-start;
+  gap: 14px;
 }
 
-/* Location reads above the title; the title stays first for assistive technology. */
-.project-card__location {
-  order: -1;
+.pf-item__num {
   color: var(--dark-muted);
   font-size: var(--text-small);
-  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
 }
 
-.project-card__title {
-  color: var(--dark-text);
-  font-size: clamp(1.25rem, 1.08rem + 0.5vw, 1.625rem);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+.pf-item__num span {
+  color: rgb(138 154 152 / 0.7);
 }
 
-.project-card__link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.project-card__link:focus-visible {
-  outline: none;
-}
-
-.project-card__link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.project-card__last {
-  white-space: nowrap;
-}
-
-.project-card__arrow {
-  display: inline-block;
-  margin-left: 0.35em;
-  color: var(--dark-accent);
-  font-size: 0.8em;
-  transition: transform 0.35s var(--ease);
-}
-
-.project-card:hover .project-card__arrow {
-  transform: translate(2px, -2px);
-}
-
-.project-card__desc {
-  color: var(--dark-text-2);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-}
-
-.project-card__category {
-  color: var(--dark-accent);
-}
-
-/* Status: a solid chip on the image (readable over any photo), with a quiet colour key. */
-.project-card__status {
+/* Status: prominent, exactly as published, with a quiet colour key. */
+.pf-status {
   --dot: var(--dark-muted);
-  position: absolute;
-  top: 14px;
-  left: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   padding: 7px 12px;
-  background: rgb(11 18 20 / 0.86);
-  border: 1px solid var(--dark-line);
+  border: 1px solid var(--dark-line-strong);
   color: var(--dark-text);
   font-size: var(--text-micro);
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1.2;
-  pointer-events: none;
 }
 
-.project-card__status::before {
+.pf-status::before {
   content: '';
   width: 7px;
   height: 7px;
@@ -265,11 +168,240 @@ html:not([data-tier='mobile']) .lp-title {
   background: var(--dot);
 }
 
-.project-card__status[data-status='under-financing'] { --dot: #5fd3c4; }
-.project-card__status[data-status='under-development'] { --dot: #9cc4e8; }
-.project-card__status[data-status='on-hold'] { --dot: #e2b95a; }
-.project-card__status[data-status='operating'] { --dot: #7fd88f; }
-.project-card__status[data-status='sold'] { --dot: #b5c2c1; }
+.pf-status[data-status='under-financing'] { --dot: #5fd3c4; }
+.pf-status[data-status='under-development'] { --dot: #9cc4e8; }
+.pf-status[data-status='on-hold'] { --dot: #e2b95a; }
+
+.pf-item__title {
+  color: var(--dark-text);
+  font-size: clamp(1.75rem, 1.15rem + 1.7vw, 3rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+
+.pf-item__location {
+  color: var(--dark-accent);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.pf-item__summary {
+  max-width: 44ch;
+  color: var(--dark-text-2);
+  font-size: var(--text-lede);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.pf-item__scope {
+  color: var(--dark-muted);
+  font-size: 0.9375rem;
+}
+
+.pf-item__category {
+  color: var(--dark-text-2);
+}
+
+.pf-item__link {
+  margin-top: 4px;
+}
+
+.pf-outro {
+  padding-top: clamp(56px, 7vw, 104px);
+}
+
+.pf-all {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--dark-line-strong);
+  color: var(--dark-text);
+  font-size: clamp(1.5rem, 1.05rem + 1.5vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: border-color 0.3s var(--ease);
+}
+
+.pf-all span {
+  color: var(--dark-accent);
+  transition: transform 0.35s var(--ease);
+}
+
+.pf-all:hover {
+  border-color: var(--dark-accent);
+}
+
+.pf-all:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* List layout on wide screens (reduced motion): text beside the image, one project per row. */
+@media (min-width: 900px) {
+  .pf[data-mode='list'] .pf-item {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    column-gap: clamp(32px, 4.5vw, 80px);
+  }
+
+  .pf[data-mode='list'] .pf-item__media {
+    order: 0;
+  }
+}
+
+/* ---- Scroll layout -------------------------------------------------------------------------- */
+.pf[data-mode='scroll'] .pf-body {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: clamp(20px, 2.6vw, 44px);
+}
+
+/* Index rail: which project is in focus, and how far along the portfolio the visitor is. */
+.pf[data-mode='scroll'] .pf-rail {
+  position: sticky;
+  top: calc(50svh - 150px);
+  align-self: start;
+  display: grid;
+  grid-template-columns: auto 1px;
+  column-gap: 14px;
+}
+
+.pf-rail ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pf-rail a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--dark-muted);
+  font-size: var(--text-small);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: color 0.35s var(--ease);
+}
+
+.pf-rail a:hover,
+.pf-rail a[aria-current] {
+  color: var(--dark-text);
+}
+
+.pf-rail a[aria-current] .pf-rail__num {
+  color: var(--dark-accent);
+}
+
+.pf-rail__name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pf-rail__meter {
+  position: relative;
+  background: var(--dark-line);
+}
+
+.pf-rail__meter span {
+  position: absolute;
+  inset: 0;
+  background: var(--dark-accent);
+  transform: scaleY(var(--pf-progress, 0));
+  transform-origin: top;
+}
+
+.pf[data-mode='scroll'] .pf-list {
+  gap: 0;
+}
+
+/* Each project spans one screen plus one step; consecutive projects overlap by a screen, so they
+   arrive one step apart. The text scrolls (centred in its span); the image wrapper is sticky. */
+.pf[data-mode='scroll'] .pf-item {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(32px, 4.5vw, 80px);
+  height: calc(100svh + var(--pf-step));
+  pointer-events: none;
+}
+
+.pf[data-mode='scroll'] .pf-item + .pf-item {
+  margin-top: -100svh;
+}
+
+/* The last image has nothing to wait for: it holds, then leaves with the list. */
+.pf[data-mode='scroll'] .pf-item:last-child {
+  height: calc(100svh + var(--pf-hold));
+}
+
+.pf[data-mode='scroll'] .pf-item:last-child .pf-item__text {
+  margin-bottom: 0;
+}
+
+/* Centred on its image's hold (the margin lifts the centred box by half an image height). */
+.pf[data-mode='scroll'] .pf-item__text {
+  align-self: center;
+  margin-bottom: var(--pf-h);
+  pointer-events: auto;
+  opacity: 0.26;
+  transition: opacity 0.5s var(--ease);
+}
+
+.pf[data-mode='scroll'] .pf-item__text > * {
+  transform: translateY(12px);
+  transition: transform 0.6s var(--ease);
+}
+
+.pf[data-mode='scroll'] .pf-item[data-active] .pf-item__text {
+  opacity: 1;
+}
+
+.pf[data-mode='scroll'] .pf-item[data-active] .pf-item__text > * {
+  transform: none;
+}
+
+.pf[data-mode='scroll'] .pf-item[data-active] .pf-item__text > :nth-child(3) { transition-delay: 40ms; }
+.pf[data-mode='scroll'] .pf-item[data-active] .pf-item__text > :nth-child(n + 4) { transition-delay: 80ms; }
+
+.pf[data-mode='scroll'] .pf-item__media {
+  order: 0;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: grid;
+  align-items: center;
+  height: 100svh;
+}
+
+/* Arrival: the image settles inside its frame; cover: the frame being covered recedes and dims. */
+.pf[data-mode='scroll'] .pf-frame {
+  max-height: 60svh;
+  pointer-events: auto;
+  transform: scale(calc(1 - 0.06 * var(--cover, 0)));
+  transform-origin: 50% 35%;
+}
+
+.pf[data-mode='scroll'] .pf-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--dark-bg);
+  opacity: calc(var(--cover, 0) * 0.72);
+  pointer-events: none;
+}
+
+.pf[data-mode='scroll'] .pf-frame img {
+  transform: translateY(calc((1 - var(--arrive, 1)) * 6%)) scale(calc(1.09 - 0.09 * var(--arrive, 1)));
+  will-change: transform;
+}
 
 /* Company: image and copy side by side, stacked on narrow screens. */
 .company {
@@ -344,7 +476,7 @@ html[data-capture='on'] [data-reveal] {
   transform: none !important;
 }
 
-html[data-motion='off'] .project-card__media img,
-html[data-motion='off'] .project-card__arrow {
+html[data-motion='off'] .pf-all span,
+html[data-motion='off'] .pf-rail a {
   transition: none;
 }

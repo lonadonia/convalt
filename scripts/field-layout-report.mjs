@@ -58,8 +58,9 @@ for (const node of terrainDoc.getRoot().listNodes()) {
 }
 const sampler = createTerrainSampler(positions, index);
 
-// Module dimensions from the module GLB's extras (measured by prepare-field).
-const moduleDoc = await io.read(path.join(ROOT, 'public', FIELD_ASSETS.module[tier]));
+// Module dimensions: the installation is built from the Overview / Module scene's own panel
+// (its GLB extras hold the measured size, prepare-assets).
+const moduleDoc = await io.read(path.join(ROOT, 'public/models/solar-panel-2k.glb'));
 const extras = moduleDoc.getRoot().listNodes().map((n) => n.getExtras()).find((e) => e?.size);
 const [width, height, thickness] = extras.size;
 const L = buildLayout(sampler, { width, height, thickness });

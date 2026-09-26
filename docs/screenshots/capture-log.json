@@ -1,6 +1,6 @@
 {
   "reference": {
-    "readyMs": 3665,
+    "readyMs": 1762,
     "handoffCornerErrorPx": 0.15047135733201733,
     "footageFrames": {
       "00-opening": "6/6",
@@ -34,10 +34,10 @@
         "arriving": 0,
         "supportsPlaced": 0,
         "supportsArriving": 0,
-        "heroSwap": 0.3167844152169991,
+        "heroSwap": 1,
         "text": 0,
-        "calls": 5,
-        "triangles": 182440
+        "calls": 3,
+        "triangles": 182252
       },
       "19-field-first-panel": {
         "reveal": 0,
@@ -48,10 +48,10 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 4,
-        "triangles": 182530
+        "triangles": 182480
       },
       "20-field-small-group": {
-        "reveal": 6.164929958878143,
+        "reveal": 6.130437805694801,
         "placed": 5,
         "arriving": 6,
         "supportsPlaced": 19,
@@ -59,21 +59,21 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 12,
-        "triangles": 185376
+        "triangles": 184176
       },
       "21-field-rows": {
-        "reveal": 89.84280362243392,
-        "placed": 191,
-        "arriving": 6,
+        "reveal": 89.45180567033752,
+        "placed": 190,
+        "arriving": 7,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 226272
+        "triangles": 206472
       },
       "22-field-installation": {
-        "reveal": 305.8872982145205,
+        "reveal": 305.4963017441978,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -81,10 +81,10 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 5,
-        "triangles": 256320
+        "triangles": 222720
       },
       "23-field-text": {
-        "reveal": 305.8872982145205,
+        "reveal": 305.4963017441978,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -92,13 +92,13 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 256320
+        "triangles": 222720
       },
       "dcStatus": "ready",
       "24-dc-transition": {
         "mode": "band",
         "calls": 21,
-        "triangles": 301566,
+        "triangles": 267966,
         "text": 0
       },
       "25-dc-closeup": {
@@ -129,7 +129,7 @@
     "log": []
   },
   "desktop": {
-    "readyMs": 1159,
+    "readyMs": 886,
     "handoffCornerErrorPx": 0.12651296465304857,
     "footageFrames": {
       "00-opening": "6/6",
@@ -140,18 +140,18 @@
     "field": {
       "status": "ready",
       "21-field-rows": {
-        "reveal": 89.88749458749167,
-        "placed": 192,
-        "arriving": 5,
+        "reveal": 89.49649666299341,
+        "placed": 191,
+        "arriving": 6,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 226272
+        "triangles": 206472
       },
       "23-field-text": {
-        "reveal": 305.8872982145205,
+        "reveal": 305.4963017441978,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -159,7 +159,7 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 256320
+        "triangles": 222720
       },
       "dcStatus": "ready",
       "25-dc-closeup": {
@@ -178,7 +178,7 @@
     "log": []
   },
   "wide": {
-    "readyMs": 949,
+    "readyMs": 788,
     "handoffCornerErrorPx": 0.15181555757875015,
     "footageFrames": {
       "00-opening": "6/6",
@@ -189,18 +189,18 @@
     "field": {
       "status": "ready",
       "21-field-rows": {
-        "reveal": 89.84119867690774,
-        "placed": 191,
-        "arriving": 6,
+        "reveal": 89.45020072382023,
+        "placed": 190,
+        "arriving": 7,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 226272
+        "triangles": 206472
       },
       "23-field-text": {
-        "reveal": 305.8872982145205,
+        "reveal": 305.4963017441978,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -208,7 +208,7 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 256320
+        "triangles": 222720
       },
       "dcStatus": "ready",
       "25-dc-closeup": {
@@ -227,7 +227,7 @@
     "log": []
   },
   "tablet": {
-    "readyMs": 675,
+    "readyMs": 935,
     "handoffCornerErrorPx": 0.1079577298341862,
     "footageFrames": {
       "00-opening": "6/6",
@@ -239,18 +239,18 @@
     "field": {
       "status": "ready",
       "21-field-rows": {
-        "reveal": 89.83843943044903,
-        "placed": 191,
-        "arriving": 6,
+        "reveal": 89.4474414756576,
+        "placed": 190,
+        "arriving": 7,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 226272
+        "triangles": 206472
       },
       "23-field-text": {
-        "reveal": 305.8872982145205,
+        "reveal": 305.4963017441978,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -258,7 +258,7 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 256320
+        "triangles": 222720
       },
       "dcStatus": "ready",
       "25-dc-closeup": {
@@ -277,7 +277,7 @@
     "log": []
   },
   "tabletPortrait": {
-    "readyMs": 786,
+    "readyMs": 719,
     "handoffCornerErrorPx": 0.11608358047224389,
     "footageFrames": {
       "00-opening": "6/6",
@@ -289,18 +289,18 @@
     "field": {
       "status": "ready",
       "21-field-rows": {
-        "reveal": 89.90693801640849,
-        "placed": 192,
-        "arriving": 5,
+        "reveal": 89.51593463666138,
+        "placed": 191,
+        "arriving": 6,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 116272
+        "triangles": 96472
       },
       "23-field-text": {
-        "reveal": 305.8872532255835,
+        "reveal": 305.49631303680775,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -308,7 +308,7 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 146320
+        "triangles": 112720
       },
       "dcStatus": "ready",
       "25-dc-closeup": {
@@ -327,7 +327,7 @@
     "log": []
   },
   "mobile": {
-    "readyMs": 791,
+    "readyMs": 669,
     "handoffCornerErrorPx": 0.09567826359135825,
     "footageFrames": {
       "00-opening": "6/6",
@@ -361,10 +361,10 @@
         "arriving": 0,
         "supportsPlaced": 0,
         "supportsArriving": 0,
-        "heroSwap": 0.3156993293538271,
+        "heroSwap": 1,
         "text": 0,
-        "calls": 5,
-        "triangles": 72440
+        "calls": 3,
+        "triangles": 72252
       },
       "19-field-first-panel": {
         "reveal": 0.000039534742138398225,
@@ -375,10 +375,10 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 6,
-        "triangles": 72852
+        "triangles": 72752
       },
       "20-field-small-group": {
-        "reveal": 6.15281059920178,
+        "reveal": 6.118448962364408,
         "placed": 5,
         "arriving": 6,
         "supportsPlaced": 19,
@@ -386,21 +386,21 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 12,
-        "triangles": 75376
+        "triangles": 74176
       },
       "21-field-rows": {
-        "reveal": 89.86570591101977,
-        "placed": 191,
-        "arriving": 6,
+        "reveal": 89.47470252609526,
+        "placed": 190,
+        "arriving": 7,
         "supportsPlaced": 285,
         "supportsArriving": 0,
         "heroSwap": 1,
         "text": 0,
         "calls": 10,
-        "triangles": 116272
+        "triangles": 96472
       },
       "22-field-installation": {
-        "reveal": 305.8872532255835,
+        "reveal": 305.49631303680775,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -408,10 +408,10 @@
         "heroSwap": 1,
         "text": 0,
         "calls": 5,
-        "triangles": 146320
+        "triangles": 112720
       },
       "23-field-text": {
-        "reveal": 305.8872532255835,
+        "reveal": 305.49631303680775,
         "placed": 671,
         "arriving": 0,
         "supportsPlaced": 912,
@@ -419,13 +419,13 @@
         "heroSwap": 1,
         "text": 1,
         "calls": 5,
-        "triangles": 146320
+        "triangles": 112720
       },
       "dcStatus": "ready",
       "24-dc-transition": {
         "mode": "band",
         "calls": 21,
-        "triangles": 191566,
+        "triangles": 157966,
         "text": 0
       },
       "25-dc-closeup": {

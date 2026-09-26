@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-24T20:54:44.192Z",
+  "generated": "2026-09-26T00:47:59.085Z",
   "note": "Official convalt.com images. No licence file accompanies the archive; confirm terms before production.",
   "images": [
     {
@@ -24,283 +24,200 @@
       "supplied": null,
       "outputs": [
         {
-          "file": "/media/portfolio/project-solis-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 41182
-        },
-        {
-          "file": "/media/portfolio/project-solis-720.webp",
-          "width": 720,
-          "height": 480,
-          "bytes": 86184
+          "file": "/media/portfolio/project-solis-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 70064
         },
         {
           "file": "/media/portfolio/project-solis-960.webp",
           "width": 960,
           "height": 640,
           "bytes": 139968
+        },
+        {
+          "file": "/media/portfolio/project-solis-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 220008
+        },
+        {
+          "file": "/media/portfolio/project-solis-1512.webp",
+          "width": 1512,
+          "height": 1008,
+          "bytes": 279806
         }
       ]
     },
     {
       "id": "watertown-factory",
-      "url": "https://www.convalt.com/assets/images/pic/watertown_factory.webp",
+      "url": "https://www.convalt.com/assets/images/watertown_factory.png",
       "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\watertown_factory.webp",
-      "bytes": 209284,
-      "sha256": "9ebca8090cd97a5fefd89f338738ee8bca46cd90d852cb94a86ae96eef8697c4",
-      "size": "836×471",
+      "file": "Convalt_Energy_Images\\projects\\watertown_factory.png",
+      "bytes": 574527,
+      "sha256": "a8e39794e73d0563fc4aac99c4d8fafe742ada357a59006a00692d03bb32ef55",
+      "size": "1672×941",
       "crop": {
-        "left": 65,
+        "left": 130,
         "top": 0,
-        "width": 707,
-        "height": 471,
+        "width": 1412,
+        "height": 941,
         "aspect": 1.5,
         "focus": [
           0.5,
           0.5
         ]
       },
-      "supplied": null,
+      "supplied": {
+        "url": "https://www.convalt.com/assets/images/pic/watertown_factory.webp",
+        "source": "Convalt_Energy_Images\\projects\\watertown_factory.webp",
+        "size": "836×471",
+        "meanDifference": 6.8
+      },
       "outputs": [
         {
-          "file": "/media/portfolio/watertown-factory-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 42904
+          "file": "/media/portfolio/watertown-factory-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 64358
         },
         {
-          "file": "/media/portfolio/watertown-factory-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 82746
+          "file": "/media/portfolio/watertown-factory-960.webp",
+          "width": 960,
+          "height": 640,
+          "bytes": 118564
+        },
+        {
+          "file": "/media/portfolio/watertown-factory-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 176772
+        },
+        {
+          "file": "/media/portfolio/watertown-factory-1412.webp",
+          "width": 1412,
+          "height": 941,
+          "bytes": 205758
         }
       ]
     },
     {
       "id": "river-drivers-solar",
-      "url": "https://www.convalt.com/assets/images/pic/river_drivers_solar.webp",
+      "url": "https://www.convalt.com/assets/images/river_drivers_solar.png",
       "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\river_drivers_solar.webp",
-      "bytes": 192138,
-      "sha256": "2f523d3c5bae084753adc513d3b5b69e300eb7ea3f10701b894f4877b3cfec0b",
-      "size": "836×468",
+      "file": "Convalt_Energy_Images\\projects\\river_drivers_solar.png",
+      "bytes": 690304,
+      "sha256": "ca99905056a0f4eb1c766e127baefedf1eb375d72aa2cec644837db848c0ed5d",
+      "size": "1672×935",
       "crop": {
-        "left": 134,
+        "left": 269,
         "top": 0,
-        "width": 702,
-        "height": 468,
+        "width": 1403,
+        "height": 935,
         "aspect": 1.5,
         "focus": [
-          0.64,
+          0.62,
           0.45
         ]
       },
-      "supplied": null,
+      "supplied": {
+        "url": "https://www.convalt.com/assets/images/pic/river_drivers_solar.webp",
+        "source": "Convalt_Energy_Images\\projects\\river_drivers_solar.webp",
+        "size": "836×468",
+        "meanDifference": 2.6
+      },
       "outputs": [
         {
-          "file": "/media/portfolio/river-drivers-solar-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 40040
+          "file": "/media/portfolio/river-drivers-solar-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 68570
         },
         {
-          "file": "/media/portfolio/river-drivers-solar-702.webp",
-          "width": 702,
-          "height": 468,
-          "bytes": 77126
+          "file": "/media/portfolio/river-drivers-solar-960.webp",
+          "width": 960,
+          "height": 640,
+          "bytes": 127618
+        },
+        {
+          "file": "/media/portfolio/river-drivers-solar-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 185734
+        },
+        {
+          "file": "/media/portfolio/river-drivers-solar-1403.webp",
+          "width": 1403,
+          "height": 935,
+          "bytes": 212582
         }
       ]
     },
     {
       "id": "new-mexico-panel-recycling",
-      "url": "https://www.convalt.com/assets/images/pic/new_mexico_panel_recycling.webp",
+      "url": "https://www.convalt.com/assets/images/new_mexico_panel_recycling.png",
       "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\new_mexico_panel_recycling.webp",
-      "bytes": 220340,
-      "sha256": "515df27ad7f3e49a9198d7a3ec1a2be6b3da4ad9fd103d5c8194f4e1df24c35c",
-      "size": "836×468",
+      "file": "Convalt_Energy_Images\\projects\\new_mexico_panel_recycling.png",
+      "bytes": 685725,
+      "sha256": "21a31324a57cef61535d97574a73b90a91996818803b547252cacc1926e2426b",
+      "size": "1672×935",
       "crop": {
-        "left": 109,
+        "left": 218,
         "top": 0,
-        "width": 702,
-        "height": 468,
+        "width": 1403,
+        "height": 935,
         "aspect": 1.5,
         "focus": [
           0.55,
           0.5
         ]
       },
-      "supplied": null,
+      "supplied": {
+        "url": "https://www.convalt.com/assets/images/pic/new_mexico_panel_recycling.webp",
+        "source": "Convalt_Energy_Images\\projects\\new_mexico_panel_recycling.webp",
+        "size": "836×468",
+        "meanDifference": 4.3
+      },
       "outputs": [
         {
-          "file": "/media/portfolio/new-mexico-panel-recycling-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 45398
+          "file": "/media/portfolio/new-mexico-panel-recycling-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 70768
         },
         {
-          "file": "/media/portfolio/new-mexico-panel-recycling-702.webp",
-          "width": 702,
-          "height": 468,
-          "bytes": 95050
+          "file": "/media/portfolio/new-mexico-panel-recycling-960.webp",
+          "width": 960,
+          "height": 640,
+          "bytes": 138344
+        },
+        {
+          "file": "/media/portfolio/new-mexico-panel-recycling-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 211686
+        },
+        {
+          "file": "/media/portfolio/new-mexico-panel-recycling-1403.webp",
+          "width": 1403,
+          "height": 935,
+          "bytes": 240822
         }
       ]
     },
     {
       "id": "northern-maine-data-center",
-      "url": "https://www.convalt.com/assets/images/pic/northern_maine_data_center.webp",
+      "url": "https://www.convalt.com/assets/images/northern_maine_data_center.png",
       "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\northern_maine_data_center.webp",
-      "bytes": 171962,
-      "sha256": "2b1b0d11edd1b6f499fd01cfb9e53e0d98fd1246bb2fe041ff2f1fc20036b32c",
-      "size": "836×471",
+      "file": "Convalt_Energy_Images\\projects\\northern_maine_data_center.png",
+      "bytes": 648649,
+      "sha256": "cfc4c743daa911bb1107195ab11efe700d72bd15140c562004662f41e66bf752",
+      "size": "1672×941",
       "crop": {
-        "left": 65,
+        "left": 130,
         "top": 0,
-        "width": 707,
-        "height": 471,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/northern-maine-data-center-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 29134
-        },
-        {
-          "file": "/media/portfolio/northern-maine-data-center-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 66094
-        }
-      ]
-    },
-    {
-      "id": "redan-waste-to-energy",
-      "url": "https://www.convalt.com/assets/images/pic/redan_waste_to_energy.webp",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\redan_waste_to_energy.webp",
-      "bytes": 221498,
-      "sha256": "cade0a140ed65568db202401b80e53f1f03f03a6e54e8db507d4c38139ea1599",
-      "size": "836×471",
-      "crop": {
-        "left": 65,
-        "top": 0,
-        "width": 707,
-        "height": 471,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/redan-waste-to-energy-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 47280
-        },
-        {
-          "file": "/media/portfolio/redan-waste-to-energy-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 96724
-        }
-      ]
-    },
-    {
-      "id": "vizhag-waste-to-energy",
-      "url": "https://www.convalt.com/assets/images/pic/vizhag_waste_to_energy.webp",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\vizhag_waste_to_energy.webp",
-      "bytes": 148864,
-      "sha256": "674c07bb0da4e986c304042037d2cd990ff5d565054df1a5afe7bc36964e4924",
-      "size": "836×471",
-      "crop": {
-        "left": 115,
-        "top": 0,
-        "width": 707,
-        "height": 471,
-        "aspect": 1.5,
-        "focus": [
-          0.56,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/vizhag-waste-to-energy-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 31294
-        },
-        {
-          "file": "/media/portfolio/vizhag-waste-to-energy-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 65158
-        }
-      ]
-    },
-    {
-      "id": "mandalay-solar",
-      "url": "https://www.convalt.com/assets/images/pic/mandalay_solar.webp",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\mandalay_solar.webp",
-      "bytes": 160600,
-      "sha256": "4da57966b3bc11be25ab75897cedd1ff0a2ab2ca19c09dbb9b9ed0f6bab68f8c",
-      "size": "836×471",
-      "crop": {
-        "left": 0,
-        "top": 0,
-        "width": 707,
-        "height": 471,
-        "aspect": 1.5,
-        "focus": [
-          0.3,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/mandalay-solar-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 29690
-        },
-        {
-          "file": "/media/portfolio/mandalay-solar-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 62738
-        }
-      ]
-    },
-    {
-      "id": "lao-solar",
-      "url": "https://www.convalt.com/assets/images/lao_solar.png",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\lao_solar.png",
-      "bytes": 366242,
-      "sha256": "deae66620cbb2032019d565f4ca3799be9d32d3d7fcedbc917a145391ecf31a0",
-      "size": "1312×750",
-      "crop": {
-        "left": 94,
-        "top": 0,
-        "width": 1125,
-        "height": 750,
+        "width": 1412,
+        "height": 941,
         "aspect": 1.5,
         "focus": [
           0.5,
@@ -308,191 +225,35 @@
         ]
       },
       "supplied": {
-        "url": "https://www.convalt.com/assets/images/pic/lao_solar.webp",
-        "source": "Convalt_Energy_Images\\projects\\lao_solar.webp",
-        "size": "656×375",
-        "meanDifference": 3.9
+        "url": "https://www.convalt.com/assets/images/pic/northern_maine_data_center.webp",
+        "source": "Convalt_Energy_Images\\projects\\northern_maine_data_center.webp",
+        "size": "836×471",
+        "meanDifference": 3
       },
       "outputs": [
         {
-          "file": "/media/portfolio/lao-solar-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 24478
+          "file": "/media/portfolio/northern-maine-data-center-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 45224
         },
         {
-          "file": "/media/portfolio/lao-solar-720.webp",
-          "width": 720,
-          "height": 480,
-          "bytes": 40544
-        },
-        {
-          "file": "/media/portfolio/lao-solar-960.webp",
+          "file": "/media/portfolio/northern-maine-data-center-960.webp",
           "width": 960,
           "height": 640,
-          "bytes": 55766
-        }
-      ]
-    },
-    {
-      "id": "chad-solar",
-      "url": "https://www.convalt.com/assets/images/pic/chad_solar.webp",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\chad_solar.webp",
-      "bytes": 209884,
-      "sha256": "4e68609301b1c76e9656bc32f40470190bebbdb308582a945ba9beaf63135d1d",
-      "size": "836×471",
-      "crop": {
-        "left": 65,
-        "top": 0,
-        "width": 707,
-        "height": 471,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/chad-solar-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 36804
+          "bytes": 104834
         },
         {
-          "file": "/media/portfolio/chad-solar-707.webp",
-          "width": 707,
-          "height": 471,
-          "bytes": 84888
-        }
-      ]
-    },
-    {
-      "id": "chad-rural-electrification",
-      "url": "https://www.convalt.com/assets/images/pic/chad_rural_electrification.webp",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\chad_rural_electrification.webp",
-      "bytes": 221712,
-      "sha256": "cf7cb85706a35a61488f583bca3a0ad1073bc1d889513044499c3bdea91f83cc",
-      "size": "836×468",
-      "crop": {
-        "left": 67,
-        "top": 0,
-        "width": 702,
-        "height": 468,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.5
-        ]
-      },
-      "supplied": null,
-      "outputs": [
-        {
-          "file": "/media/portfolio/chad-rural-electrification-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 43056
+          "file": "/media/portfolio/northern-maine-data-center-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 189422
         },
         {
-          "file": "/media/portfolio/chad-rural-electrification-702.webp",
-          "width": 702,
-          "height": 468,
-          "bytes": 92174
-        }
-      ]
-    },
-    {
-      "id": "sierra-leone-solar",
-      "url": "https://www.convalt.com/assets/images/sierra_leone_solar.png",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\sierra_leone_solar.png",
-      "bytes": 360285,
-      "sha256": "8da2a6f92056f8f587a9df6349c878e71d51a8fcc3b444f3af68a62f790cf920",
-      "size": "1188×970",
-      "crop": {
-        "left": 0,
-        "top": 178,
-        "width": 1188,
-        "height": 792,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.62
-        ]
-      },
-      "supplied": {
-        "url": "https://www.convalt.com/assets/images/pic/sierra_leone_solar.webp",
-        "source": "Convalt_Energy_Images\\projects\\sierra_leone_solar.webp",
-        "size": "594×485",
-        "meanDifference": 2.6
-      },
-      "outputs": [
-        {
-          "file": "/media/portfolio/sierra-leone-solar-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 13574
-        },
-        {
-          "file": "/media/portfolio/sierra-leone-solar-720.webp",
-          "width": 720,
-          "height": 480,
-          "bytes": 23088
-        },
-        {
-          "file": "/media/portfolio/sierra-leone-solar-960.webp",
-          "width": 960,
-          "height": 640,
-          "bytes": 34456
-        }
-      ]
-    },
-    {
-      "id": "kobong-hybrid-infrastructure",
-      "url": "https://www.convalt.com/assets/images/kobong_hybrid_infrastructure.png",
-      "source": "archive",
-      "file": "Convalt_Energy_Images\\projects\\kobong_hybrid_infrastructure.png",
-      "bytes": 725315,
-      "sha256": "ef4aa997c116df70037ba7b76b32c242662c0a3989ec65a7979ede6888368d55",
-      "size": "1306×974",
-      "crop": {
-        "left": 0,
-        "top": 100,
-        "width": 1306,
-        "height": 871,
-        "aspect": 1.5,
-        "focus": [
-          0.5,
-          0.55
-        ]
-      },
-      "supplied": {
-        "url": "https://www.convalt.com/assets/images/pic/kobong_hybrid_infrastructure.webp",
-        "source": "Convalt_Energy_Images\\projects\\kobong_hybrid_infrastructure.webp",
-        "size": "281×194",
-        "meanDifference": 12.6
-      },
-      "outputs": [
-        {
-          "file": "/media/portfolio/kobong-hybrid-infrastructure-480.webp",
-          "width": 480,
-          "height": 320,
-          "bytes": 34266
-        },
-        {
-          "file": "/media/portfolio/kobong-hybrid-infrastructure-720.webp",
-          "width": 720,
-          "height": 480,
-          "bytes": 70224
-        },
-        {
-          "file": "/media/portfolio/kobong-hybrid-infrastructure-960.webp",
-          "width": 960,
-          "height": 640,
-          "bytes": 115394
+          "file": "/media/portfolio/northern-maine-data-center-1412.webp",
+          "width": 1412,
+          "height": 941,
+          "bytes": 240752
         }
       ]
     },
