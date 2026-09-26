@@ -1279,7 +1279,8 @@ async function checks() {
     const loadMs = Date.now() - t0;
     const first = await fieldState(page);
     record('power generation: assets load in the background once the module is ready', status === 'ready' && first.chapter === 'intro', `${status} ${loadMs} ms after the module (still in the intro)`);
-    const st = first.stats;
+    // Assets not ready (e.g. a very slow connection): the checks below fail instead of crashing.
+    const st = first.stats ?? { modules: 0, tables: 0, supports: 0, rejected: [], clearance: [0, 0], legs: [0, 0] };
     const total = st.modules - 1; // instanced; the hero module is the Module scene's panel
     record('layout: 672 modules (+50% over the first 448), none rejected, lower edge ≥ 0.75 m above ground, legs reach the ground', st.modules >= 620 && st.modules <= 700 && st.rejected === 0 && st.clearance[0] >= 0.749 && st.legs[0] > 0.5 && st.legs[1] < 2,
       JSON.stringify(st));

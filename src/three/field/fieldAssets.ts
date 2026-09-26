@@ -38,7 +38,8 @@ export type FieldAssets = {
   dispose(): void;
 };
 
-const TIMEOUT_MS = 45000;
+/** Generous (≈ 1.8 MB on desktop, loading beside the intro media): slow connections still get the scene. */
+const TIMEOUT_MS = 120000;
 
 function withTimeout<T>(p: Promise<T>, label: string): Promise<T> {
   return new Promise((resolve, reject) => {

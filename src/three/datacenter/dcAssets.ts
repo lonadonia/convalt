@@ -23,7 +23,8 @@ export type DcAssets = {
   dispose(): void;
 };
 
-const TIMEOUT_MS = 45000;
+/** Generous, as for the field: slow connections still get the scene (the page stays usable meanwhile). */
+const TIMEOUT_MS = 120000;
 
 export async function loadDcAssets(anisotropy: number): Promise<DcAssets> {
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);

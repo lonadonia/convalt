@@ -23,7 +23,8 @@ export type PanelAsset = {
   dispose(): void;
 };
 
-const LOAD_TIMEOUT_MS = 25000;
+/** Generous: on a slow connection (≈ 0.5 Mbit/s) the 2K model alone takes ≈ 30 s; give up only then. */
+const LOAD_TIMEOUT_MS = 60000;
 
 function splitByFaceNormal(geometry: THREE.BufferGeometry) {
   const index = geometry.getIndex();
